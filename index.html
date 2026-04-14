@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SoundPro - Distribuidora de Eletrônicos</title>
+    
+    <link rel="icon" type="image/jpeg" href="favicon.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #ec4899;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --gray-light: #e2e8f0;
+            --gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+            --star-gold: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --bg-body: #f0f2f5;
+            --whatsapp: #25d366;
+            --stock-green: #10b981;
+            --stock-red: #ef4444;
+            --discount-bg: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-body);
+            color: #1a1a2e;
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+
+        /* ==================== HEADER ==================== */
+        .header {
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            background: rgba(2, 6, 23, 0.98); backdrop-filter: blur(20px);
+        }
+        .header-main { padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .logo-icon {
+            width: 38px; height: 38px; background: var(--gradient); border-radius: 10px;
+            display: flex; align-items: center; justify-content: center; font-size: 18px; color: white;
+        }
+        .logo-name {
+            font-size: 18px; font-weight: 800; background: var(--gradient);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .logo-tagline { font-size: 8px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1.5px; }
+        .hamburger { display: flex; flex-direction: column; gap: 4px; cursor: pointer; padding: 6px; background: transparent; border: none; }
+        .hamburger span { width: 22px; height: 2px; background: white; border-radius: 2px; }
+
+        /* Mobile Menu */
+        .mobile-menu-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+            z-index: 999; opacity: 0; visibility: hidden; transition: all 0.3s;
+        }
+        .mobile-menu-overlay.active { opacity: 1; visibility: visible; }
+        .mobile-menu {
+            position: fixed; top: 0; right: -100%; width: 280px; max-width: 85%; height: 100vh;
+            background: linear-gradient(180deg, #0f172a 0%, #1e1b4b 100%); z-index: 1000;
+            transition: right 0.3s ease; padding: 70px 20px 20px;
+        }
+        .mobile-menu.active { right: 0; }
+        .mobile-menu-header {
+            display: flex; align-items: center; gap: 10px; padding-bottom: 16px;
+            margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .mobile-menu-logo {
+            width: 38px; height: 38px; background: var(--gradient); border-radius: 10px;
+            display: flex; align-items: center; justify-content: center; font-size: 18px; color: white;
+        }
+        .mobile-menu nav a {
+            display: flex; align-items: center; gap: 12px; padding: 12px 0;
+            color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .mobile-menu nav a i { width: 18px; color: var(--primary); text-align: center; }
+
+        /* ==================== BANNER CAROUSEL COM IMAGENS ==================== */
+        .banner-carousel {
+            position: relative; margin-top: 65px; overflow: hidden; height: 150px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08); cursor: pointer;
+        }
+        .carousel-track { display: flex; height: 100%; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        .banner-slide {
+            min-width: 100%; height: 100%; position: relative; overflow: hidden;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .banner-slide img {
+            position: absolute; inset: 0; width: 100%; height: 100%;
+            object-fit: cover; object-position: center;
+        }
+        .banner-slide::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(135deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.2) 100%);
+            z-index: 1; pointer-events: none;
+        }
+        .banner-content {
+            display: flex; align-items: center; gap: 18px; position: relative; z-index: 2;
+            max-width: 500px; width: 100%; padding: 20px 24px; color: white;
+            transition: transform 0.3s ease;
+        }
+        .banner-slide:hover .banner-content { transform: scale(1.02); }
+        .banner-icon {
+            width: 54px; height: 54px; background: rgba(255,255,255,0.2); border-radius: 14px;
+            display: flex; align-items: center; justify-content: center; font-size: 22px;
+            backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,0.3);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2); flex-shrink: 0;
+        }
+        .banner-text h3 { font-size: 17px; font-weight: 700; margin-bottom: 4px; line-height: 1.2; letter-spacing: -0.2px; }
+        .banner-text p { font-size: 12.5px; opacity: 0.95; line-height: 1.35; margin: 0; font-weight: 400; }
+        
+        .carousel-indicators {
+            position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 8px; z-index: 5; padding: 0; margin: 0;
+        }
+        .carousel-indicators .dot {
+            width: 8px; height: 8px; border-radius: 50%; border: none;
+            background: rgba(255,255,255,0.5); cursor: pointer; transition: all 0.3s; padding: 0;
+        }
+        .carousel-indicators .dot.active { background: white; width: 24px; border-radius: 4px; }
+
+        /* ==================== PRODUCT GRID ==================== */
+        .products-section { max-width: 1280px; margin: 0 auto; padding: 24px 16px 40px; }
+        .section-title {
+            font-size: 20px; font-weight: 700; color: var(--dark); margin-bottom: 18px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .section-title i { color: var(--primary); }
+        .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+        @media (min-width: 768px) { .products-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (min-width: 1024px) { .products-grid { grid-template-columns: repeat(4, 1fr); } }
+
+        /* Product Card */
+        .product-card {
+            background: white; border-radius: 16px; overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer; position: relative; display: flex; flex-direction: column;
+        }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.12); }
+        .product-card.out-of-stock { opacity: 0.7; cursor: not-allowed; }
+        .product-card.out-of-stock:hover { transform: none; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+
+        .stock-badge {
+            position: absolute; top: 10px; right: 10px; padding: 5px 10px; border-radius: 20px;
+            font-size: 10px; font-weight: 700; z-index: 10; display: flex; align-items: center; gap: 4px;
+        }
+        .stock-badge.available {
+            background: linear-gradient(135deg, var(--stock-green) 0%, #047857 100%);
+            color: white; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.35);
+        }
+        .stock-badge.unavailable {
+            background: linear-gradient(135deg, var(--stock-red) 0%, #b91c1c 100%);
+            color: white; box-shadow: 0 2px 8px rgba(239, 68, 68, 0.35);
+        }
+
+        /* 🔥 BADGE DE DESCONTO */
+        .discount-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: var(--discount-bg);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 800;
+            z-index: 10;
+            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            animation: pulseDiscount 2s infinite;
+        }
+        @keyframes pulseDiscount {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .product-image {
+            aspect-ratio: 4/3; background: #f8fafc; display: flex; align-items: center;
+            justify-content: center; padding: 14px; position: relative;
+        }
+        .product-image img { max-width: 100%; max-height: 100%; object-fit: contain; transition: transform 0.3s ease; }
+        .product-card:hover .product-image img { transform: scale(1.08); }
+
+        .product-info { padding: 14px; flex: 1; display: flex; flex-direction: column; }
+        .product-title {
+            font-size: 13px; font-weight: 600; color: var(--dark); line-height: 1.35;
+            margin-bottom: 8px; display: -webkit-box; -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical; overflow: hidden; min-height: 35px;
+        }
+        .product-stars { display: flex; gap: 2px; margin-bottom: 10px; }
+        .product-stars i { color: var(--star-gold); font-size: 11px; }
+        .product-stars .empty { color: #e2e8f0; }
+
+        .product-price { margin-bottom: 10px; }
+        .price-old { font-size: 12px; color: #94a3b8; text-decoration: line-through; margin-bottom: 2px; display: block; }
+        .price-current { font-size: 19px; font-weight: 800; color: var(--dark); line-height: 1; }
+        .price-cents { font-size: 12px; font-weight: 700; }
+
+        .payment-options { margin-top: auto; padding-top: 10px; border-top: 1px dashed #e2e8f0; margin-bottom: 12px; }
+        .payment-option.pix { display: flex; align-items: center; gap: 6px; font-size: 11px; padding: 3px 0; color: var(--success); font-weight: 600; }
+        .payment-option.pix i { font-size: 13px; }
+        .payment-option.card { display: flex; align-items: center; gap: 6px; font-size: 11px; padding: 3px 0; color: #64748b; }
+        .payment-option.card i { font-size: 13px; }
+
+        .btn-add-cart {
+            width: 100%; padding: 11px; border: none; border-radius: 10px; font-size: 12.5px;
+            font-weight: 600; cursor: pointer; transition: all 0.2s;
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+        }
+        .product-card.available .btn-add-cart { background: var(--gradient); color: white; }
+        .product-card.available .btn-add-cart:hover { filter: brightness(1.1); transform: translateY(-1px); }
+        .product-card.out-of-stock .btn-add-cart { background: #e2e8f0; color: #64748b; cursor: not-allowed; }
+
+        /* ==================== EMPRESAS PARCEIRAS - DESIGN PREMIUM ==================== */
+        .partners-section {
+            background: linear-gradient(180deg, #ffffff 0%, #f8f9ff 100%);
+            padding: 50px 0;
+            margin: 0;
+            border-top: 3px solid var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+        .partners-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: radial-gradient(circle, #e2e8f0 1px, transparent 1px);
+            background-size: 24px 24px;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+        .partners-header {
+            text-align: center;
+            margin-bottom: 36px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+        .partners-header .section-title {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 8px;
+            justify-content: center;
+            gap: 12px;
+        }
+        .partners-header .section-title i {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 26px;
+        }
+        .partners-subtitle {
+            font-size: 14px;
+            color: var(--gray);
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+        .partners-carousel {
+            position: relative;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 16px;
+            position: relative;
+            z-index: 1;
+        }
+        .partners-track-wrapper {
+            overflow: hidden;
+            margin: 0 20px;
+        }
+        .partners-track {
+            display: flex;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            gap: 20px;
+            padding: 10px 0;
+        }
+        .partner-card {
+            min-width: 260px;
+            background: white;
+            border-radius: 20px;
+            padding: 24px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            transition: all 0.3s ease;
+            cursor: default;
+            flex-shrink: 0;
+            position: relative;
+            border: 1px solid #e8ecf4;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+        }
+        .partner-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient);
+            border-radius: 20px 20px 0 0;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .partner-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 35px rgba(99, 102, 241, 0.12);
+            border-color: transparent;
+        }
+        .partner-card:hover::before {
+            opacity: 1;
+        }
+        .partner-card.featured {
+            border: 2px solid rgba(99, 102, 241, 0.2);
+        }
+        .partner-card.featured::after {
+            content: '⭐ Destaque';
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--primary);
+            background: rgba(99, 102, 241, 0.08);
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+        .partner-top {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            width: 100%;
+        }
+        .partner-avatar {
+            width: 52px;
+            height: 52px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            font-weight: 700;
+            text-transform: uppercase;
+            flex-shrink: 0;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .partner-avatar.av-1 { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
+        .partner-avatar.av-2 { background: linear-gradient(135deg, #ec4899, #f472b6); }
+        .partner-avatar.av-3 { background: linear-gradient(135deg, #10b981, #34d399); }
+        .partner-avatar.av-4 { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
+        .partner-avatar.av-5 { background: linear-gradient(135deg, #3b82f6, #60a5fa); }
+        .partner-avatar.av-6 { background: linear-gradient(135deg, #ef4444, #f87171); }
+        .partner-avatar.av-7 { background: linear-gradient(135deg, #8b5cf6, #a78bfa); }
+        .partner-avatar.av-8 { background: linear-gradient(135deg, #14b8a6, #2dd4bf); }
+        .partner-avatar.av-9 { background: linear-gradient(135deg, #f97316, #fb923c); }
+        .partner-avatar.av-10 { background: linear-gradient(135deg, #0ea5e9, #38bdf8); }
+        
+        .partner-verified {
+            position: absolute;
+            bottom: -4px;
+            right: -4px;
+            width: 20px;
+            height: 20px;
+            background: var(--success);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 10px;
+            border: 2px solid white;
+        }
+        .partner-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .partner-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .partner-since {
+            font-size: 11px;
+            color: var(--gray);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .partner-since i { font-size: 10px; color: var(--primary); }
+        .partner-stars {
+            display: flex;
+            gap: 2px;
+        }
+        .partner-stars i { color: var(--star-gold); font-size: 12px; }
+        .partner-stars i.empty { color: #e2e8f0; }
+        .partner-specialty {
+            width: 100%;
+            text-align: center;
+            font-size: 12px;
+            color: var(--gray);
+            padding: 10px 0;
+            border-top: 1px dashed #e8ecf4;
+            border-bottom: 1px dashed #e8ecf4;
+        }
+        .partner-specialty i { color: var(--primary); margin-right: 4px; }
+        .partner-badge-premium {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            color: white;
+            background: linear-gradient(135deg, var(--primary), #8b5cf6);
+            padding: 6px 14px;
+            border-radius: 20px;
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+        }
+        .partner-badge-standard {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--gray);
+            background: #f1f5f9;
+            padding: 6px 14px;
+            border-radius: 20px;
+        }
+        .partners-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid #e8ecf4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark);
+            cursor: pointer;
+            transition: all 0.2s;
+            z-index: 10;
+            font-size: 14px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+        .partners-nav:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+        .partners-nav.prev { left: 0; }
+        .partners-nav.next { right: 0; }
+        .partners-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 24px;
+        }
+        .partners-indicators .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #d1d5db;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            padding: 0;
+        }
+        .partners-indicators .dot.active {
+            background: var(--primary);
+            width: 32px;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+        }
+
+        /* ==================== OUT OF STOCK MODAL ==================== */
+        .oos-modal {
+            position: fixed; inset: 0; background: rgba(2, 6, 23, 0.75);
+            display: flex; align-items: center; justify-content: center; z-index: 3000;
+            opacity: 0; visibility: hidden; transition: all 0.3s ease; padding: 20px;
+        }
+        .oos-modal.active { opacity: 1; visibility: visible; }
+        .oos-content {
+            background: linear-gradient(145deg, #ef4444 0%, #b91c1c 100%);
+            color: white; padding: 26px 22px; border-radius: 20px; max-width: 340px;
+            text-align: center; box-shadow: 0 20px 50px rgba(239, 68, 68, 0.4);
+            animation: modalPop 0.35s ease; position: relative;
+        }
+        @keyframes modalPop { from { transform: scale(0.85) translateY(15px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
+        .oos-close {
+            position: absolute; top: 10px; right: 10px; width: 26px; height: 26px;
+            border-radius: 50%; background: rgba(255,255,255,0.2); border: none;
+            color: white; font-size: 12px; cursor: pointer; display: flex;
+            align-items: center; justify-content: center; transition: background 0.2s;
+        }
+        .oos-close:hover { background: rgba(255,255,255,0.35); }
+        .oos-icon { font-size: 44px; margin-bottom: 10px; animation: bounce 0.8s ease infinite alternate; }
+        @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-5px); } }
+        .oos-title { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+        .oos-message { font-size: 13.5px; opacity: 0.95; margin-bottom: 16px; line-height: 1.45; }
+        .oos-btn-group { display: flex; flex-direction: column; gap: 10px; }
+        .oos-btn {
+            background: white; color: #dc2626; border: none; padding: 12px;
+            border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer;
+            transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .oos-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.2); }
+        .oos-btn-secondary {
+            background: transparent; color: white; border: 2px solid rgba(255,255,255,0.35);
+            padding: 10px; border-radius: 10px; font-size: 13px; font-weight: 500;
+            cursor: pointer; transition: all 0.2s;
+        }
+        .oos-btn-secondary:hover { background: rgba(255,255,255,0.12); border-color: white; }
+
+        /* ==================== FOOTER ==================== */
+        .footer { background: var(--darker); color: white; margin-top: auto; }
+        .footer-main { max-width: 1280px; margin: 0 auto; padding: 30px 20px; }
+        .footer-brand .logo { margin-bottom: 12px; }
+        .footer-company {
+            font-size: 12px; color: #64748b; line-height: 1.8; padding: 12px;
+            background: rgba(255,255,255,0.03); border-radius: 10px; border: 1px solid rgba(255,255,255,0.06);
+        }
+        
+        /* Payment Methods */
+        .payment-methods {
+            margin-top: 20px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+        .payment-methods-title {
+            font-size: 11px;
+            color: #64748b;
+            margin-bottom: 14px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .payment-icons {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* Estilo base para cada bandeira */
+        .card-flag {
+            width: 52px;
+            height: 34px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        /* Visa */
+        .card-flag.visa {
+            background: #1a1f71;
+        }
+        .card-flag.visa span {
+            font-family: Arial, sans-serif;
+            font-style: italic;
+            font-weight: 900;
+            font-size: 14px;
+            letter-spacing: -0.5px;
+        }
+
+        /* Mastercard */
+        .card-flag.mastercard {
+            background: #252525;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .card-flag.mastercard .circle-red {
+            width: 22px;
+            height: 22px;
+            background: #eb001b;
+            border-radius: 50%;
+            position: absolute;
+            left: 12px;
+        }
+        .card-flag.mastercard .circle-yellow {
+            width: 22px;
+            height: 22px;
+            background: #f79e1b;
+            border-radius: 50%;
+            position: absolute;
+            right: 12px;
+        }
+        .card-flag.mastercard .circle-overlap {
+            width: 22px;
+            height: 22px;
+            background: #ff5f00;
+            border-radius: 50%;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Elo */
+        .card-flag.elo {
+            background: #0033a0;
+        }
+        .card-flag.elo span {
+            font-family: Arial, sans-serif;
+            font-weight: 800;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+        }
+
+        /* American Express */
+        .card-flag.amex {
+            background: #006fcf;
+        }
+        .card-flag.amex span {
+            font-family: Arial, sans-serif;
+            font-weight: 700;
+            font-size: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        /* PIX */
+        .card-flag.pix {
+            background: #34a37f;
+            width: 58px;
+        }
+        .card-flag.pix span {
+            font-family: Arial, sans-serif;
+            font-weight: 800;
+            font-size: 13px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Social Share */
+        .social-share {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+        .social-share-title {
+            font-size: 11px;
+            color: #64748b;
+            margin-bottom: 14px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .social-icons {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: white;
+            font-size: 18px;
+            text-decoration: none;
+        }
+        .social-icon:hover {
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        .social-icon.whatsapp { background: linear-gradient(135deg, #25d366 0%, #128c7e 100%); }
+        .social-icon.facebook { background: linear-gradient(135deg, #1877f2 0%, #0d5cb6 100%); }
+        .social-icon.twitter { background: linear-gradient(135deg, #000000 0%, #333333 100%); }
+        .social-icon.instagram { background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+        .social-icon.telegram { background: linear-gradient(135deg, #0088cc 0%, #006699 100%); }
+        .social-icon.linkedin { background: linear-gradient(135deg, #0077b5 0%, #005885 100%); }
+        .social-icon.pinterest { background: linear-gradient(135deg, #bd081c 0%, #8b0614 100%); }
+        .social-icon.copy { background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.06); padding: 16px 20px; text-align: center;
+        }
+        .footer-bottom p { font-size: 11px; color: #64748b; }
+
+        /* ==================== WHATSAPP FLOATING BUTTON ==================== */
+        .whatsapp-float {
+            position: fixed; bottom: 24px; right: 24px; z-index: 2000; width: 60px; height: 60px;
+            border-radius: 50%; background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+            display: flex; align-items: center; justify-content: center; color: white;
+            font-size: 28px; text-decoration: none; box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s ease; animation: whatsappPulse 2s infinite;
+        }
+        .whatsapp-float:hover { transform: scale(1.1); box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6); }
+        .whatsapp-float:active { transform: scale(0.95); }
+        .whatsapp-float i { filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2)); }
+        @keyframes whatsappPulse {
+            0%, 100% { box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4); }
+            50% { box-shadow: 0 4px 30px rgba(37, 211, 102, 0.6), 0 0 0 8px rgba(37, 211, 102, 0.1); }
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            background: var(--dark); color: white; padding: 12px 20px; border-radius: 10px;
+            font-size: 13px; z-index: 10000; box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            display: flex; align-items: center; gap: 8px; animation: fadeInUp 0.3s ease;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .banner-carousel { height: 135px; }
+            .banner-content { flex-direction: column; text-align: center; gap: 10px; padding: 16px; }
+            .banner-icon { width: 48px; height: 48px; font-size: 20px; }
+            .banner-text h3 { font-size: 15px; }
+            .banner-text p { font-size: 11.5px; }
+            .products-grid { gap: 10px; }
+            .product-title { font-size: 12px; min-height: 30px; }
+            .price-current { font-size: 17px; }
+            .whatsapp-float { width: 54px; height: 54px; font-size: 24px; bottom: 20px; right: 20px; }
+            .payment-icons { gap: 8px; }
+            .card-flag { width: 46px; height: 30px; }
+            .card-flag.visa span { font-size: 12px; }
+            .card-flag.elo span { font-size: 11px; }
+            .card-flag.amex span { font-size: 9px; }
+            .card-flag.pix { width: 52px; }
+            .card-flag.pix span { font-size: 11px; }
+            .card-flag.mastercard .circle-red,
+            .card-flag.mastercard .circle-yellow,
+            .card-flag.mastercard .circle-overlap { width: 18px; height: 18px; }
+            .social-icons { gap: 8px; }
+            .social-icon { width: 36px; height: 36px; font-size: 16px; }
+            
+            .partners-section { padding: 36px 0; }
+            .partners-header .section-title { font-size: 20px; }
+            .partner-card { min-width: 220px; padding: 20px 16px; }
+            .partner-avatar { width: 44px; height: 44px; font-size: 16px; border-radius: 12px; }
+            .partner-name { font-size: 13px; }
+            .partner-specialty { font-size: 11px; }
+            .partners-nav { width: 34px; height: 34px; font-size: 12px; }
+            .partners-nav.prev { left: -4px; }
+            .partners-nav.next { right: -4px; }
+            
+            .discount-badge { font-size: 10px; padding: 3px 8px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-main">
+            <a href="#" class="logo">
+                <div class="logo-icon"><i class="fas fa-music"></i></div>
+                <div>
+                    <div class="logo-name">SoundPro</div>
+                    <div class="logo-tagline">Distribuidora de Eletrônicos</div>
+                </div>
+            </a>
+            <button class="hamburger" onclick="toggleMenu()">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay" onclick="toggleMenu()"></div>
+    <div class="mobile-menu">
+        <div class="mobile-menu-header">
+            <div class="mobile-menu-logo"><i class="fas fa-music"></i></div>
+            <div style="font-size: 18px; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">SoundPro</div>
+        </div>
+        <nav>
+            <a href="index.html"><i class="fas fa-home"></i> Início</a>
+            <a href="rastreio.html"><i class="fas fa-box"></i> Rastreio</a>
+            <a href="zap.html"><i class="fab fa-whatsapp"></i> Contato</a>
+        </nav>
+    </div>
+
+    <!-- BANNER CAROUSEL COM IMAGENS -->
+    <section class="banner-carousel" id="bannerCarousel" onclick="goToAnuncio()">
+        <div class="carousel-track">
+            <div class="banner-slide">
+                <img src="1.jpeg" alt="Frete Grátis" loading="lazy">
+                <div class="banner-content">
+                    <div class="banner-icon"><i class="fas fa-truck-fast"></i></div>
+                    <div class="banner-text">
+                        <h3>Receba suas compras com frete grátis</h3>
+                        <p>Entregas em todo território nacional sem custo adicional</p>
+                    </div>
+                </div>
+            </div>
+            <div class="banner-slide">
+                <img src="2.jpeg" alt="72h Informática" loading="lazy">
+                <div class="banner-content">
+                    <div class="banner-icon"><i class="fas fa-laptop"></i></div>
+                    <div class="banner-text">
+                        <h3>72h Informática - até 30% off + 10% à vista</h3>
+                        <p>Ofertas imperdíveis em notebooks e periféricos</p>
+                    </div>
+                </div>
+            </div>
+            <div class="banner-slide">
+                <img src="3.jpeg" alt="Vai de Tech" loading="lazy">
+                <div class="banner-content">
+                    <div class="banner-icon"><i class="fas fa-microchip"></i></div>
+                    <div class="banner-text">
+                        <h3>VAI DE TECH - 10% de desconto</h3>
+                        <p>Use o cupom TECH e aproveite em até 12x sem juros</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-indicators">
+            <button class="dot active" data-index="0" onclick="event.stopPropagation()"></button>
+            <button class="dot" data-index="1" onclick="event.stopPropagation()"></button>
+            <button class="dot" data-index="2" onclick="event.stopPropagation()"></button>
+        </div>
+    </section>
+
+    <!-- PRODUCTS GRID -->
+    <main class="products-section">
+        <h2 class="section-title"><i class="fas fa-headphones"></i> Nossos Produtos</h2>
+        <div class="products-grid" id="productsGrid"></div>
+    </main>
+
+    <!-- ✅ EMPRESAS PARCEIRAS - DESIGN PREMIUM -->
+    <section class="partners-section">
+        <div class="partners-header">
+            <h2 class="section-title"><i class="fas fa-handshake"></i> Empresas Parceiras</h2>
+            <p class="partners-subtitle">Conheça as marcas e distribuidoras que confiam na SoundPro para levar som de qualidade até você</p>
+        </div>
+        <div class="partners-carousel">
+            <button class="partners-nav prev" onclick="partnersCarousel.move(-1)"><i class="fas fa-chevron-left"></i></button>
+            <div class="partners-track-wrapper">
+                <div class="partners-track" id="partnersTrack">
+                    
+                    <!-- Parceiro 1 -->
+                    <div class="partner-card featured">
+                        <div class="partner-top">
+                            <div class="partner-avatar av-1">
+                                T
+                                <span class="partner-verified"><i class="fas fa-check"></i></span>
+                            </div>
+                            <div class="partner-info">
+                                <div class="partner-name">TechSound Brasil</div>
+                                <div class="partner-since"><i class="fas fa-calendar"></i> Parceiro desde 2020</div>
+                            </div>
+                        </div>
+                        <div class="partner-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="partner-specialty"><i class="fas fa-microchip"></i> Equipamentos de som profissional</div>
+                        <div class="partner-badge-premium"><i class="fas fa-crown"></i> Parceiro Premium</div>
+                    </div>
+
+                    <!-- Parceiro 2 -->
+                    <div class="partner-card featured">
+                        <div class="partner-top">
+                            <div class="partner-avatar av-2">
+                                A
+                                <span class="partner-verified"><i class="fas fa-check"></i></span>
+                            </div>
+                            <div class="partner-info">
+                                <div class="partner-name">AudioMax Distribuidora</div>
+                                <div class="partner-since"><i class="fas fa-calendar"></i> Parceiro desde 2019</div>
+                            </div>
+                        </div>
+                        <div class="partner-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="partner-specialty"><i class="fas fa-volume-high"></i> Caixas e amplificadores</div>
+                        <div class="partner-badge-premium"><i class="fas fa-crown"></i> Parceiro Premium</div>
+                    </div>
+
+                    <!-- Parceiro 3 -->
+                    <div class="partner-card">
+                        <div class="partner-top">
+                            <div class="partner-avatar av-3">
+                                E
+                                <span class="partner-verified"><i class="fas fa-check"></i></span>
+                            </div>
+                            <div class="partner-info">
+                                <div class="partner-name">Eletrônica Pro</div>
+                                <div class="partner-since"><i class="fas fa-calendar"></i> Parceiro desde 2021</div>
+                            </div>
+                        </div>
+                        <div class="partner-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star empty"></i>
+                        </div>
+                        <div class="partner-specialty"><i class="fas fa-plug"></i> Acessórios e cabos</div>
+                        <div class="partner-badge-standard"><i class="fas fa-shield"></i> Parceiro Verificado</div>
+                    </div>
+
+                    <!-- Parceiro 4 -->
+                    <div class="partner-card">
+                        <div class="partner-top">
+                            <div class="partner-avatar av-4">
+                                S
+                                <span class="partner-verified"><i class="fas fa-check"></i></span>
+                            </div>
+                            <div class="partner-info">
+                                <div class="partner-name">Som & Cia</div>
+                                <div class="partner-since"><i class="fas fa-calendar"></i> Parceiro desde 2022</div>
+                            </div>
+                        </div>
+                        <div class="partner-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star empty"></i>
+                        </div>
+                        <div class="partner-specialty"><i class="fas fa-music"></i> Instrumentos musicais</div>
+                        <div class="partner-badge-standard"><i class="fas fa-shield"></i> Parceiro Verificado</div>
+                    </div>
+
+                    <!-- Parceiro 5 -->
+                    <div class="partner-card featured">
+                        <div class="partner-top">
+                            <div class="partner-avatar av-5">
+                                M
+                                <span class="partner-verified"><i class="fas fa-check"></i></span>
+                            </div>
+                            <div class="partner-info">
+                                <div class="partner-name">MusicStore Online</div>
+                                <div class="partner-since"><i class="fas fa-calendar"></i> Parceiro desde 2018</div>
+                            </div>
+                        </div>
+                        <div class="partner-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="partner-specialty"><i class="fas fa-guitar"></i> Instrumentos e acessórios</div>
+                        <div class="partner-badge-premium"><i class="fas fa-crown"></i> Parceiro Premium</div>
+                    </div>
+
+                    <!-- Parceiro 6 -->
+                    <div class="partner-card">
+                        <div class="partner-top">
+                            <div class="partner-avatar av-6">
+                                D
+                                <span class="partner-verified"><i class="fas fa-check"></i></span>
+                            </div>
+                            <div class="partner-info">
+                                <div class="partner-name">Digital Audio SP</div>
+                                <div class="partner-since"><i class="fas fa-calendar"></i> Parceiro desde 2023</div>
+                            </div>
+                        </div>
+                        <div class="partner-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star empty"></i>
+                        </div>
+                        <div class="partner-specialty"><i class="fas fa-laptop"></i> Áudio digital e interfaces</div>
+                        <div class="partner-badge-standard"><i class="fas fa-shield"></i> Parceiro Verificado</div>
+                    </div>
+
+                    <!-- Parceiro 7 -->
+                    <div class="partner-card featured">
+                        <div class="partner-top">
+                            <div class="partner-avatar av-7">
+                                P
+                                <span class="partner-verified"><i class="fas fa-check"></i></span>
+                            </div>
+                            <div class="partner-info">
+                                <div class="partner-name">ProSound Equipamentos</div>
+                                <div class="partner-since"><i class="fas fa-calendar"></i> Parceiro desde 2017</div>
+                            </div>
+                        </div>
+                        <div class="partner-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="partner-specialty"><i class="fas fa-sliders"></i> Mesas e efeitos profissionais</div>
+                        <div class="partner-badge-premium"><i class="fas fa-crown"></i> Parceiro Premium</div>
+                    </div>
+
+                    <!-- Parceiro 8 -->
+                    <div class="partner-card">
+                        <div class="partner-top">
+                            <div class="partner-avatar av-8">
+                                G
+                                <span class="partner-verified"><i class="fas fa-check"></i></span>
+                            </div>
+                            <div class="partner-info">
+                                <div class="partner-name">GigaTech Importadora</div>
+                                <div class="partner-since"><i class="fas fa-calendar"></i> Parceiro desde 2021</div>
+                            </div>
+                        </div>
+                        <div class="partner-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star empty"></i>
+                        </div>
+                        <div class="partner-specialty"><i class="fas fa-truck"></i> Importação de eletrônicos</div>
+                        <div class="partner-badge-standard"><i class="fas fa-shield"></i> Parceiro Verificado</div>
+                    </div>
+
+                    <!-- Parceiro 9 -->
+                    <div class="partner-card">
+                        <div class="partner-top">
+                            <div class="partner-avatar av-9">
+                                B
+                                <span class="partner-verified"><i class="fas fa-check"></i></span>
+                            </div>
+                            <div class="partner-info">
+                                <div class="partner-name">Brasil Áudio & Vídeo</div>
+                                <div class="partner-since"><i class="fas fa-calendar"></i> Parceiro desde 2020</div>
+                            </div>
+                        </div>
+                        <div class="partner-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <div class="partner-specialty"><i class="fas fa-video"></i> Home theater e TV</div>
+                        <div class="partner-badge-standard"><i class="fas fa-shield"></i> Parceiro Verificado</div>
+                    </div>
+
+                    <!-- Parceiro 10 -->
+                    <div class="partner-card featured">
+                        <div class="partner-top">
+                            <div class="partner-avatar av-10">
+                                N
+                                <span class="partner-verified"><i class="fas fa-check"></i></span>
+                            </div>
+                            <div class="partner-info">
+                                <div class="partner-name">NextGen Eletrônicos</div>
+                                <div class="partner-since"><i class="fas fa-calendar"></i> Parceiro desde 2019</div>
+                            </div>
+                        </div>
+                        <div class="partner-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="partner-specialty"><i class="fas fa-rocket"></i> Tecnologia de ponta</div>
+                        <div class="partner-badge-premium"><i class="fas fa-crown"></i> Parceiro Premium</div>
+                    </div>
+
+                </div>
+            </div>
+            <button class="partners-nav next" onclick="partnersCarousel.move(1)"><i class="fas fa-chevron-right"></i></button>
+            <div class="partners-indicators" id="partnersIndicators"></div>
+        </div>
+    </section>
+
+    <!-- OUT OF STOCK MODAL -->
+    <div class="oos-modal" id="oosModal">
+        <div class="oos-content">
+            <button class="oos-close" onclick="closeOOSModal()"><i class="fas fa-times"></i></button>
+            <div class="oos-icon"><i class="fas fa-box-open"></i></div>
+            <h3 class="oos-title">Produto Esgotado 🔔</h3>
+            <p class="oos-message" id="oosMessage"></p>
+            <div class="oos-btn-group">
+                <button class="oos-btn" onclick="notifyMe()">
+                    <i class="fab fa-whatsapp"></i> Avise-me quando chegar
+                </button>
+                <button class="oos-btn-secondary" onclick="closeOOSModal()">
+                    Continuar comprando
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-main">
+            <div class="footer-brand">
+                <a href="#" class="logo">
+                    <div class="logo-icon"><i class="fas fa-music"></i></div>
+                    <div>
+                        <div class="logo-name">SoundPro</div>
+                        <div class="logo-tagline">Distribuidora de Eletrônicos</div>
+                    </div>
+                </a>
+                <div class="footer-company">
+                    <strong>GOB DISTRIBUIDORA (Luz & Ordem)</strong><br>
+                    GALPÃO AZUL - RUA AGENOR PEREIRA DA COSTA, 270A<br>
+                    JARDIM ALVORADA - JANDIRA, SP<br>
+                    CEP: 06612-220<br>
+                    CNPJ: 50.742.088/0001-95
+                </div>
+            </div>
+            
+            <!-- Payment Methods -->
+            <div class="payment-methods">
+                <div class="payment-methods-title">Formas de Pagamento</div>
+                <div class="payment-icons">
+                    <div class="card-flag visa"><span>VISA</span></div>
+                    <div class="card-flag mastercard">
+                        <div class="circle-red"></div>
+                        <div class="circle-overlap"></div>
+                        <div class="circle-yellow"></div>
+                    </div>
+                    <div class="card-flag elo"><span>ELO</span></div>
+                    <div class="card-flag amex"><span>AMEX</span></div>
+                    <div class="card-flag pix"><span>PIX</span></div>
+                </div>
+            </div>
+
+            <!-- Social Share -->
+            <div class="social-share">
+                <div class="social-share-title">Compartilhar</div>
+                <div class="social-icons">
+                    <a href="#" class="social-icon whatsapp" onclick="shareOnSocial('whatsapp'); return false;" title="Compartilhar no WhatsApp">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a href="#" class="social-icon facebook" onclick="shareOnSocial('facebook'); return false;" title="Compartilhar no Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-icon twitter" onclick="shareOnSocial('twitter'); return false;" title="Compartilhar no X">
+                        <i class="fab fa-x-twitter"></i>
+                    </a>
+                    <a href="#" class="social-icon instagram" onclick="shareOnSocial('instagram'); return false;" title="Compartilhar no Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-icon telegram" onclick="shareOnSocial('telegram'); return false;" title="Compartilhar no Telegram">
+                        <i class="fab fa-telegram-plane"></i>
+                    </a>
+                    <a href="#" class="social-icon linkedin" onclick="shareOnSocial('linkedin'); return false;" title="Compartilhar no LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="#" class="social-icon pinterest" onclick="shareOnSocial('pinterest'); return false;" title="Compartilhar no Pinterest">
+                        <i class="fab fa-pinterest-p"></i>
+                    </a>
+                    <a href="#" class="social-icon copy" onclick="copyLink(); return false;" title="Copiar link">
+                        <i class="fas fa-link"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 SoundPro — GOB DISTRIBUIDORA — Todos os direitos reservados</p>
+        </div>
+    </footer>
+
+    <!-- WHATSAPP FLOATING BUTTON -->
+    <a href="zap.html" class="whatsapp-float" title="Fale conosco pelo WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // ==================== CARROSSEL DE PARCEIROS ====================
+        const partnersCarousel = {
+            track: null,
+            indicatorsContainer: null,
+            cards: [],
+            currentIndex: 0,
+            cardsPerView: 3,
+            autoPlayInterval: null,
+
+            init() {
+                this.track = document.getElementById('partnersTrack');
+                this.indicatorsContainer = document.getElementById('partnersIndicators');
+                this.cards = Array.from(this.track.querySelectorAll('.partner-card'));
+                this.updateCardsPerView();
+                this.renderIndicators();
+                this.updateTrack();
+                this.startAutoPlay();
+                
+                window.addEventListener('resize', () => {
+                    this.updateCardsPerView();
+                    this.updateTrack();
+                    this.renderIndicators();
+                });
+
+                let touchStartX = 0;
+                let touchEndX = 0;
+                
+                this.track.addEventListener('touchstart', (e) => {
+                    touchStartX = e.changedTouches[0].screenX;
+                }, { passive: true });
+                
+                this.track.addEventListener('touchend', (e) => {
+                    touchEndX = e.changedTouches[0].screenX;
+                    this.handleSwipe(touchStartX, touchEndX);
+                }, { passive: true });
+            },
+
+            updateCardsPerView() {
+                const width = window.innerWidth;
+                if (width < 480) {
+                    this.cardsPerView = 1.3;
+                } else if (width < 768) {
+                    this.cardsPerView = 2;
+                } else if (width < 1024) {
+                    this.cardsPerView = 3;
+                } else {
+                    this.cardsPerView = 4;
+                }
+            },
+
+            renderIndicators() {
+                if (!this.indicatorsContainer) return;
+                const totalSlides = Math.ceil(this.cards.length / this.cardsPerView);
+                this.indicatorsContainer.innerHTML = '';
+                
+                for (let i = 0; i < totalSlides; i++) {
+                    const dot = document.createElement('button');
+                    dot.className = `dot${i === this.currentIndex ? ' active' : ''}`;
+                    dot.onclick = () => this.goToSlide(i);
+                    this.indicatorsContainer.appendChild(dot);
+                }
+            },
+
+            updateTrack() {
+                if (!this.track) return;
+                const card = this.cards[0];
+                if (!card) return;
+                const cardWidth = card.offsetWidth;
+                const gap = 20;
+                const offset = this.currentIndex * (cardWidth + gap);
+                this.track.style.transform = `translateX(-${offset}px)`;
+                
+                const dots = this.indicatorsContainer?.querySelectorAll('.dot') || [];
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === this.currentIndex);
+                });
+            },
+
+            move(direction) {
+                const totalSlides = Math.ceil(this.cards.length / this.cardsPerView);
+                this.currentIndex += direction;
+                
+                if (this.currentIndex < 0) {
+                    this.currentIndex = totalSlides - 1;
+                } else if (this.currentIndex >= totalSlides) {
+                    this.currentIndex = 0;
+                }
+                
+                this.updateTrack();
+                this.resetAutoPlay();
+            },
+
+            goToSlide(index) {
+                this.currentIndex = index;
+                this.updateTrack();
+                this.resetAutoPlay();
+            },
+
+            handleSwipe(startX, endX) {
+                const diff = startX - endX;
+                if (Math.abs(diff) > 50) {
+                    this.move(diff > 0 ? 1 : -1);
+                }
+            },
+
+            startAutoPlay() {
+                this.autoPlayInterval = setInterval(() => {
+                    this.move(1);
+                }, 4500);
+            },
+
+            resetAutoPlay() {
+                clearInterval(this.autoPlayInterval);
+                this.startAutoPlay();
+            }
+        };
+
+        // ==================== LISTA DE PRODUTOS ====================
+        const products = [
+            // ✅ PRODUTOS DISPONÍVEIS COM DESCONTO
+            { id: 1, name: "Caixa de Som P10 com Microfone FM Pendrive 1000W PMPO", originalPrice: 289.99, price: 129.99, rating: 4, inStock: true },
+            { id: 2, name: "Caixa de Som Bluetooth Externo Prova D'Água IPX5 - TWS Multimídia TWS USB TF FM AUX para Praia", originalPrice: 187.99, price: 49.99, rating: 5, inStock: true },
+            { id: 3, name: " Caixa De Som Amplificada Bomber Papão 300 Portátil 300W Bluetooth Usb Bivolt", originalPrice: 346.89, price: 146.00, rating: 4, inStock: true },
+            { id: 4, name: "Caixa de Som Bluetooth, À Prova d'água, 7 Horas, JBL GO4, 4,2W RMS - PRETA", originalPrice: 189.99, price: 79.99, rating: 5, inStock: true },
+            { id: 5, name: "Smart TV AOC 32 LED HD 32S5155/78G Roku Wifi HDMI Dolby Audio", originalPrice: 783.99, price: 329.99, rating: 4, inStock: true },
+            { id: 6, name: "Caixa de som Bluetooth Potente Multimídia com LED RGB Subwoofer TWS Estéreo sem fio XDG-96-XTRAD", originalPrice: 187.99, price: 95.99, rating: 3, inStock: true },
+            { id: 7, name: "Kit Som Automotivo Player Bluetooth Falante Leson 6 + 6x9", originalPrice: 203.05, price: 143.99, rating: 5, inStock: true },
+            
+            // ❌ PRODUTOS 8, 9 e 10 SEM ESTOQUE (conforme solicitado)
+            { id: 8, name: "Kit 2 Caixas Ativas com Tripé e Cabos P10", originalPrice: 899.99, price: 599.99, rating: 4, inStock: false },
+            { id: 9, name: "Microfone Sem Fio Profissional com Receptor USB", originalPrice: 289.99, price: 189.99, rating: 4, inStock: false },
+            { id: 10, name: "Caixa Gigante com Rodinhas e Alça Retrátil 2000W", originalPrice: 1199.99, price: 799.99, rating: 5, inStock: false },
+            
+            // ❌ 5 PRODUTOS SEM ESTOQUE (já existentes)
+            { id: 11, name: "Caixa de Som Philco Extreme Ex Bass 750W PCX7100", originalPrice: 1299.99, price: 599.99, rating: 5, inStock: false },
+            { id: 12, name: " Caixa Som Grande Alta Torre Grave", originalPrice: 1288.99, price: 899.99, rating: 4, inStock: false },
+            { id: 13, name: "Fone Gamer RGB com Microfone Retrátil", originalPrice: 199.99, price: 129.99, rating: 5, inStock: false },
+            { id: 14, name: "Kit Som Automotivo Completo com Módulo", originalPrice: 1899.99, price: 1299.99, rating: 5, inStock: false },
+            { id: 15, name: "Rádio Caixa De Som Casa Bar Rancho Churrasco Usb Bluetooth", originalPrice: 499.99, price: 349.99, rating: 4, inStock: false }
+        ];
+
+        // 🔥 FUNÇÃO PARA CALCULAR PORCENTAGEM DE DESCONTO
+        function calculateDiscount(originalPrice, price) {
+            if (!originalPrice || !price || originalPrice <= price) return null;
+            const discount = ((originalPrice - price) / originalPrice) * 100;
+            return Math.round(discount);
+        }
+
+        function formatPrice(val) {
+            return val.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = '';
+
+            products.forEach(product => {
+                const stars = generateStars(product.rating);
+                const priceFormatted = formatPrice(product.price).replace('.', ',');
+                const discountPercent = calculateDiscount(product.originalPrice, product.price);
+                
+                const card = document.createElement('div');
+                card.className = `product-card ${product.inStock ? 'available' : 'out-of-stock'}`;
+                card.onclick = () => handleProductClick(product);
+                
+                // 🔥 Badge de desconto só aparece se houver desconto real
+                const discountBadge = discountPercent ? `<div class="discount-badge">-${discountPercent}% OFF</div>` : '';
+                
+                card.innerHTML = `
+                    ${discountBadge}
+                    <div class="stock-badge ${product.inStock ? 'available' : 'unavailable'}">
+                        <i class="fas fa-${product.inStock ? 'check' : 'times'}"></i>
+                        ${product.inStock ? 'Disponível' : 'Sem estoque'}
+                    </div>
+                    <div class="product-image">
+                        <img src="${product.id}s.webp" alt="${product.name}" loading="lazy">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">${product.name}</h3>
+                        <div class="product-stars">${stars}</div>
+                        <div class="product-price">
+                            <span class="price-old">R$ ${formatPrice(product.originalPrice).replace('.', ',')}</span>
+                            <span class="price-current">R$ ${priceFormatted.split(',')[0]}<span class="price-cents">,${priceFormatted.split(',')[1]}</span></span>
+                        </div>
+                        <div class="payment-options">
+                            <div class="payment-option pix">
+                                <i class="fas fa-qrcode"></i> No PIX: R$ ${priceFormatted}
+                            </div>
+                            <div class="payment-option card">
+                                <i class="fas fa-credit-card"></i> Cartão: +1,5% juros
+                            </div>
+                        </div>
+                        <button class="btn-add-cart">
+                            <i class="fas fa-${product.inStock ? 'arrow-right' : 'bell'}"></i>
+                            ${product.inStock ? 'Ver produto' : 'Avise-me'}
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function generateStars(rating) {
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                stars += i <= rating ? '<i class="fas fa-star"></i>' : '<i class="far fa-star empty"></i>';
+            }
+            return stars;
+        }
+
+        function handleProductClick(product) {
+            if (product.inStock) {
+                window.location.href = `${product.id}.html`;
+            } else {
+                showOOSModal(product);
+            }
+        }
+
+        let currentOOSProduct = null;
+
+        function showOOSModal(product) {
+            currentOOSProduct = product;
+            const modal = document.getElementById('oosModal');
+            const message = document.getElementById('oosMessage');
+            message.innerHTML = `<strong>"${product.name}"</strong> está temporariamente indisponível.<br><br>Quer ser o primeiro a saber quando ele voltar? Clique no botão abaixo para falar conosco.`;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeOOSModal() {
+            document.getElementById('oosModal').classList.remove('active');
+            document.body.style.overflow = '';
+            currentOOSProduct = null;
+        }
+
+        function notifyMe() {
+            window.location.href = 'zap.html';
+        }
+
+        document.getElementById('oosModal').addEventListener('click', function(e) {
+            if (e.target === this) closeOOSModal();
+        });
+
+        function toggleMenu() {
+            document.querySelector('.mobile-menu').classList.toggle('active');
+            document.querySelector('.mobile-menu-overlay').classList.toggle('active');
+        }
+
+        function goToAnuncio() {
+            window.location.href = 'anuncio.html';
+        }
+
+        function shareOnSocial(network) {
+            const url = encodeURIComponent(window.location.href);
+            const title = encodeURIComponent('SoundPro - Distribuidora de Eletrônicos');
+            const text = encodeURIComponent('Confira as ofertas incríveis da SoundPro!');
+            
+            let shareUrl = '';
+            
+            switch(network) {
+                case 'whatsapp':
+                    shareUrl = `https://wa.me/?text=${title}%20${text}%20${url}`;
+                    break;
+                case 'facebook':
+                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+                    break;
+                case 'twitter':
+                    shareUrl = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+                    break;
+                case 'instagram':
+                    copyLink();
+                    showToast('Link copiado! Cole no Instagram Stories ou Direct.');
+                    return;
+                case 'telegram':
+                    shareUrl = `https://t.me/share/url?url=${url}&text=${text}`;
+                    break;
+                case 'linkedin':
+                    shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+                    break;
+                case 'pinterest':
+                    shareUrl = `https://pinterest.com/pin/create/button/?url=${url}&description=${text}`;
+                    break;
+            }
+            
+            if (shareUrl) {
+                window.open(shareUrl, '_blank', 'width=600,height=400');
+            }
+        }
+
+        function copyLink() {
+            const url = window.location.href;
+            
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(url).then(() => {
+                    showToast('Link copiado para a área de transferência!');
+                }).catch(() => {
+                    fallbackCopy(url);
+                });
+            } else {
+                fallbackCopy(url);
+            }
+        }
+
+        function fallbackCopy(text) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                showToast('Link copiado para a área de transferência!');
+            } catch (err) {
+                showToast('Não foi possível copiar. Copie manualmente.');
+            }
+            
+            document.body.removeChild(textArea);
+        }
+
+        // Banner Carousel
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.banner-slide');
+        const dots = document.querySelectorAll('.carousel-indicators .dot');
+        const track = document.querySelector('.carousel-track');
+
+        function goToSlide(index) {
+            currentSlide = index;
+            track.style.transform = `translateX(-${index * 100}%)`;
+            dots.forEach((d, i) => d.classList.toggle('active', i === index));
+        }
+
+        dots.forEach(dot => {
+            dot.addEventListener('click', (e) => {
+                e.stopPropagation();
+                goToSlide(parseInt(dot.dataset.index));
+            });
+        });
+
+        setInterval(() => {
+            goToSlide((currentSlide + 1) % slides.length);
+        }, 4500);
+
+        function showToast(message) {
+            const existing = document.querySelector('.toast');
+            if (existing) existing.remove();
+            
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `<i class="fas fa-check-circle" style="color:#10b981;"></i> ${message}`;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.3s';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProducts();
+            partnersCarousel.init();
+        });
+    </script>
+</body>
+</html>

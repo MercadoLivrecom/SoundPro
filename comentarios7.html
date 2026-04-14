@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Avaliações - Kit Som Leson 6 + 6x9 | SoundPro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f0f2f5;
+            color: #1a1a2e;
+            overflow-x: hidden;
+        }
+        .header {
+            background: rgba(2, 6, 23, 0.98);
+            backdrop-filter: blur(20px);
+            padding: 12px 16px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .header-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .logo-icon {
+            width: 38px; height: 38px;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+            border-radius: 10px; display: flex; align-items: center; justify-content: center;
+            font-size: 18px; color: white; flex-shrink: 0;
+        }
+        .logo-text h1 {
+            font-size: 18px; font-weight: 800;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .logo-text p { font-size: 8px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1.5px; }
+        .menu-btn { background: none; border: none; color: white; font-size: 24px; cursor: pointer; padding: 8px; transition: transform 0.3s; }
+        .menu-btn:hover { transform: scale(1.1); }
+        .mobile-menu-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+            z-index: 999; opacity: 0; visibility: hidden; transition: all 0.3s ease;
+        }
+        .mobile-menu-overlay.active { opacity: 1; visibility: visible; }
+        .mobile-menu {
+            position: fixed; top: 0; right: -100%; width: 280px; max-width: 85%; height: 100vh;
+            background: linear-gradient(180deg, #0f172a 0%, #1e1b4b 100%); z-index: 1000;
+            transition: right 0.3s ease; padding: 70px 20px 20px; overflow-y: auto;
+        }
+        .mobile-menu.active { right: 0; }
+        .mobile-menu-header {
+            display: flex; align-items: center; gap: 10px; padding-bottom: 16px;
+            margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .mobile-menu-logo {
+            width: 38px; height: 38px;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+            border-radius: 10px; display: flex; align-items: center; justify-content: center;
+            font-size: 18px; color: white;
+        }
+        .mobile-menu-title {
+            font-size: 18px; font-weight: 800;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .mobile-menu nav { display: flex; flex-direction: column; gap: 8px; }
+        .mobile-menu nav a {
+            display: flex; align-items: center; gap: 12px; padding: 14px 16px;
+            color: rgba(255,255,255,0.8); text-decoration: none; font-size: 15px;
+            border-radius: 10px; transition: all 0.3s;
+        }
+        .mobile-menu nav a:hover { background: rgba(99,102,241,0.1); color: white; }
+        .mobile-menu nav a i { width: 20px; color: #6366f1; text-align: center; font-size: 16px; }
+        .mobile-menu-close {
+            position: absolute; top: 16px; right: 16px; background: rgba(255,255,255,0.1);
+            border: none; color: white; width: 36px; height: 36px; border-radius: 8px;
+            cursor: pointer; font-size: 18px; transition: all 0.3s;
+        }
+        .mobile-menu-close:hover { background: rgba(255,255,255,0.2); }
+        .container { max-width: 800px; margin: 0 auto; padding: 16px; }
+        .rating-card {
+            background: white; border-radius: 16px; padding: 24px;
+            margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        }
+        .rating-header {
+            text-align: center; padding-bottom: 24px; border-bottom: 1px solid #f1f5f9; margin-bottom: 24px;
+        }
+        .rating-header h2 { font-size: 24px; font-weight: 700; color: #0f172a; margin-bottom: 8px; }
+        .rating-header p { color: #64748b; font-size: 14px; }
+        .average-rating { text-align: center; margin-bottom: 24px; }
+        .average-number { font-size: 64px; font-weight: 300; color: #0f172a; line-height: 1; }
+        .average-stars { margin: 12px 0; display: flex; justify-content: center; gap: 4px; }
+        .average-stars i { color: #f59e0b; font-size: 20px; }
+        .average-stars i.empty { color: #e2e8f0; }
+        .total-ratings { color: #64748b; font-size: 14px; }
+        .rating-bars { display: flex; flex-direction: column; gap: 10px; }
+        .rating-bar-item { display: flex; align-items: center; gap: 10px; width: 100%; }
+        .star-label {
+            display: flex; align-items: center; gap: 4px; min-width: 40px;
+            font-weight: 600; color: #64748b; font-size: 14px;
+        }
+        .star-label i { color: #f59e0b; font-size: 14px; }
+        .bar-container { flex: 1; height: 8px; background: #e2e8f0; border-radius: 4px; overflow: hidden; min-width: 0; }
+        .bar-fill {
+            height: 100%; background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+            border-radius: 4px; transition: width 0.5s ease;
+        }
+        .rating-count { min-width: 110px; font-size: 13px; color: #64748b; font-weight: 500; white-space: nowrap; }
+        .comments-section {
+            background: white; border-radius: 16px; overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06); margin-bottom: 20px;
+        }
+        .comments-header {
+            padding: 20px 24px; border-bottom: 1px solid #f1f5f9;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .comments-header h3 { font-size: 20px; font-weight: 700; color: #0f172a; }
+        .comments-filter { display: flex; gap: 8px; }
+        .filter-btn {
+            padding: 6px 12px; border-radius: 6px; border: 1px solid #e2e8f0;
+            background: white; color: #64748b; font-size: 12px; font-weight: 500;
+            cursor: pointer; transition: all 0.3s;
+        }
+        .filter-btn.active { background: #6366f1; color: white; border-color: #6366f1; }
+        .comment-item { padding: 24px; border-bottom: 1px solid #f1f5f9; }
+        .comment-item:last-child { border-bottom: none; }
+        .comment-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
+        .comment-avatar {
+            width: 48px; height: 48px; border-radius: 50%;
+            background: linear-gradient(135deg, #a8a29e 0%, #78716c 100%);
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 20px; font-weight: 600; flex-shrink: 0; text-transform: uppercase;
+        }
+        .comment-meta { flex: 1; }
+        .comment-author { font-size: 16px; font-weight: 600; color: #0f172a; margin-bottom: 4px; }
+        .comment-info { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .comment-stars { display: flex; gap: 2px; }
+        .comment-stars i { color: #f59e0b; font-size: 14px; }
+        .comment-date { font-size: 13px; color: #64748b; }
+        .comment-text { font-size: 15px; color: #334155; line-height: 1.6; margin-bottom: 16px; }
+        .comment-images { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+        .comment-image {
+            width: 100px; height: 100px; border-radius: 8px; overflow: hidden;
+            cursor: pointer; border: 2px solid #e2e8f0; transition: border-color 0.3s;
+        }
+        .comment-image:hover { border-color: #6366f1; }
+        .comment-image img { width: 100%; height: 100%; object-fit: cover; }
+        .comment-footer {
+            margin-top: 16px; padding-top: 16px; border-top: 1px solid #f1f5f9; display: flex; gap: 20px;
+        }
+        .comment-action {
+            display: flex; align-items: center; gap: 6px; font-size: 13px;
+            color: #64748b; cursor: pointer; transition: color 0.3s;
+        }
+        .comment-action:hover { color: #6366f1; }
+        .comment-action i { font-size: 16px; }
+        .load-more {
+            display: block; padding: 16px; text-align: center; background: #f8fafc;
+            color: #6366f1; text-decoration: none; font-weight: 600; font-size: 14px;
+            transition: background 0.3s; border: none; cursor: pointer; width: 100%;
+        }
+        .load-more:hover { background: #eef2f7; }
+        .whatsapp-float {
+            position: fixed; bottom: 24px; right: 24px; width: 60px; height: 60px;
+            border-radius: 50%; background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+            display: flex; align-items: center; justify-content: center; color: white;
+            font-size: 28px; text-decoration: none; box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+            z-index: 1000; animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.4); }
+            50% { box-shadow: 0 4px 30px rgba(37,211,102,0.6), 0 0 0 8px rgba(37,211,102,0.1); }
+        }
+        .footer { background: #020617; color: white; margin-top: 20px; }
+        .footer-main { max-width: 1280px; margin: 0 auto; padding: 30px 20px; }
+        .footer-brand .logo { margin-bottom: 12px; }
+        .footer-company {
+            font-size: 12px; color: #64748b; line-height: 1.8; padding: 12px;
+            background: rgba(255,255,255,0.03); border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        .payment-methods {
+            margin-top: 20px; padding-top: 20px; padding-bottom: 20px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+        .payment-methods-title {
+            font-size: 11px; color: #64748b; margin-bottom: 14px;
+            text-align: center; text-transform: uppercase; letter-spacing: 1px;
+        }
+        .payment-icons { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+        .card-flag-footer {
+            width: 52px; height: 34px; border-radius: 8px; display: flex;
+            align-items: center; justify-content: center; font-size: 11px;
+            font-weight: 700; color: white; position: relative; overflow: hidden; flex-shrink: 0;
+        }
+        .card-flag-footer.visa { background: #1a1f71; }
+        .card-flag-footer.visa span { font-family: Arial, sans-serif; font-style: italic; font-weight: 900; font-size: 14px; letter-spacing: -0.5px; }
+        .card-flag-footer.mastercard { background: #252525; display: flex; align-items: center; justify-content: center; position: relative; }
+        .card-flag-footer.mastercard .circle-red { width: 22px; height: 22px; background: #eb001b; border-radius: 50%; position: absolute; left: 12px; }
+        .card-flag-footer.mastercard .circle-yellow { width: 22px; height: 22px; background: #f79e1b; border-radius: 50%; position: absolute; right: 12px; }
+        .card-flag-footer.mastercard .circle-overlap { width: 22px; height: 22px; background: #ff5f00; border-radius: 50%; position: absolute; left: 50%; transform: translateX(-50%); }
+        .card-flag-footer.elo { background: #0033a0; }
+        .card-flag-footer.elo span { font-family: Arial, sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.5px; }
+        .card-flag-footer.amex { background: #006fcf; }
+        .card-flag-footer.amex span { font-family: Arial, sans-serif; font-weight: 700; font-size: 10px; letter-spacing: 0.5px; }
+        .card-flag-footer.pix { background: #34a37f; width: 58px; }
+        .card-flag-footer.pix span { font-family: Arial, sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; }
+        .social-share { margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.08); }
+        .social-share-title { font-size: 11px; color: #64748b; margin-bottom: 14px; text-align: center; text-transform: uppercase; letter-spacing: 1px; }
+        .social-icons { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+        .social-icon {
+            width: 40px; height: 40px; border-radius: 50%; display: flex;
+            align-items: center; justify-content: center; cursor: pointer;
+            transition: all 0.3s; color: white; font-size: 18px; text-decoration: none;
+        }
+        .social-icon:hover { transform: translateY(-3px) scale(1.1); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+        .social-icon.whatsapp { background: linear-gradient(135deg, #25d366 0%, #128c7e 100%); }
+        .social-icon.facebook { background: linear-gradient(135deg, #1877f2 0%, #0d5cb6 100%); }
+        .social-icon.twitter { background: linear-gradient(135deg, #000000 0%, #333333 100%); }
+        .social-icon.instagram { background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+        .social-icon.telegram { background: linear-gradient(135deg, #0088cc 0%, #006699 100%); }
+        .social-icon.linkedin { background: linear-gradient(135deg, #0077b5 0%, #005885 100%); }
+        .social-icon.pinterest { background: linear-gradient(135deg, #bd081c 0%, #8b0614 100%); }
+        .social-icon.copy { background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.06); padding: 16px 20px; text-align: center; }
+        .footer-bottom p { font-size: 11px; color: #64748b; }
+        .toast {
+            position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%);
+            background: #0f172a; color: white; padding: 12px 20px; border-radius: 10px;
+            font-size: 13px; z-index: 10000; box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            display: flex; align-items: center; gap: 8px; animation: fadeInUp 0.3s ease;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+        @media (max-width: 640px) {
+            body { padding-bottom: 20px; }
+            .header { padding: 10px 12px; }
+            .logo-text h1 { font-size: 16px; }
+            .logo-text p { font-size: 7px; }
+            .container { padding: 12px; }
+            .rating-card { padding: 20px 16px; }
+            .rating-header h2 { font-size: 20px; }
+            .average-number { font-size: 48px; }
+            .average-stars i { font-size: 16px; }
+            .rating-bar-item { flex-wrap: nowrap; }
+            .rating-count { min-width: 90px; font-size: 12px; }
+            .star-label { min-width: 35px; font-size: 13px; }
+            .comments-header { padding: 16px; flex-direction: column; gap: 12px; text-align: center; }
+            .comments-header h3 { font-size: 18px; }
+            .comments-filter { display: flex; }
+            .comment-item { padding: 16px; }
+            .comment-avatar { width: 40px; height: 40px; font-size: 16px; }
+            .comment-author { font-size: 14px; }
+            .comment-text { font-size: 14px; }
+            .comment-image { width: 80px; height: 80px; }
+            .payment-icons { gap: 8px; }
+            .card-flag-footer { width: 46px; height: 30px; }
+            .card-flag-footer.visa span { font-size: 12px; }
+            .card-flag-footer.elo span { font-size: 11px; }
+            .card-flag-footer.amex span { font-size: 9px; }
+            .card-flag-footer.pix { width: 52px; }
+            .card-flag-footer.pix span { font-size: 11px; }
+            .card-flag-footer.mastercard .circle-red,
+            .card-flag-footer.mastercard .circle-yellow,
+            .card-flag-footer.mastercard .circle-overlap { width: 18px; height: 18px; }
+            .social-icons { gap: 8px; }
+            .social-icon { width: 36px; height: 36px; font-size: 16px; }
+            .whatsapp-float { width: 54px; height: 54px; font-size: 24px; bottom: 20px; right: 20px; }
+            .footer-main { padding: 24px 16px; }
+            .footer-company { font-size: 11px; }
+        }
+        @media (max-width: 360px) {
+            .rating-count { min-width: 75px; font-size: 11px; }
+            .star-label { min-width: 30px; font-size: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <div class="logo-icon"><i class="fas fa-car"></i></div>
+                <div class="logo-text">
+                    <h1>SoundPro</h1>
+                    <p>Distribuidora de Eletrônicos</p>
+                </div>
+            </a>
+            <button class="menu-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay" onclick="toggleMenu()"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-menu-close" onclick="toggleMenu()"><i class="fas fa-times"></i></button>
+        <div class="mobile-menu-header">
+            <div class="mobile-menu-logo"><i class="fas fa-car"></i></div>
+            <div class="mobile-menu-title">SoundPro</div>
+        </div>
+        <nav>
+            <a href="index.html"><i class="fas fa-home"></i><span>Início</span></a>
+            <a href="rastreio.html"><i class="fas fa-box"></i><span>Rastreio</span></a>
+            <a href="zap.html"><i class="fab fa-whatsapp"></i><span>Contato</span></a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Rating Summary -->
+        <div class="rating-card">
+            <div class="rating-header">
+                <h2>Avaliações do produto</h2>
+                <p>Baseado em 512 avaliações</p>
+            </div>
+            <div class="average-rating">
+                <div class="average-number">4.7</div>
+                <div class="average-stars">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                </div>
+                <div class="total-ratings">512 avaliações</div>
+            </div>
+            <div class="rating-bars">
+                <div class="rating-bar-item">
+                    <div class="star-label"><i class="fas fa-star"></i><span>5</span></div>
+                    <div class="bar-container"><div class="bar-fill" style="width: 75%"></div></div>
+                    <div class="rating-count">384 avaliações</div>
+                </div>
+                <div class="rating-bar-item">
+                    <div class="star-label"><i class="fas fa-star"></i><span>4</span></div>
+                    <div class="bar-container"><div class="bar-fill" style="width: 17%"></div></div>
+                    <div class="rating-count">87 avaliações</div>
+                </div>
+                <div class="rating-bar-item">
+                    <div class="star-label"><i class="fas fa-star"></i><span>3</span></div>
+                    <div class="bar-container"><div class="bar-fill" style="width: 5%"></div></div>
+                    <div class="rating-count">26 avaliações</div>
+                </div>
+                <div class="rating-bar-item">
+                    <div class="star-label"><i class="fas fa-star"></i><span>2</span></div>
+                    <div class="bar-container"><div class="bar-fill" style="width: 2%"></div></div>
+                    <div class="rating-count">10 avaliações</div>
+                </div>
+                <div class="rating-bar-item">
+                    <div class="star-label"><i class="fas fa-star"></i><span>1</span></div>
+                    <div class="bar-container"><div class="bar-fill" style="width: 1%"></div></div>
+                    <div class="rating-count">5 avaliações</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comments Section -->
+        <div class="comments-section">
+            <div class="comments-header">
+                <h3>Comentários dos clientes</h3>
+                <div class="comments-filter">
+                    <button class="filter-btn active">Todas</button>
+                    <button class="filter-btn">Com fotos</button>
+                </div>
+            </div>
+
+            <!-- Comment 1 - Marcos Silva -->
+            <div class="comment-item">
+                <div class="comment-header">
+                    <div class="comment-avatar">M</div>
+                    <div class="comment-meta">
+                        <div class="comment-author">Marcos Silva</div>
+                        <div class="comment-info">
+                            <div class="comment-stars">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                            <span class="comment-date">• 1 semana atrás</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="comment-text">
+                    Instalei no meu Gol G7 e ficou sensacional! O som melhorou 100%, os graves ficaram bem definidos e os agudos cristalinos. O player Bluetooth conecta fácil e a qualidade do áudio é excelente. Kit completo e fácil de instalar, valeu cada centavo! 🚗🔊
+                </div>
+                <div class="comment-images">
+                    <div class="comment-image"><img src="https://i.postimg.cc/CLDNXTLP/br-11134103-7r98o-m036rqt1wxgp8b-resize-w144-nl.webp" alt="Foto 1"></div>
+                    <div class="comment-image"><img src="https://i.postimg.cc/ZRCPLXMR/br-11134103-7r98o-m036rqsrxby5c0-resize-w144-nl.webp" alt="Foto 2"></div>
+                    <div class="comment-image"><img src="https://i.postimg.cc/d3C8brvd/br-11134103-7r98o-m036rqtbwippea-resize-w144-nl.webp" alt="Foto 3"></div>
+                </div>
+                <div class="comment-footer">
+                    <div class="comment-action"><i class="far fa-thumbs-up"></i><span>Útil (87)</span></div>
+                    <div class="comment-action"><i class="far fa-comment"></i><span>Responder</span></div>
+                </div>
+            </div>
+
+            <!-- Comment 2 - André Oliveira -->
+            <div class="comment-item">
+                <div class="comment-header">
+                    <div class="comment-avatar" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">A</div>
+                    <div class="comment-meta">
+                        <div class="comment-author">André Oliveira</div>
+                        <div class="comment-info">
+                            <div class="comment-stars">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="comment-date">• 3 dias atrás</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="comment-text">
+                    Comprei pra colocar no Onix e o resultado foi incrível! Os alto-falantes Leson têm uma qualidade sonora muito boa, principalmente pelo preço. A instalação foi tranquila, encaixou perfeitamente nas portas. O player Bluetooth é um plus, consigo conectar o celular e tocar minhas playlists sem fio. Recomendo! 🎵✨
+                </div>
+                <div class="comment-images">
+                    <div class="comment-image"><img src="https://i.postimg.cc/nzj7mBX5/br-11134103-7r98o-mdg8djlmio5t43-resize-w144-nl.webp" alt="Foto 1"></div>
+                    <div class="comment-image"><img src="https://i.postimg.cc/ry4xFGXM/br-11134103-7r98o-mdg8djg2qt2xca-resize-w144-nl.webp" alt="Foto 2"></div>
+                    <div class="comment-image"><img src="https://i.postimg.cc/ZKFN6Tq4/br-11134103-7r98o-mdg8djgmpz9t6d-resize-w144-nl.webp" alt="Foto 3"></div>
+                </div>
+                <div class="comment-footer">
+                    <div class="comment-action"><i class="far fa-thumbs-up"></i><span>Útil (52)</span></div>
+                    <div class="comment-action"><i class="far fa-comment"></i><span>Responder</span></div>
+                </div>
+            </div>
+
+            <!-- Comment 3 - Realistic additional comment -->
+            <div class="comment-item">
+                <div class="comment-header">
+                    <div class="comment-avatar" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">R</div>
+                    <div class="comment-meta">
+                        <div class="comment-author">Ricardo Almeida</div>
+                        <div class="comment-info">
+                            <div class="comment-stars">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                            <span class="comment-date">• 2 semanas atrás</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="comment-text">
+                    Melhor custo-benefício que encontrei! Instalei no meu Palio e a diferença foi brutal. Os falantes 6x9 no tampão dão um grave que eu não tinha antes, e os 6" na porta deixaram o médio/agudo perfeito. O player Bluetooth é um bônus que eu nem esperava. Chegou tudo certinho e bem embalado. 👍
+                </div>
+                <div class="comment-footer">
+                    <div class="comment-action"><i class="far fa-thumbs-up"></i><span>Útil (63)</span></div>
+                    <div class="comment-action"><i class="far fa-comment"></i><span>Responder</span></div>
+                </div>
+            </div>
+
+            <!-- Comment 4 - Realistic additional comment -->
+            <div class="comment-item">
+                <div class="comment-header">
+                    <div class="comment-avatar" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">C</div>
+                    <div class="comment-meta">
+                        <div class="comment-author">Carla Santos</div>
+                        <div class="comment-info">
+                            <div class="comment-stars">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+                            </div>
+                            <span class="comment-date">• 5 dias atrás</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="comment-text">
+                    O kit é bom, mas a instalação exigiu um pouco de adaptação no meu Corsa. Os falantes são de qualidade, mas o player Bluetooth poderia ter mais funções (sem entrada AUX, por exemplo). No geral, pelo preço, vale a pena. O som melhorou bastante em relação ao original.
+                </div>
+                <div class="comment-footer">
+                    <div class="comment-action"><i class="far fa-thumbs-up"></i><span>Útil (28)</span></div>
+                    <div class="comment-action"><i class="far fa-comment"></i><span>Responder</span></div>
+                </div>
+            </div>
+
+            <!-- Comment 5 - Realistic additional comment -->
+            <div class="comment-item">
+                <div class="comment-header">
+                    <div class="comment-avatar" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">F</div>
+                    <div class="comment-meta">
+                        <div class="comment-author">Felipe Costa</div>
+                        <div class="comment-info">
+                            <div class="comment-stars">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="comment-date">• 1 mês atrás</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="comment-text">
+                    Comprei pra dar um upgrade no som do meu HB20 e não me arrependi! A instalação foi tranquila, segui um tutorial no YouTube. Os falantes Leson têm um som equilibrado, sem distorção mesmo no volume alto. O Bluetooth do player funciona perfeitamente. Só gostaria que viesse com os cabos de instalação, mas nada que impeça a compra. Recomendo! 🎶
+                </div>
+                <div class="comment-footer">
+                    <div class="comment-action"><i class="far fa-thumbs-up"></i><span>Útil (44)</span></div>
+                    <div class="comment-action"><i class="far fa-comment"></i><span>Responder</span></div>
+                </div>
+            </div>
+
+            <button class="load-more" onclick="loadMoreComments()">
+                Ver mais 505 comentários <i class="fas fa-chevron-down"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-main">
+            <div class="footer-brand">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon"><i class="fas fa-car"></i></div>
+                    <div>
+                        <div class="logo-name" style="font-size:18px;font-weight:800;background:linear-gradient(135deg,#6366f1 0%,#8b5cf6 50%,#ec4899 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">SoundPro</div>
+                        <div class="logo-tagline" style="font-size:8px;color:#94a3b8;text-transform:uppercase;letter-spacing:1.5px;">Distribuidora de Eletrônicos</div>
+                    </div>
+                </a>
+                <div class="footer-company">
+                    <strong>GOB DISTRIBUIDORA (Luz &amp; Ordem)</strong><br>
+                    GALPÃO AZUL - RUA AGENOR PEREIRA DA COSTA, 270A<br>
+                    JARDIM ALVORADA - JANDIRA, SP<br>
+                    CEP: 06612-220<br>
+                    CNPJ: 50.742.088/0001-95
+                </div>
+            </div>
+            <div class="payment-methods">
+                <div class="payment-methods-title">Formas de Pagamento</div>
+                <div class="payment-icons">
+                    <div class="card-flag-footer visa"><span>VISA</span></div>
+                    <div class="card-flag-footer mastercard"><div class="circle-red"></div><div class="circle-overlap"></div><div class="circle-yellow"></div></div>
+                    <div class="card-flag-footer elo"><span>ELO</span></div>
+                    <div class="card-flag-footer amex"><span>AMEX</span></div>
+                    <div class="card-flag-footer pix"><span>PIX</span></div>
+                </div>
+            </div>
+            <div class="social-share">
+                <div class="social-share-title">Compartilhar</div>
+                <div class="social-icons">
+                    <a href="#" class="social-icon whatsapp" onclick="shareOnSocial('whatsapp');return false;"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" class="social-icon facebook" onclick="shareOnSocial('facebook');return false;"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon twitter" onclick="shareOnSocial('twitter');return false;"><i class="fab fa-x-twitter"></i></a>
+                    <a href="#" class="social-icon instagram" onclick="shareOnSocial('instagram');return false;"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon telegram" onclick="shareOnSocial('telegram');return false;"><i class="fab fa-telegram-plane"></i></a>
+                    <a href="#" class="social-icon linkedin" onclick="shareOnSocial('linkedin');return false;"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="social-icon pinterest" onclick="shareOnSocial('pinterest');return false;"><i class="fab fa-pinterest-p"></i></a>
+                    <a href="#" class="social-icon copy" onclick="copyLink();return false;"><i class="fas fa-link"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 SoundPro — GOB DISTRIBUIDORA — Todos os direitos reservados</p>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float -->
+    <a href="zap.html" class="whatsapp-float"><i class="fab fa-whatsapp"></i></a>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const overlay = document.querySelector('.mobile-menu-overlay');
+            menu.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : '';
+        }
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const menu = document.getElementById('mobileMenu');
+                if (menu.classList.contains('active')) toggleMenu();
+            }
+        });
+        function loadMoreComments() { showToast('Carregando mais comentários...'); }
+        function shareOnSocial(network) {
+            const url = encodeURIComponent(window.location.href);
+            const title = encodeURIComponent('SoundPro - Kit Som Leson');
+            const text = encodeURIComponent('Kit Som Automotivo Leson 6 + 6x9 - Apenas R$ 143,99!');
+            let shareUrl = '';
+            switch(network) {
+                case 'whatsapp': shareUrl = `https://wa.me/?text=${title}%20${text}%20${url}`; break;
+                case 'facebook': shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`; break;
+                case 'twitter': shareUrl = `https://twitter.com/intent/tweet?text=${text}&url=${url}`; break;
+                case 'instagram': copyLink(); showToast('Link copiado! Cole no Instagram Stories ou Direct.'); return;
+                case 'telegram': shareUrl = `https://t.me/share/url?url=${url}&text=${text}`; break;
+                case 'linkedin': shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`; break;
+                case 'pinterest': shareUrl = `https://pinterest.com/pin/create/button/?url=${url}&description=${text}`; break;
+            }
+            if (shareUrl) window.open(shareUrl, '_blank', 'width=600,height=400');
+        }
+        function copyLink() {
+            const url = window.location.href;
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(url).then(() => showToast('Link copiado!')).catch(() => fallbackCopy(url));
+            } else { fallbackCopy(url); }
+        }
+        function fallbackCopy(text) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus(); textArea.select();
+            try { document.execCommand('copy'); showToast('Link copiado!'); }
+            catch (err) { showToast('Copie manualmente.'); }
+            document.body.removeChild(textArea);
+        }
+        function showToast(msg) {
+            const ex = document.querySelector('.toast');
+            if (ex) ex.remove();
+            const t = document.createElement('div');
+            t.className = 'toast';
+            t.innerHTML = `<i class="fas fa-info-circle" style="color:#60a5fa;"></i> ${msg}`;
+            document.body.appendChild(t);
+            setTimeout(() => { t.style.opacity='0'; t.style.transition='opacity .3s'; setTimeout(()=>t.remove(),300); }, 3000);
+        }
+    </script>
+</body>
+</html>

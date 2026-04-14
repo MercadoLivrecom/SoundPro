@@ -1,0 +1,1722 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Smart TV AOC 32" Roku - SoundPro</title>
+    
+    <link rel="icon" type="image/jpeg" href="favicon.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #ec4899;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --gray-light: #e2e8f0;
+            --gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+            --star-gold: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --bg-body: #f0f2f5;
+            --whatsapp: #25d366;
+            --aoc-red: #e30613;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-body);
+            color: #1a1a2e;
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+
+        /* ==================== HEADER ==================== */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(2, 6, 23, 0.98);
+            backdrop-filter: blur(20px);
+        }
+
+        .header-main {
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 38px;
+            height: 38px;
+            background: var(--gradient);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: white;
+        }
+
+        .logo-name {
+            font-size: 18px;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-tagline {
+            font-size: 8px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+            padding: 6px;
+            background: transparent;
+            border: none;
+        }
+
+        .hamburger span {
+            width: 22px;
+            height: 2px;
+            background: white;
+            border-radius: 2px;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        .mobile-menu-overlay.active { opacity: 1; visibility: visible; }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 280px;
+            max-width: 85%;
+            height: 100vh;
+            background: linear-gradient(180deg, #0f172a 0%, #1e1b4b 100%);
+            z-index: 1000;
+            transition: right 0.3s ease;
+            padding: 70px 20px 20px;
+        }
+
+        .mobile-menu.active { right: 0; }
+
+        .mobile-menu-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 16px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .mobile-menu-logo {
+            width: 38px;
+            height: 38px;
+            background: var(--gradient);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: white;
+        }
+
+        .mobile-menu nav a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .mobile-menu nav a i { width: 18px; color: var(--primary); text-align: center; }
+
+        /* ==================== BREADCRUMBS ==================== */
+        .breadcrumbs-section {
+            background: white;
+            padding: 12px 16px;
+            margin-top: 65px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .breadcrumbs {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .breadcrumb-item:hover { color: var(--primary); }
+        .breadcrumb-item.active { color: var(--dark); font-weight: 600; }
+        .breadcrumb-separator { color: #cbd5e1; font-size: 12px; }
+        .breadcrumb-item i { font-size: 14px; }
+
+        /* ==================== MAIN ==================== */
+        .main-wrapper { max-width: 1280px; margin: 0 auto; padding: 12px; }
+
+        .product-page {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            overflow: hidden;
+        }
+
+        /* Gallery */
+        .gallery-section {
+            background: linear-gradient(145deg, #f8fafc 0%, #eef2f7 100%);
+            padding: 16px;
+            position: relative;
+        }
+
+        .badge-promo {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 12px;
+            z-index: 20;
+        }
+
+        .badge-stock {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 12px;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+        }
+
+        .carousel-wrapper {
+            overflow: hidden;
+            border-radius: 12px;
+            background: #fff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            position: relative;
+        }
+
+        .carousel-track { display: flex; transition: transform 0.4s ease; }
+
+        .carousel-slide {
+            min-width: 100%;
+            aspect-ratio: 16/9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            background: #fff;
+        }
+
+        .carousel-slide img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            cursor: pointer;
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.95);
+            border: none;
+            color: var(--dark);
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .carousel-btn.prev { left: 8px; }
+        .carousel-btn.next { right: 8px; }
+
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 12px;
+        }
+
+        .indicator {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #cbd5e1;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+        }
+
+        .indicator.active {
+            background: var(--primary);
+            width: 24px;
+            border-radius: 3px;
+        }
+
+        /* Product Info */
+        .product-info { padding: 16px; }
+
+        .product-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .stars { display: flex; gap: 2px; }
+        .stars i { color: var(--star-gold); font-size: 14px; }
+        .stars .empty { color: #e2e8f0; }
+
+        .rating-value { font-size: 13px; font-weight: 600; color: var(--dark); margin-left: 6px; }
+        .rating-count { font-size: 12px; color: var(--gray); }
+
+        .sales-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            color: var(--success);
+            font-weight: 600;
+            background: rgba(16, 185, 129, 0.1);
+            padding: 4px 10px;
+            border-radius: 12px;
+        }
+
+        .product-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--dark);
+            line-height: 1.3;
+            margin-bottom: 10px;
+        }
+
+        .product-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--primary);
+            background: rgba(99, 102, 241, 0.08);
+        }
+
+        .tag.aoc {
+            background: linear-gradient(135deg, var(--aoc-red) 0%, #c41e3a 100%);
+            color: white;
+        }
+
+        /* Price */
+        .price-block {
+            background: linear-gradient(135deg, #f8faff 0%, #f0f4ff 100%);
+            border: 1px solid #e0e7ff;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .price-old { font-size: 13px; color: var(--gray); text-decoration: line-through; margin-bottom: 4px; }
+
+        .price-main { display: flex; align-items: baseline; gap: 6px; margin-bottom: 4px; }
+        .price-current { font-size: 32px; font-weight: 900; color: var(--dark); }
+        .price-cents { font-size: 18px; font-weight: 800; }
+
+        .price-installment {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #d4d9e5;
+            font-size: 12px;
+            color: #475569;
+        }
+
+        .card-flags { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+        .card-flag {
+            height: 20px;
+            border-radius: 4px;
+            background: #fff;
+            padding: 2px 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .card-flag-text { font-size: 10px; font-weight: 700; color: #64748b; }
+
+        .btn-buy {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+        }
+
+        .shipping-block {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            background: #ecfdf5;
+            border-radius: 10px;
+            margin-bottom: 16px;
+            border: 1px solid #d1fae5;
+        }
+
+        .shipping-block i { font-size: 20px; color: var(--success); }
+        .shipping-text strong { display: block; font-size: 13px; color: var(--dark); }
+        .shipping-text span { font-size: 11px; color: var(--gray); }
+
+        /* ==================== DESCRIPTION ==================== */
+        .description-section { margin: 20px auto; }
+
+        .description-card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+
+        .desc-header {
+            padding: 16px 20px;
+            border-bottom: 2px solid #f1f5f9;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .desc-header i { font-size: 18px; color: var(--primary); }
+        .desc-header h2 { font-size: 16px; font-weight: 700; color: var(--dark); }
+
+        .desc-body { padding: 20px; }
+        .desc-body p { font-size: 14px; line-height: 1.7; color: #475569; margin-bottom: 12px; }
+
+        .benefits-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 12px;
+            background: #f8fafc;
+            border-radius: 10px;
+        }
+
+        .benefit-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--gradient);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .benefit-text { font-size: 12px; font-weight: 600; color: var(--dark); }
+
+        /* Medidas */
+        .measures-section { margin: 24px 0; }
+        .measures-section h3 { font-size: 14px; font-weight: 700; color: var(--dark); margin-bottom: 12px; }
+
+        .measures-list { display: flex; flex-direction: column; gap: 8px; }
+
+        .measure-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .measure-item:last-child { border-bottom: none; }
+
+        .measure-label {
+            font-size: 13px;
+            color: var(--gray);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .measure-label i { color: var(--primary); font-size: 14px; width: 18px; }
+        .measure-value { font-size: 13px; font-weight: 600; color: var(--dark); }
+
+        /* Itens Inclusos */
+        .included-section {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 2px solid #f1f5f9;
+        }
+
+        .included-section h3 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .included-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+
+        .included-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px;
+            background: #f8fafc;
+            border-radius: 10px;
+            border: 1px solid #f1f5f9;
+        }
+
+        .included-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .included-text { font-size: 12px; font-weight: 600; color: var(--dark); }
+        .included-text small { display: block; font-size: 10px; font-weight: 400; color: var(--gray); margin-top: 2px; }
+
+        /* ==================== QUALIFICAÇÕES ==================== */
+        .ratings-section {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+
+        .ratings-header { padding: 20px; border-bottom: 1px solid #f1f5f9; }
+        .ratings-header h3 { font-size: 18px; font-weight: 700; color: var(--dark); margin-bottom: 4px; }
+        .ratings-header-subtitle { font-size: 13px; color: var(--gray); }
+
+        .ratings-content { padding: 20px; }
+
+        .ratings-overview { display: flex; gap: 32px; margin-bottom: 28px; }
+
+        .average-rating { text-align: center; min-width: 100px; }
+        .average-number { font-size: 56px; font-weight: 300; color: var(--dark); line-height: 1; }
+        .average-stars { margin: 8px 0; display: flex; justify-content: center; }
+        .average-stars i { color: var(--star-gold); font-size: 16px; }
+        .total-ratings { font-size: 13px; color: var(--gray); margin-top: 4px; }
+
+        .rating-bars { flex: 1; }
+
+        .rating-bar-item { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+
+        .rating-bar-label {
+            font-size: 13px;
+            color: var(--gray);
+            min-width: 60px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .rating-bar-label i { color: var(--star-gold); font-size: 12px; }
+
+        .rating-bar { flex: 1; height: 8px; background: #e2e8f0; border-radius: 4px; overflow: hidden; }
+        .rating-bar-fill {
+            height: 100%;
+            background: var(--star-gold);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .rating-bar-count { font-size: 13px; color: var(--gray); min-width: 90px; text-align: left; }
+
+        /* ==================== COMENTÁRIOS ==================== */
+        .comments-section {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+
+        .comments-header {
+            padding: 20px;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .comments-header h3 { font-size: 18px; font-weight: 700; color: var(--dark); }
+
+        .comments-filter { display: flex; gap: 8px; }
+
+        .filter-btn {
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+            background: white;
+            color: var(--gray);
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+        .comment-item { padding: 20px; border-bottom: 1px solid #f1f5f9; }
+        .comment-item:last-child { border-bottom: none; }
+
+        .comment-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
+
+        .comment-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #a8a29e 0%, #78716c 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            flex-shrink: 0;
+            text-transform: uppercase;
+        }
+
+        .comment-meta { flex: 1; }
+        .comment-author { font-size: 14px; font-weight: 600; color: var(--dark); margin-bottom: 4px; }
+        .comment-info { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .comment-stars i { color: var(--star-gold); font-size: 12px; }
+        .comment-date { font-size: 12px; color: var(--gray); }
+
+        .comment-text { font-size: 14px; color: #334155; line-height: 1.6; margin-bottom: 12px; }
+
+        .comment-images { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+
+        .comment-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid #e2e8f0;
+        }
+
+        .comment-image img { width: 100%; height: 100%; object-fit: cover; }
+
+        .comment-footer {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #f1f5f9;
+            display: flex;
+            gap: 16px;
+        }
+
+        .comment-action {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: var(--gray);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .comment-action:hover { color: var(--primary); }
+        .comment-action i { font-size: 14px; }
+
+        .see-more-comments {
+            display: block;
+            text-align: center;
+            padding: 16px;
+            background: #f8fafc;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .see-more-comments:hover { background: #eef2f7; }
+
+        /* ==================== FOOTER PREMIUM ==================== */
+        .footer { background: var(--darker); color: white; margin-top: 20px; }
+        .footer-main { max-width: 1280px; margin: 0 auto; padding: 30px 20px; }
+        .footer-brand .logo { margin-bottom: 12px; }
+
+        .footer-company {
+            font-size: 12px;
+            color: #64748b;
+            line-height: 1.8;
+            padding: 12px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+
+        /* Payment Methods */
+        .payment-methods {
+            margin-top: 20px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+        .payment-methods-title {
+            font-size: 11px;
+            color: #64748b;
+            margin-bottom: 14px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .payment-icons { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+
+        .card-flag-footer {
+            width: 52px;
+            height: 34px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .card-flag-footer.visa { background: #1a1f71; }
+        .card-flag-footer.visa span { font-family: Arial, sans-serif; font-style: italic; font-weight: 900; font-size: 14px; letter-spacing: -0.5px; }
+
+        .card-flag-footer.mastercard { background: #252525; display: flex; align-items: center; justify-content: center; position: relative; }
+        .card-flag-footer.mastercard .circle-red { width: 22px; height: 22px; background: #eb001b; border-radius: 50%; position: absolute; left: 12px; }
+        .card-flag-footer.mastercard .circle-yellow { width: 22px; height: 22px; background: #f79e1b; border-radius: 50%; position: absolute; right: 12px; }
+        .card-flag-footer.mastercard .circle-overlap { width: 22px; height: 22px; background: #ff5f00; border-radius: 50%; position: absolute; left: 50%; transform: translateX(-50%); }
+
+        .card-flag-footer.elo { background: #0033a0; }
+        .card-flag-footer.elo span { font-family: Arial, sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.5px; }
+
+        .card-flag-footer.amex { background: #006fcf; }
+        .card-flag-footer.amex span { font-family: Arial, sans-serif; font-weight: 700; font-size: 10px; letter-spacing: 0.5px; }
+
+        .card-flag-footer.pix { background: #34a37f; width: 58px; }
+        .card-flag-footer.pix span { font-family: Arial, sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; }
+
+        /* Social Share */
+        .social-share { margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.08); }
+        .social-share-title { font-size: 11px; color: #64748b; margin-bottom: 14px; text-align: center; text-transform: uppercase; letter-spacing: 1px; }
+        .social-icons { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: white;
+            font-size: 18px;
+            text-decoration: none;
+        }
+
+        .social-icon:hover { transform: translateY(-3px) scale(1.1); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+        .social-icon.whatsapp { background: linear-gradient(135deg, #25d366 0%, #128c7e 100%); }
+        .social-icon.facebook { background: linear-gradient(135deg, #1877f2 0%, #0d5cb6 100%); }
+        .social-icon.twitter { background: linear-gradient(135deg, #000000 0%, #333333 100%); }
+        .social-icon.instagram { background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+        .social-icon.telegram { background: linear-gradient(135deg, #0088cc 0%, #006699 100%); }
+        .social-icon.linkedin { background: linear-gradient(135deg, #0077b5 0%, #005885 100%); }
+        .social-icon.pinterest { background: linear-gradient(135deg, #bd081c 0%, #8b0614 100%); }
+        .social-icon.copy { background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); }
+
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.06); padding: 16px 20px; text-align: center; }
+        .footer-bottom p { font-size: 11px; color: #64748b; }
+
+        /* ==================== WHATSAPP FLOATING BUTTON ==================== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 2000;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+            text-decoration: none;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s ease;
+            animation: whatsappPulse 2s infinite;
+        }
+
+        .whatsapp-float:hover { transform: scale(1.1); box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6); }
+        .whatsapp-float:active { transform: scale(0.95); }
+        .whatsapp-float i { filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2)); }
+
+        @keyframes whatsappPulse {
+            0%, 100% { box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4); }
+            50% { box-shadow: 0 4px 30px rgba(37, 211, 102, 0.6), 0 0 0 8px rgba(37, 211, 102, 0.1); }
+        }
+
+        /* ==================== CART MODAL ==================== */
+        .cart-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 3000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .cart-modal.active { opacity: 1; visibility: visible; }
+
+        .cart-content {
+            background: white;
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            border-radius: 20px 20px 0 0;
+            overflow: hidden;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-modal.active .cart-content { transform: translateY(0); }
+
+        .cart-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .cart-header h3 { font-size: 16px; font-weight: 700; color: var(--dark); }
+        .cart-close {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: #f1f5f9;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .cart-body { padding: 20px; overflow-y: auto; flex: 1; }
+        .cart-item { margin-bottom: 20px; }
+
+        .cart-item-header {
+            display: flex;
+            gap: 12px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #f1f5f9;
+            margin-bottom: 16px;
+        }
+
+        .cart-item-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            overflow: hidden;
+            flex-shrink: 0;
+            background: #f8fafc;
+        }
+
+        .cart-item-image img { width: 100%; height: 100%; object-fit: cover; }
+        .cart-item-details { flex: 1; }
+        .cart-item-title { font-size: 14px; font-weight: 600; color: var(--dark); margin-bottom: 6px; line-height: 1.3; }
+        .cart-item-price { font-size: 16px; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
+
+        /* Color Selection */
+        .color-selection { margin-bottom: 16px; }
+        .color-label { font-size: 12px; color: var(--gray); margin-bottom: 8px; display: block; }
+        .color-options { display: flex; gap: 10px; }
+
+        .color-option { position: relative; cursor: pointer; }
+        .color-option input { position: absolute; opacity: 0; cursor: pointer; }
+
+        .color-box {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .color-option input:checked + .color-box {
+            border-color: var(--primary);
+            transform: scale(1.1);
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
+        }
+
+        .color-box.black { background: linear-gradient(135deg, #1f2937 0%, #111827 100%); }
+        .color-box.blue { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); opacity: 0.3; }
+        .color-box.red { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); opacity: 0.3; }
+        .color-box.white { background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%); opacity: 0.3; }
+
+        .color-option.disabled { opacity: 0.4; cursor: not-allowed; }
+
+        .out-of-stock {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            background: var(--danger);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 9px;
+            font-weight: 700;
+            white-space: nowrap;
+            z-index: 10;
+        }
+
+        .color-name { font-size: 11px; text-align: center; margin-top: 4px; color: var(--gray); }
+
+        .cart-quantity { display: flex; align-items: center; gap: 10px; }
+        .qty-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+            background: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .qty-value { font-size: 14px; font-weight: 600; min-width: 30px; text-align: center; }
+
+        .cart-footer { padding: 20px; border-top: 1px solid #e2e8f0; background: #f8fafc; }
+        .cart-total { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .cart-total-value { font-size: 24px; font-weight: 800; color: var(--dark); }
+
+        .btn-checkout {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        /* ==================== LIGHTBOX ==================== */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(2, 6, 23, 0.96);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            padding: 20px;
+        }
+
+        .lightbox.active { opacity: 1; visibility: visible; }
+
+        .lightbox-content {
+            background: white;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .lightbox-header {
+            padding: 14px 16px;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .lightbox-close {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            background: #f1f5f9;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .lightbox-main-image {
+            padding: 20px;
+            background: #f8fafc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 250px;
+        }
+
+        .lightbox-main-image img { max-width: 100%; max-height: 300px; object-fit: contain; }
+
+        .lightbox-thumbnails {
+            display: flex;
+            gap: 6px;
+            padding: 12px 16px 16px;
+            overflow-x: auto;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .lightbox-thumbnails img {
+            width: 56px;
+            height: 56px;
+            border-radius: 8px;
+            object-fit: cover;
+            cursor: pointer;
+            border: 2px solid transparent;
+            flex-shrink: 0;
+        }
+
+        .lightbox-thumbnails img.active { border-color: var(--primary); }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--dark);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 13px;
+            z-index: 10000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+
+        /* Responsive */
+        @media (min-width: 768px) { .product-page { display: grid; grid-template-columns: 1fr 1fr; } }
+
+        @media (max-width: 480px) {
+            .main-wrapper { margin-top: 0; padding: 8px; }
+            .product-info { padding: 14px; }
+            .product-title { font-size: 16px; }
+            .price-current { font-size: 28px; }
+            .ratings-overview { flex-direction: column; gap: 20px; }
+            .average-number { font-size: 48px; }
+            .comments-filter { display: none; }
+            .breadcrumbs { justify-content: flex-start; }
+            .whatsapp-float { width: 54px; height: 54px; font-size: 24px; bottom: 20px; right: 20px; }
+            .payment-icons { gap: 8px; }
+            .card-flag-footer { width: 46px; height: 30px; }
+            .card-flag-footer.visa span { font-size: 12px; }
+            .card-flag-footer.elo span { font-size: 11px; }
+            .card-flag-footer.amex span { font-size: 9px; }
+            .card-flag-footer.pix { width: 52px; }
+            .card-flag-footer.pix span { font-size: 11px; }
+            .card-flag-footer.mastercard .circle-red,
+            .card-flag-footer.mastercard .circle-yellow,
+            .card-flag-footer.mastercard .circle-overlap { width: 18px; height: 18px; }
+            .social-icons { gap: 8px; }
+            .social-icon { width: 36px; height: 36px; font-size: 16px; }
+            .benefits-list { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-main">
+            <a href="#" class="logo">
+                <div class="logo-icon"><i class="fas fa-tv"></i></div>
+                <div>
+                    <div class="logo-name">SoundPro</div>
+                    <div class="logo-tagline">Distribuidora de Eletrônicos</div>
+                </div>
+            </a>
+            <button class="hamburger" onclick="toggleMenu()">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- BREADCRUMBS -->
+    <div class="breadcrumbs-section">
+        <nav class="breadcrumbs">
+            <a href="index.html" class="breadcrumb-item"><i class="fas fa-home"></i><span>Início</span></a>
+            <span class="breadcrumb-separator">/</span>
+            <a href="rastreio.html" class="breadcrumb-item"><i class="fas fa-box"></i><span>Rastreio</span></a>
+            <span class="breadcrumb-separator">/</span>
+            <a href="zap.html" class="breadcrumb-item"><i class="fab fa-whatsapp"></i><span>Contato</span></a>
+        </nav>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay" onclick="toggleMenu()"></div>
+    <div class="mobile-menu">
+        <div class="mobile-menu-header">
+            <div class="mobile-menu-logo"><i class="fas fa-tv"></i></div>
+            <div style="font-size: 18px; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">SoundPro</div>
+        </div>
+        <nav>
+            <a href="index.html"><i class="fas fa-home"></i> Início</a>
+            <a href="rastreio.html"><i class="fas fa-box"></i> Rastreio</a>
+            <a href="zap.html"><i class="fab fa-whatsapp"></i> Contato</a>
+        </nav>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-wrapper">
+        <div class="product-page">
+            <!-- Gallery -->
+            <div class="gallery-section">
+                <div class="badge-promo">-58% OFF</div>
+                <div class="badge-stock"><i class="fas fa-check-circle"></i> Em estoque</div>
+                <div class="carousel-wrapper">
+                    <div class="carousel-track" id="carouselTrack">
+                        <div class="carousel-slide"><img src="5s.webp" onclick="openLightbox(0)"></div>
+                        <div class="carousel-slide"><img src="https://i.postimg.cc/L6FtSFLx/1.webp" onclick="openLightbox(1)"></div>
+                        <div class="carousel-slide"><img src="https://i.postimg.cc/GmVh0dsr/2.webp" onclick="openLightbox(2)"></div>
+                        <div class="carousel-slide"><img src="https://i.postimg.cc/pVCWWDnc/3.webp" onclick="openLightbox(3)"></div>
+                        <div class="carousel-slide"><img src="https://i.postimg.cc/Ssq4qsQY/4.webp" onclick="openLightbox(4)"></div>
+                        <div class="carousel-slide"><img src="https://i.postimg.cc/c46SdPW1/5.webp" onclick="openLightbox(5)"></div>
+                        <div class="carousel-slide"><img src="https://i.postimg.cc/q7HVXR3x/6.webp" onclick="openLightbox(6)"></div>
+                    </div>
+                </div>
+                <button class="carousel-btn prev" onclick="moveCarousel(-1)"><i class="fas fa-chevron-left"></i></button>
+                <button class="carousel-btn next" onclick="moveCarousel(1)"><i class="fas fa-chevron-right"></i></button>
+                <div class="carousel-indicators" id="carouselIndicators"></div>
+            </div>
+
+            <!-- Product Info -->
+            <div class="product-info">
+                <div class="product-top">
+                    <div>
+                        <div class="stars">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span class="rating-value">4.6</span>
+                        <span class="rating-count">(892)</span>
+                    </div>
+                    <div class="sales-badge"><i class="fas fa-fire-alt"></i> 2.156 vendidos</div>
+                </div>
+
+                <h1 class="product-title">Smart TV AOC 32" LED HD 32S5155/78G Roku Wifi HDMI Dolby Audio</h1>
+                
+                <div class="product-tags">
+                    <span class="tag aoc"><i class="fas fa-certificate"></i> Original AOC</span>
+                    <span class="tag"><i class="fas fa-wifi"></i> Wi-Fi Dual Band</span>
+                    <span class="tag"><i class="fas fa-robot"></i> Roku TV</span>
+                    <span class="tag"><i class="fas fa-volume-up"></i> Dolby Audio</span>
+                    <span class="tag"><i class="fas fa-microphone-alt"></i> Alexa/Google</span>
+                </div>
+
+                <div class="price-block">
+                    <div class="price-old">De R$ 783,99</div>
+                    <div class="price-main">
+                        <span class="price-current">R$ 329<span class="price-cents">,99</span></span>
+                    </div>
+                    <div class="price-installment">
+                        <i class="fas fa-credit-card"></i> Até 2x de R$ 166,65 (juros 1,5%)
+                    </div>
+                    <div class="card-flags">
+                        <div class="card-flag"><span class="card-flag-text">VISA</span></div>
+                        <div class="card-flag"><span class="card-flag-text">MASTERCARD</span></div>
+                        <div class="card-flag"><span class="card-flag-text">ELO</span></div>
+                        <div class="card-flag"><span class="card-flag-text">AMEX</span></div>
+                    </div>
+                </div>
+
+                <button class="btn-buy" onclick="openCart()">
+                    <i class="fas fa-shopping-cart"></i> Comprar Agora
+                </button>
+
+                <div class="shipping-block">
+                    <i class="fas fa-truck"></i>
+                    <div class="shipping-text">
+                        <strong>Frete Grátis para todo Brasil</strong>
+                        <span>Entrega em até 7 dias úteis</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Description -->
+        <div class="description-section">
+            <div class="description-card">
+                <div class="desc-header"><i class="fas fa-info-circle"></i><h2>Descrição do Produto</h2></div>
+                <div class="desc-body">
+                    <p>A <strong>Smart TV AOC 32S5045/78G</strong> combina tecnologia moderna e simplicidade para transformar sua experiência de entretenimento. Com o sistema operacional <strong>Roku TV</strong>, oferece uma navegação rápida e intuitiva, reunindo milhares de aplicativos como Netflix, YouTube e Disney+ em uma única interface.</p>
+                    
+                    <div class="benefits-list">
+                        <div class="benefit-item">
+                            <div class="benefit-icon"><i class="fas fa-tv"></i></div>
+                            <div class="benefit-text">Roku TV com milhares de apps</div>
+                        </div>
+                        <div class="benefit-item">
+                            <div class="benefit-icon"><i class="fas fa-wifi"></i></div>
+                            <div class="benefit-text">Wi-Fi Dual Band estável</div>
+                        </div>
+                        <div class="benefit-item">
+                            <div class="benefit-icon"><i class="fas fa-microphone-alt"></i></div>
+                            <div class="benefit-text">Compatível com Alexa, Google e Siri</div>
+                        </div>
+                        <div class="benefit-item">
+                            <div class="benefit-icon"><i class="fas fa-headphones"></i></div>
+                            <div class="benefit-text">Dolby Audio + Audição Privada</div>
+                        </div>
+                    </div>
+
+                    <!-- Medidas -->
+                    <div class="measures-section">
+                        <h3>📊 Especificações Técnicas</h3>
+                        <div class="measures-list">
+                            <div class="measure-item"><span class="measure-label"><i class="fas fa-tv"></i> Tela</span><span class="measure-value">32" HD (1366x768)</span></div>
+                            <div class="measure-item"><span class="measure-label"><i class="fas fa-sliders-h"></i> Painel</span><span class="measure-value">DLED VA - 60Hz</span></div>
+                            <div class="measure-item"><span class="measure-label"><i class="fas fa-microchip"></i> Processador</span><span class="measure-value">Quad Core</span></div>
+                            <div class="measure-item"><span class="measure-label"><i class="fas fa-volume-up"></i> Áudio</span><span class="measure-value">10W RMS + Dolby Audio</span></div>
+                            <div class="measure-item"><span class="measure-label"><i class="fas fa-wifi"></i> Conectividade</span><span class="measure-value">Wi-Fi Dual Band (2.4/5GHz)</span></div>
+                            <div class="measure-item"><span class="measure-label"><i class="fas fa-plug"></i> Entradas</span><span class="measure-value">3x HDMI, 1x USB, 1x Ethernet</span></div>
+                            <div class="measure-item"><span class="measure-label"><i class="fas fa-ruler-combined"></i> Dimensões c/ base</span><span class="measure-value">47 x 72 x 22 cm</span></div>
+                            <div class="measure-item"><span class="measure-label"><i class="fas fa-weight-hanging"></i> Peso</span><span class="measure-value">4 kg</span></div>
+                            <div class="measure-item"><span class="measure-label"><i class="fas fa-certificate"></i> Homologação Anatel</span><span class="measure-value">02891-24-06714</span></div>
+                            <div class="measure-item"><span class="measure-label"><i class="fas fa-shield-alt"></i> Garantia</span><span class="measure-value">12 meses (fabricante)</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Itens Inclusos -->
+                    <div class="included-section">
+                        <h3><i class="fas fa-box-open"></i> Itens Inclusos</h3>
+                        <div class="included-grid">
+                            <div class="included-item">
+                                <div class="included-icon"><i class="fas fa-tv"></i></div>
+                                <div class="included-text">Smart TV AOC 32"<small>Modelo 32S5045/78G</small></div>
+                            </div>
+                            <div class="included-item">
+                                <div class="included-icon"><i class="fas fa-remote"></i></div>
+                                <div class="included-text">Controle Remoto Roku<small>Baterias inclusas</small></div>
+                            </div>
+                            <div class="included-item">
+                                <div class="included-icon"><i class="fas fa-tools"></i></div>
+                                <div class="included-text">Base com Parafusos<small>Instalação fácil</small></div>
+                            </div>
+                            <div class="included-item">
+                                <div class="included-icon"><i class="fas fa-file-contract"></i></div>
+                                <div class="included-text">Guia + Garantia<small>12 meses</small></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Qualificações -->
+        <div class="ratings-section">
+            <div class="ratings-header">
+                <h3>Avaliações do produto</h3>
+                <div class="ratings-header-subtitle">Baseado em 892 avaliações</div>
+            </div>
+            <div class="ratings-content">
+                <div class="ratings-overview">
+                    <div class="average-rating">
+                        <div class="average-number">4.6</div>
+                        <div class="average-stars">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <div class="total-ratings">892 avaliações</div>
+                    </div>
+                    <div class="rating-bars">
+                        <div class="rating-bar-item">
+                            <span class="rating-bar-label"><i class="fas fa-star"></i> 5</span>
+                            <div class="rating-bar"><div class="rating-bar-fill" style="width: 72%"></div></div>
+                            <span class="rating-bar-count">642 avaliações</span>
+                        </div>
+                        <div class="rating-bar-item">
+                            <span class="rating-bar-label"><i class="fas fa-star"></i> 4</span>
+                            <div class="rating-bar"><div class="rating-bar-fill" style="width: 18%"></div></div>
+                            <span class="rating-bar-count">161 avaliações</span>
+                        </div>
+                        <div class="rating-bar-item">
+                            <span class="rating-bar-label"><i class="fas fa-star"></i> 3</span>
+                            <div class="rating-bar"><div class="rating-bar-fill" style="width: 6%"></div></div>
+                            <span class="rating-bar-count">54 avaliações</span>
+                        </div>
+                        <div class="rating-bar-item">
+                            <span class="rating-bar-label"><i class="fas fa-star"></i> 2</span>
+                            <div class="rating-bar"><div class="rating-bar-fill" style="width: 3%"></div></div>
+                            <span class="rating-bar-count">27 avaliações</span>
+                        </div>
+                        <div class="rating-bar-item">
+                            <span class="rating-bar-label"><i class="fas fa-star"></i> 1</span>
+                            <div class="rating-bar"><div class="rating-bar-fill" style="width: 1%"></div></div>
+                            <span class="rating-bar-count">8 avaliações</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comentários -->
+        <div class="comments-section">
+            <div class="comments-header">
+                <h3>Comentários dos clientes</h3>
+                <div class="comments-filter">
+                    <button class="filter-btn active">Todas</button>
+                    <button class="filter-btn">Com fotos</button>
+                </div>
+            </div>
+            
+            <div class="comment-item">
+                <div class="comment-header">
+                    <div class="comment-avatar">R</div>
+                    <div class="comment-meta">
+                        <div class="comment-author">Ricardo Ferreira</div>
+                        <div class="comment-info">
+                            <div class="comment-stars">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                            <span class="comment-date">• 1 semana atrás</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="comment-text">
+                    Chegou super bem embalada e antes do prazo! A imagem é muito boa pra uma TV de 32", cores vivas e sem distorção. O Roku é muito fácil de usar, conectei na hora e já tava assistindo Netflix. Wi-Fi Dual Band não trava nem com a internet cheia. Recomendo demais! 📺✨
+                </div>
+                <div class="comment-images">
+                    <div class="comment-image"><img src="https://i.postimg.cc/2SQmthmv/br-11134103-820lc-mmt8e7v0ldkxef-resize-w144-nl.webp" alt="Foto 1"></div>
+                    <div class="comment-image"><img src="https://i.postimg.cc/pTTHySj0/br-11134103-820mf-mmt8e7v0ms5d3c-resize-w144-nl.webp" alt="Foto 2"></div>
+                    <div class="comment-image"><img src="https://i.postimg.cc/cCtGB8XK/br-11134103-820mh-mmt8e7v7dsef7e-resize-w144-nl.webp" alt="Foto 3"></div>
+                </div>
+                <div class="comment-footer">
+                    <div class="comment-action"><i class="far fa-thumbs-up"></i> Útil (73)</div>
+                    <div class="comment-action"><i class="far fa-comment"></i> Responder</div>
+                </div>
+            </div>
+
+            <div class="comment-item">
+                <div class="comment-header">
+                    <div class="comment-avatar" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">P</div>
+                    <div class="comment-meta">
+                        <div class="comment-author">Patrícia Almeida</div>
+                        <div class="comment-info">
+                            <div class="comment-stars">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="comment-date">• 3 dias atrás</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="comment-text">
+                    Comprei pro quarto e ficou perfeita! O design slim com bordas finas deixa o ambiente mais moderno. A função de audição privada pelo app do Roku é genial pra não acordar ninguém. Único ponto: o som poderia ser um pouco mais potente, mas com Dolby Audio dá pra ouvir bem. Vale muito a pena pelo preço! 🎬
+                </div>
+                <div class="comment-images">
+                    <div class="comment-image"><img src="https://i.postimg.cc/XXMSH7z2/br-11134103-820m9-mmvymi8blk3lb6-resize-w144-nl.webp" alt="Foto 1"></div>
+                    <div class="comment-image"><img src="https://i.postimg.cc/59DXd5df/br-11134103-820ma-mmtjsb51hjwnfa-resize-w144-nl.webp" alt="Foto 2"></div>
+                </div>
+                <div class="comment-footer">
+                    <div class="comment-action"><i class="far fa-thumbs-up"></i> Útil (45)</div>
+                    <div class="comment-action"><i class="far fa-comment"></i> Responder</div>
+                </div>
+            </div>
+
+            <a href="comentarios5.html" class="see-more-comments">
+                Ver todos os comentários <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- FOOTER PREMIUM COMPLETO -->
+    <footer class="footer">
+        <div class="footer-main">
+            <div class="footer-brand">
+                <a href="#" class="logo">
+                    <div class="logo-icon"><i class="fas fa-tv"></i></div>
+                    <div>
+                        <div class="logo-name">SoundPro</div>
+                        <div class="logo-tagline">Distribuidora de Eletrônicos</div>
+                    </div>
+                </a>
+                <div class="footer-company">
+                    <strong>GOB DISTRIBUIDORA (Luz & Ordem)</strong><br>
+                    GALPÃO AZUL - RUA AGENOR PEREIRA DA COSTA, 270A<br>
+                    JARDIM ALVORADA - JANDIRA, SP<br>
+                    CEP: 06612-220<br>
+                    CNPJ: 50.742.088/0001-95
+                </div>
+            </div>
+            
+            <!-- Payment Methods -->
+            <div class="payment-methods">
+                <div class="payment-methods-title">Formas de Pagamento</div>
+                <div class="payment-icons">
+                    <div class="card-flag-footer visa"><span>VISA</span></div>
+                    <div class="card-flag-footer mastercard"><div class="circle-red"></div><div class="circle-overlap"></div><div class="circle-yellow"></div></div>
+                    <div class="card-flag-footer elo"><span>ELO</span></div>
+                    <div class="card-flag-footer amex"><span>AMEX</span></div>
+                    <div class="card-flag-footer pix"><span>PIX</span></div>
+                </div>
+            </div>
+
+            <!-- Social Share -->
+            <div class="social-share">
+                <div class="social-share-title">Compartilhar</div>
+                <div class="social-icons">
+                    <a href="#" class="social-icon whatsapp" onclick="shareOnSocial('whatsapp'); return false;"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" class="social-icon facebook" onclick="shareOnSocial('facebook'); return false;"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon twitter" onclick="shareOnSocial('twitter'); return false;"><i class="fab fa-x-twitter"></i></a>
+                    <a href="#" class="social-icon instagram" onclick="shareOnSocial('instagram'); return false;"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon telegram" onclick="shareOnSocial('telegram'); return false;"><i class="fab fa-telegram-plane"></i></a>
+                    <a href="#" class="social-icon linkedin" onclick="shareOnSocial('linkedin'); return false;"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="social-icon pinterest" onclick="shareOnSocial('pinterest'); return false;"><i class="fab fa-pinterest-p"></i></a>
+                    <a href="#" class="social-icon copy" onclick="copyLink(); return false;"><i class="fas fa-link"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 SoundPro — GOB DISTRIBUIDORA — Todos os direitos reservados</p>
+        </div>
+    </footer>
+
+    <!-- WHATSAPP FLOATING BUTTON -->
+    <a href="zap.html" class="whatsapp-float" title="Fale conosco pelo WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- CART MODAL -->
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h3><i class="fas fa-shopping-cart"></i> Carrinho</h3>
+                <button class="cart-close" onclick="closeCart()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="cart-body" id="cartBody">
+                <div class="cart-item">
+                    <div class="cart-item-header">
+                        <div class="cart-item-image"><img src="5s.webp" alt="Produto"></div>
+                        <div class="cart-item-details">
+                            <div class="cart-item-title">Smart TV AOC 32" Roku</div>
+                            <div class="cart-item-price">R$ 329,99</div>
+                            
+                            <!-- Color Selection - Only Black Available -->
+                            <div class="color-selection">
+                                <span class="color-label">Cor:</span>
+                                <div class="color-options">
+                                    <label class="color-option">
+                                        <input type="radio" name="color" value="preto" checked>
+                                        <div class="color-box black"></div>
+                                        <div class="color-name">Preto</div>
+                                    </label>
+                                    <label class="color-option disabled">
+                                        <input type="radio" name="color" value="branco" disabled>
+                                        <div class="color-box white"><span class="out-of-stock">Esgotado</span></div>
+                                        <div class="color-name">Branco</div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="cart-quantity">
+                                <button class="qty-btn" onclick="changeQty(-1)">-</button>
+                                <span class="qty-value" id="qtyValue">1</span>
+                                <button class="qty-btn" onclick="changeQty(1)">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cart-footer">
+                <div class="cart-total"><span>Total:</span><span class="cart-total-value" id="cartTotal">R$ 329,99</span></div>
+                <button class="btn-checkout" onclick="checkout()"><i class="fas fa-lock"></i> Finalizar Compra</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <div class="lightbox-header">
+                <h3>Galeria</h3>
+                <button class="lightbox-close" onclick="closeLightbox()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="lightbox-main-image"><img id="lightboxImg" src="5s.webp"></div>
+            <div class="lightbox-thumbnails" id="lightboxThumbs"></div>
+        </div>
+    </div>
+
+    <script>
+        // Array de imagens
+        const images = [
+            "5s.webp",
+            "https://i.postimg.cc/L6FtSFLx/1.webp",
+            "https://i.postimg.cc/GmVh0dsr/2.webp",
+            "https://i.postimg.cc/pVCWWDnc/3.webp",
+            "https://i.postimg.cc/Ssq4qsQY/4.webp",
+            "https://i.postimg.cc/c46SdPW1/5.webp",
+            "https://i.postimg.cc/q7HVXR3x/6.webp"
+        ];
+        
+        let current = 0;
+        let cartQty = 1;
+        const price = 329.99;
+        const maxStock = 35;
+
+        // Carousel
+        const indContainer = document.getElementById('carouselIndicators');
+        const lbThumbs = document.getElementById('lightboxThumbs');
+
+        images.forEach((src, i) => {
+            const ind = document.createElement('button');
+            ind.className = 'indicator' + (i===0?' active':'');
+            ind.onclick = () => { current=i; update(); };
+            indContainer.appendChild(ind);
+            const lbThumb = document.createElement('img');
+            lbThumb.src = src;
+            lbThumb.className = i===0?'active':'';
+            lbThumb.onclick = () => { current=i; updateLightbox(); };
+            lbThumbs.appendChild(lbThumb);
+        });
+
+        function update() {
+            document.getElementById('carouselTrack').style.transform = `translateX(-${current*100}%)`;
+            document.querySelectorAll('.indicator').forEach((d,i) => d.classList.toggle('active', i===current));
+        }
+
+        function moveCarousel(dir) {
+            current = (current + dir + images.length) % images.length;
+            update();
+        }
+
+        // Touch
+        let tx = 0;
+        document.getElementById('carouselTrack').addEventListener('touchstart', e => tx = e.changedTouches[0].screenX);
+        document.getElementById('carouselTrack').addEventListener('touchend', e => {
+            const diff = tx - e.changedTouches[0].screenX;
+            if (Math.abs(diff) > 50) moveCarousel(diff > 0 ? 1 : -1);
+        });
+
+        // Lightbox
+        function openLightbox(idx) {
+            current = idx;
+            updateLightbox();
+            document.getElementById('lightbox').classList.add('active');
+        }
+
+        function updateLightbox() {
+            document.getElementById('lightboxImg').src = images[current];
+            document.querySelectorAll('.lightbox-thumbnails img').forEach((d,i) => d.classList.toggle('active', i===current));
+        }
+
+        function closeLightbox() { document.getElementById('lightbox').classList.remove('active'); }
+
+        // Menu
+        function toggleMenu() {
+            document.querySelector('.mobile-menu').classList.toggle('active');
+            document.querySelector('.mobile-menu-overlay').classList.toggle('active');
+        }
+
+        // Cart
+        function openCart() { updateCart(); document.getElementById('cartModal').classList.add('active'); }
+        function closeCart() { document.getElementById('cartModal').classList.remove('active'); }
+
+        function updateCart() {
+            const total = (price * cartQty).toFixed(2).replace('.', ',');
+            document.getElementById('cartTotal').textContent = `R$ ${total}`;
+            document.getElementById('qtyValue').textContent = cartQty;
+        }
+
+        function changeQty(delta) {
+            const newQty = cartQty + delta;
+            if (newQty < 1) { showToast('Quantidade mínima é 1'); return; }
+            if (newQty > maxStock) { showToast(`Estoque limitado a ${maxStock} unidades`); return; }
+            cartQty = newQty;
+            updateCart();
+        }
+
+        function checkout() {
+            const colorInput = document.querySelector('input[name="color"]:checked');
+            const color = colorInput ? colorInput.value : 'preto';
+            const total = (price * cartQty).toFixed(2);
+            const params = new URLSearchParams({
+                produto: 'Smart TV AOC 32 Roku',
+                foto: '5s.webp',
+                quantidade: cartQty,
+                cor: color,
+                total: total
+            });
+            window.location.href = `checkout.html?${params.toString()}`;
+        }
+
+        // Share
+        function shareOnSocial(network) {
+            const url = encodeURIComponent(window.location.href);
+            const title = encodeURIComponent('SoundPro - Smart TV AOC 32"');
+            const text = encodeURIComponent('Smart TV AOC 32" Roku - Apenas R$ 329,99!');
+            let shareUrl = '';
+            switch(network) {
+                case 'whatsapp': shareUrl = `https://wa.me/?text=${title}%20${text}%20${url}`; break;
+                case 'facebook': shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`; break;
+                case 'twitter': shareUrl = `https://twitter.com/intent/tweet?text=${text}&url=${url}`; break;
+                case 'instagram': copyLink(); showToast('Link copiado! Cole no Instagram Stories ou Direct.'); return;
+                case 'telegram': shareUrl = `https://t.me/share/url?url=${url}&text=${text}`; break;
+                case 'linkedin': shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`; break;
+                case 'pinterest': shareUrl = `https://pinterest.com/pin/create/button/?url=${url}&description=${text}`; break;
+            }
+            if (shareUrl) window.open(shareUrl, '_blank', 'width=600,height=400');
+        }
+
+        // Copy link
+        function copyLink() {
+            const url = window.location.href;
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(url).then(() => showToast('Link copiado!')).catch(() => fallbackCopy(url));
+            } else { fallbackCopy(url); }
+        }
+
+        function fallbackCopy(text) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus(); textArea.select();
+            try { document.execCommand('copy'); showToast('Link copiado!'); }
+            catch (err) { showToast('Copie manualmente.'); }
+            document.body.removeChild(textArea);
+        }
+
+        // Toast
+        function showToast(msg) {
+            const ex = document.querySelector('.toast');
+            if (ex) ex.remove();
+            const t = document.createElement('div');
+            t.className = 'toast';
+            t.innerHTML = `<i class="fas fa-info-circle" style="color:#60a5fa;"></i> ${msg}`;
+            document.body.appendChild(t);
+            setTimeout(() => { t.style.opacity='0'; t.style.transition='opacity .3s'; setTimeout(()=>t.remove(),300); }, 3000);
+        }
+
+        document.getElementById('cartModal').addEventListener('click', function(e) { if (e.target === this) closeCart(); });
+        update();
+    </script>
+</body>
+</html>
