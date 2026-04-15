@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Análise de Pagamento - SoundPro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #ec4899;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+            --whatsapp: #25d366;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--darker);
+            color: var(--light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 80px; /* Espaço para o float button */
+        }
+
+        /* Header Simplificado */
+        .header {
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .logo-mini {
+            font-size: 22px;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .main-container {
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+            flex: 1;
+        }
+
+        /* Card de Status Principal */
+        .status-card {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-align: center;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .status-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient);
+        }
+
+        .icon-pending {
+            width: 80px;
+            height: 80px;
+            background: rgba(245, 158, 11, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: var(--warning);
+            font-size: 36px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(245, 158, 11, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .status-subtitle {
+            font-size: 15px;
+            color: #cbd5e1;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .alert-box {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            text-align: left;
+            margin-top: 15px;
+        }
+
+        .alert-box i {
+            color: var(--warning);
+            font-size: 18px;
+            margin-top: 2px;
+        }
+
+        .alert-text {
+            font-size: 13px;
+            color: #fcd34d;
+            line-height: 1.4;
+        }
+
+        .alert-text strong {
+            display: block;
+            margin-bottom: 4px;
+            color: #fbbf24;
+            font-size: 14px;
+        }
+
+        /* Timeline de Passos */
+        .timeline {
+            position: relative;
+            padding: 10px 0;
+            margin: 30px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 24px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .step {
+            position: relative;
+            padding-left: 60px;
+            margin-bottom: 25px;
+            opacity: 0.5;
+            transition: all 0.3s;
+        }
+
+        .step.active {
+            opacity: 1;
+        }
+
+        .step.completed {
+            opacity: 1;
+        }
+
+        .step-icon {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 50px;
+            height: 50px;
+            background: var(--darker);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            font-size: 18px;
+            color: var(--gray);
+            transition: all 0.3s;
+        }
+
+        .step.active .step-icon {
+            border-color: var(--warning);
+            color: var(--warning);
+            background: rgba(245, 158, 11, 0.1);
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.2);
+        }
+
+        .step.completed .step-icon {
+            border-color: var(--success);
+            background: var(--success);
+            color: white;
+        }
+
+        .step-content h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: white;
+        }
+
+        .step-content p {
+            font-size: 13px;
+            color: var(--gray);
+        }
+
+        .step.active .step-content p {
+            color: #cbd5e1;
+        }
+
+        /* Botão de Ação */
+        .btn-action {
+            width: 100%;
+            padding: 16px;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 25px;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+            transition: transform 0.2s;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-action:active {
+            transform: scale(0.98);
+        }
+
+        /* WhatsApp Float */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 1000;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+            text-decoration: none;
+            box-shadow: 0 6px 24px rgba(37,211,102,0.4);
+            transition: all 0.3s ease;
+            animation: whatsappPulse 3s infinite;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 28px rgba(37,211,102,0.6);
+        }
+
+        @keyframes whatsappPulse {
+            0%, 100% { box-shadow: 0 6px 24px rgba(37,211,102,0.4); }
+            50% { box-shadow: 0 6px 32px rgba(37,211,102,0.6), 0 0 0 10px rgba(37,211,102,0.1); }
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #475569;
+            margin-top: auto;
+        }
+
+        @media (max-width: 480px) {
+            .main-container { padding: 15px; }
+            h1 { font-size: 20px; }
+            .step { padding-left: 50px; }
+            .step-icon { width: 40px; height: 40px; font-size: 16px; left: 5px; }
+            .timeline::before { left: 24.5px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo-mini">
+            <i class="fas fa-music"></i> SoundPro
+        </div>
+    </header>
+
+    <div class="main-container">
+        
+        <!-- Card de Status -->
+        <div class="status-card">
+            <div class="icon-pending">
+                <i class="fas fa-hourglass-half"></i>
+            </div>
+            <h1>Pagamento em Análise</h1>
+            <p class="status-subtitle">Recebemos seu pedido! Estamos aguardando a confirmação bancária para liberar sua entrega.</p>
+            
+            <div class="alert-box">
+                <i class="fas fa-info-circle"></i>
+                <div class="alert-text">
+                    <strong>Atenção: Prazo de Compensação</strong>
+                    Dependendo da instituição financeira, a aprovação pode levar até <strong>72 horas úteis</strong>. Assim que confirmado, você receberá um aviso imediato.
+                </div>
+            </div>
+        </div>
+
+        <!-- Timeline de Passos -->
+        <div class="timeline">
+            <!-- Passo 1: Concluído -->
+            <div class="step completed">
+                <div class="step-icon">
+                    <i class="fas fa-check"></i>
+                </div>
+                <div class="step-content">
+                    <h3>Pedido Recebido</h3>
+                    <p>Seus dados foram capturados com sucesso.</p>
+                </div>
+            </div>
+
+            <!-- Passo 2: Ativo (Atual) -->
+            <div class="step active">
+                <div class="step-icon">
+                    <i class="fas fa-university"></i>
+                </div>
+                <div class="step-content">
+                    <h3>Análise Bancária</h3>
+                    <p>Aguardando liberação dos fundos pelo banco/emissor.</p>
+                </div>
+            </div>
+
+            <!-- Passo 3: Pendente -->
+            <div class="step">
+                <div class="step-icon">
+                    <i class="fas fa-box-open"></i>
+                </div>
+                <div class="step-content">
+                    <h3>Preparação para Envio</h3>
+                    <p>Separação e embalagem do produto no galpão.</p>
+                </div>
+            </div>
+
+            <!-- Passo 4: Pendente -->
+            <div class="step">
+                <div class="step-icon">
+                    <i class="fas fa-truck-fast"></i>
+                </div>
+                <div class="step-content">
+                    <h3>Entrega em Andamento</h3>
+                    <p>Seu produto chegará ao endereço cadastrado.</p>
+                </div>
+            </div>
+        </div>
+
+        <a href="index.html" class="btn-action">
+            <i class="fas fa-home"></i> Voltar ao Início
+        </a>
+
+    </div>
+
+    <footer class="footer">
+        &copy; 2026 SoundPro — GOB DISTRIBUIDORA<br>
+        Todos os direitos reservados.
+    </footer>
+
+    <!-- Botão Flutuante WhatsApp -->
+    <a href="zap.html" class="whatsapp-float" title="Fale conosco no WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+</body>
+</html>

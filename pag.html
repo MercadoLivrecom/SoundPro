@@ -24,6 +24,21 @@
             --warning: #f59e0b;
             --bg-body: #f0f2f5;
             --whatsapp: #25d366;
+            /* Cores do modal cartão - Light */
+            --card-modal-bg: #ffffff;
+            --card-modal-text: #1e293b;
+            --card-modal-input-bg: #f8fafc;
+            --card-modal-input-border: #e2e8f0;
+            --card-modal-shadow: rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Tema Escuro para Modal Cartão */
+        .dark-theme {
+            --card-modal-bg: #1e293b;
+            --card-modal-text: #f1f5f9;
+            --card-modal-input-bg: #334155;
+            --card-modal-input-border: #475569;
+            --card-modal-shadow: rgba(0, 0, 0, 0.4);
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -940,9 +955,11 @@
             to { transform: translateY(0); }
         }
         
-        /* === MODAL CARTÃO COMPACTO === */
+        /* === MODAL CARTÃO COMPACTO - DESIGN ATUALIZADO === */
         .card-modal-box {
             padding: 16px 18px 20px;
+            background: var(--card-modal-bg);
+            color: var(--card-modal-text);
         }
         
         .card-handle {
@@ -953,39 +970,172 @@
             margin: 0 auto 12px;
         }
         
+        .dark-theme .card-handle {
+            background: #64748b;
+        }
+        
         .card-modal-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
             margin-bottom: 14px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--card-modal-input-border);
         }
         
         .card-modal-header h3 {
             font-size: 17px;
             font-weight: 700;
-            color: var(--dark);
+            color: var(--card-modal-text);
             margin: 0;
             text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .card-modal-header h3 i {
+            color: var(--primary);
+        }
+        
+        .card-theme-toggle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--card-modal-input-bg);
+            border: 1px solid var(--card-modal-input-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--card-modal-text);
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .card-theme-toggle:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
         }
         
         .card-close-btn {
             width: 32px;
             height: 32px;
             border-radius: 50%;
-            background: #f1f5f9;
-            border: none;
+            background: var(--card-modal-input-bg);
+            border: 1px solid var(--card-modal-input-border);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--gray);
+            color: var(--card-modal-text);
             font-size: 16px;
             cursor: pointer;
             transition: all 0.2s;
         }
         
         .card-close-btn:hover {
-            background: #e2e8f0;
-            color: var(--dark);
+            background: var(--danger);
+            color: white;
+            border-color: var(--danger);
+        }
+        
+        /* Card Preview Visual */
+        .card-preview {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            min-height: 160px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .card-preview::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(99,102,241,0.3) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        
+        .card-preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        
+        .card-brand-display {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .card-chip {
+            width: 40px;
+            height: 30px;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            border-radius: 6px;
+            position: relative;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .card-chip::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 20px;
+            border: 2px solid rgba(0,0,0,0.2);
+            border-radius: 3px;
+        }
+        
+        .card-number-display {
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .card-number-display.placeholder {
+            color: rgba(255,255,255,0.5);
+        }
+        
+        .card-footer-display {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        
+        .card-name-display, .card-expiry-display {
+            font-size: 11px;
+            text-transform: uppercase;
+            opacity: 0.9;
+        }
+        
+        .card-name-display span, .card-expiry-display span {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 2px;
+        }
+        
+        .card-name-display.placeholder span,
+        .card-expiry-display.placeholder span {
+            color: rgba(255,255,255,0.5);
         }
         
         .card-input-group {
@@ -996,33 +1146,44 @@
             display: block;
             font-size: 12px;
             font-weight: 600;
-            color: #475569;
+            color: var(--card-modal-text);
             margin-bottom: 4px;
+            opacity: 0.9;
         }
         
         .card-input-group input {
             width: 100%;
             padding: 11px 14px;
-            border: 2px solid #e2e8f0;
+            border: 2px solid var(--card-modal-input-border);
             border-radius: 10px;
             font-size: 15px;
             transition: all 0.2s;
             font-family: 'Inter', sans-serif;
+            background: var(--card-modal-input-bg);
+            color: var(--card-modal-text);
         }
         
         .card-input-group input:focus {
             border-color: var(--primary);
             outline: none;
-            box-shadow: 0 0 0 3px rgba(99,102,241,0.1);
+            box-shadow: 0 0 0 3px rgba(99,102,241,0.2);
         }
         
         .card-input-group input.input-error {
             border-color: var(--danger);
-            background: #fef2f2;
+            background: rgba(239, 68, 68, 0.1);
+            animation: shake 0.3s ease;
         }
         
         .card-input-group input.input-success {
             border-color: var(--success);
+            background: rgba(16, 185, 129, 0.1);
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-4px); }
+            75% { transform: translateX(4px); }
         }
         
         .card-error-msg {
@@ -1032,17 +1193,25 @@
             display: none;
             align-items: center;
             gap: 4px;
-            animation: shakeIn 0.3s ease;
         }
         
         .card-error-msg.show {
             display: flex;
+            animation: fadeIn 0.2s ease;
         }
         
-        @keyframes shakeIn {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-4px); }
-            75% { transform: translateX(4px); }
+        .card-success-msg {
+            font-size: 11px;
+            color: var(--success);
+            margin-top: 3px;
+            display: none;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .card-success-msg.show {
+            display: flex;
+            animation: fadeIn 0.2s ease;
         }
         
         .input-with-icon {
@@ -1053,18 +1222,73 @@
             padding-right: 46px;
         }
         
-        .input-with-icon .card-brand-icon {
+        .card-brand-icon {
             position: absolute;
             right: 12px;
             top: 50%;
             transform: translateY(-50%);
             font-size: 22px;
-            color: #cbd5e1;
+            color: #94a3b8;
+            transition: all 0.3s;
+            pointer-events: none;
+        }
+        
+        .card-brand-icon.active {
+            color: var(--primary);
+            animation: pulse 0.5s ease;
+        }
+        
+        @keyframes pulse {
+            0% { transform: translateY(-50%) scale(1); }
+            50% { transform: translateY(-50%) scale(1.2); }
+            100% { transform: translateY(-50%) scale(1); }
+        }
+        
+        /* Validade do Cartão - Barra de Status */
+        .card-validation-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 8px 0 12px;
+            padding: 8px 12px;
+            background: var(--card-modal-input-bg);
+            border-radius: 8px;
+            border: 1px solid var(--card-modal-input-border);
+            font-size: 12px;
+        }
+        
+        .validation-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--gray);
             transition: all 0.3s;
         }
         
-        .input-with-icon .card-brand-icon.active {
-            color: var(--primary);
+        .validation-dot.valid {
+            background: var(--success);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+        }
+        
+        .validation-dot.invalid {
+            background: var(--danger);
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+        }
+        
+        .validation-text {
+            flex: 1;
+            color: var(--card-modal-text);
+            opacity: 0.9;
+        }
+        
+        .validation-text.valid {
+            color: var(--success);
+            font-weight: 600;
+        }
+        
+        .validation-text.invalid {
+            color: var(--danger);
+            font-weight: 600;
         }
         
         .card-row {
@@ -1077,17 +1301,21 @@
         }
         
         .installment-section {
-            background: #f8fafc;
+            background: var(--card-modal-input-bg);
             border-radius: 10px;
             padding: 12px;
             margin: 12px 0;
+            border: 1px solid var(--card-modal-input-border);
         }
         
         .installment-section h4 {
             font-size: 13px;
             font-weight: 700;
-            color: var(--dark);
+            color: var(--card-modal-text);
             margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
         
         .installment-options {
@@ -1101,8 +1329,8 @@
             align-items: center;
             gap: 10px;
             padding: 10px 12px;
-            background: white;
-            border: 2px solid #e2e8f0;
+            background: var(--card-modal-bg);
+            border: 2px solid var(--card-modal-input-border);
             border-radius: 10px;
             cursor: pointer;
             transition: all 0.2s;
@@ -1110,12 +1338,12 @@
         
         .installment-option:hover {
             border-color: var(--primary);
-            background: rgba(99,102,241,0.03);
+            background: rgba(99,102,241,0.05);
         }
         
         .installment-option.selected {
             border-color: var(--primary);
-            background: rgba(99,102,241,0.08);
+            background: rgba(99,102,241,0.1);
         }
         
         .installment-option input {
@@ -1128,7 +1356,7 @@
         .installment-option span {
             flex: 1;
             font-size: 13px;
-            color: var(--dark);
+            color: var(--card-modal-text);
         }
         
         .installment-option span small {
@@ -1149,16 +1377,29 @@
             align-items: center;
         }
         
+        .dark-theme .card-total-bar {
+            background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
+            border-color: #059669;
+        }
+        
         .card-total-bar span:first-child {
             font-size: 14px;
             color: #166534;
             font-weight: 600;
         }
         
+        .dark-theme .card-total-bar span:first-child {
+            color: #6ee7b7;
+        }
+        
         .card-total-bar span:last-child {
             font-size: 18px;
             font-weight: 800;
             color: #166534;
+        }
+        
+        .dark-theme .card-total-bar span:last-child {
+            color: #6ee7b7;
         }
         
         .btn-confirm-card {
@@ -1187,6 +1428,13 @@
         
         .btn-confirm-card:active {
             transform: translateY(0);
+        }
+        
+        .btn-confirm-card:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
         }
         
         /* Footer */
@@ -1459,6 +1707,8 @@
             .card-flag-footer.mastercard .circle-overlap { width: 20px; height: 20px; }
             .social-icons { gap: 10px; }
             .social-icon { width: 40px; height: 40px; font-size: 18px; }
+            .card-preview { padding: 16px; min-height: 140px; }
+            .card-number-display { font-size: 18px; }
         }
     </style>
 </head>
@@ -1613,11 +1863,11 @@
     <!-- Modal Código Promocional -->
     <div id="promoModal" class="modal-overlay">
         <div class="modal-box">
-            <h3 class="modal-title">🔐 Código Promocional Obrigatório</h3>
+            <h3 class="modal-title"> Código Promocional Obrigatório</h3>
             <p class="modal-subtitle">
                 <strong>Atenção:</strong> A SoundPro trabalha com <span style="color:var(--primary)">estoque controlado</span>.<br><br>
                 Nossos produtos são limitados e vendidos <strong>exclusivamente</strong> através de revendedores autorizados.<br><br>
-                📞 Entre em contato com quem lhe indicou para obter seu código de 4 dígitos.
+                 Entre em contato com quem lhe indicou para obter seu código de 4 dígitos.
             </p>
             <input type="text" id="modalPromoInput" class="modal-input" placeholder="____" maxlength="4" autocomplete="off">
             <div class="modal-buttons">
@@ -1628,15 +1878,39 @@
         </div>
     </div>
     
-    <!-- Modal Cartão Compacto -->
+    <!-- Modal Cartão Compacto - ATUALIZADO -->
     <div id="cardModal" class="modal-overlay">
-        <div class="modal-box card-modal-box">
+        <div class="modal-box card-modal-box" id="cardModalBox">
             <div class="card-handle"></div>
             <div class="card-modal-header">
-                <h3>💳 Dados do Cartão</h3>
-                <button class="card-close-btn" onclick="closeCardModal()">
-                    <i class="fas fa-times"></i>
-                </button>
+                <h3><i class="fas fa-credit-card"></i> Dados do Cartão</h3>
+                <div style="display: flex; gap: 8px; align-items: center;">
+                    <button class="card-theme-toggle" onclick="toggleCardTheme()" title="Alternar tema">
+                        <i class="fas fa-moon" id="themeIcon"></i>
+                    </button>
+                    <button class="card-close-btn" onclick="closeCardModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Preview Visual do Cartão -->
+            <div class="card-preview">
+                <div class="card-preview-header">
+                    <div class="card-brand-display" id="previewBrand">VISA</div>
+                    <div class="card-chip"></div>
+                </div>
+                <div class="card-number-display placeholder" id="previewNumber">•••• •••• •••• ••••</div>
+                <div class="card-footer-display">
+                    <div class="card-name-display placeholder">
+                        TITULAR
+                        <span id="previewName">NOME DO CARTÃO</span>
+                    </div>
+                    <div class="card-expiry-display placeholder">
+                        VALIDADE
+                        <span id="previewExpiry">MM/AA</span>
+                    </div>
+                </div>
             </div>
             
             <div class="card-input-group">
@@ -1645,12 +1919,17 @@
                     <input type="text" id="cardNumber" placeholder="0000 0000 0000 0000" maxlength="19" autocomplete="cc-number">
                     <i class="fas fa-credit-card card-brand-icon" id="cardBrandIcon"></i>
                 </div>
+                <div class="card-validation-bar">
+                    <div class="validation-dot" id="validationDot"></div>
+                    <span class="validation-text" id="validationText">Digite o número do cartão</span>
+                </div>
                 <div class="card-error-msg" id="cardNumberError"><i class="fas fa-exclamation-circle"></i> <span></span></div>
+                <div class="card-success-msg" id="cardNumberSuccess"><i class="fas fa-check-circle"></i> <span>Cartão válido!</span></div>
             </div>
             
             <div class="card-input-group">
-                <label>Nome Impresso (Opcional)</label>
-                <input type="text" id="cardName" placeholder="NOME NO CARTÃO" maxlength="26" autocomplete="cc-name">
+                <label>Nome Impresso no Cartão (Opcional)</label>
+                <input type="text" id="cardName" placeholder="NOME COMO ESTÁ NO CARTÃO" maxlength="26" autocomplete="cc-name">
                 <div class="card-error-msg" id="cardNameError"><i class="fas fa-exclamation-circle"></i> <span></span></div>
             </div>
             
@@ -1662,21 +1941,21 @@
                 </div>
                 <div class="card-input-group">
                     <label>CVV</label>
-                    <input type="text" id="cardCVV" placeholder="123" maxlength="4" autocomplete="cc-csc">
+                    <input type="password" id="cardCVV" placeholder="•••" maxlength="4" autocomplete="cc-csc">
                     <div class="card-error-msg" id="cardCVVError"><i class="fas fa-exclamation-circle"></i> <span></span></div>
                 </div>
             </div>
             
             <div class="installment-section">
-                <h4>Parcelamento</h4>
+                <h4><i class="fas fa-calculator"></i> Parcelamento</h4>
                 <div class="installment-options">
                     <label class="installment-option selected" onclick="selectInstallment(1)">
                         <input type="radio" name="installments" value="1" checked>
-                        <span>1x de <strong id="install1x">R$ 0,00</strong></span>
+                        <span>1x de <strong id="install1x">R$ 0,00</strong> <small>sem juros</small></span>
                     </label>
                     <label class="installment-option" onclick="selectInstallment(2)">
                         <input type="radio" name="installments" value="2">
-                        <span>2x de <strong id="install2x">R$ 0,00</strong> <small>(+1.4% taxa)</small></span>
+                        <span>2x de <strong id="install2x">R$ 0,00</strong> <small>+1.5% taxa</small></span>
                     </label>
                 </div>
             </div>
@@ -1686,7 +1965,7 @@
                 <span id="cardFinalTotal">R$ 0,00</span>
             </div>
             
-            <button class="btn-confirm-card" onclick="confirmCard()">
+            <button class="btn-confirm-card" id="btnConfirmCard" onclick="confirmCard()">
                 <i class="fas fa-check-circle"></i> Salvar Cartão
             </button>
         </div>
@@ -1770,6 +2049,66 @@
             info(msg, title) { this.show({ type: 'info', message: msg, title }); }
         };
         
+        // === SISTEMA DE VALIDAÇÃO DE CARTÃO ===
+        const CardValidator = {
+            // Algoritmo de Luhn para validar número de cartão
+            luhnCheck(cardNumber) {
+                const digits = cardNumber.replace(/\D/g, '').split('').reverse();
+                let sum = 0;
+                for (let i = 0; i < digits.length; i++) {
+                    let digit = parseInt(digits[i]);
+                    if (i % 2 === 1) {
+                        digit *= 2;
+                        if (digit > 9) digit -= 9;
+                    }
+                    sum += digit;
+                }
+                return sum % 10 === 0;
+            },
+            
+            // Detectar bandeira do cartão
+            detectBrand(cardNumber) {
+                const num = cardNumber.replace(/\D/g, '');
+                const brands = {
+                    visa: /^4[0-9]{12}(?:[0-9]{3})?$/,
+                    mastercard: /^5[1-5][0-9]{14}$|^2(22[1-9]|2[3-9][0-9]|[3-6][0-9]{2}|7[01][0-9]|720)[0-9]{12}$/,
+                    amex: /^3[47][0-9]{13}$/,
+                    elo: /^((4011[789]|4389|4514|4573|5041|5067|6277|6363|6500|6504|6516|6550)[0-9]{0,14}|(4312|4389|4576|4576|5041|5067|5090|6277|6363|6500|6504|6516|6550)[0-9]{0,12}|(5041|5067|5090|6277|6363|6500|6504|6516|6550)[0-9]{0,10})$/,
+                    hipercard: /^(606282\d{10}(\d{3})?)|(3841\d{11})$/,
+                    diners: /^3(?:0[0-5]|[68][0-9])[0-9]{11}$/
+                };
+                
+                for (let [brand, regex] of Object.entries(brands)) {
+                    if (regex.test(num)) return brand;
+                }
+                return 'unknown';
+            },
+            
+            // Formatar número do cartão com espaços
+            formatCardNumber(value) {
+                return value.replace(/\D/g, '').replace(/(\d{4})(?=\d)/g, '$1 ').trim().substring(0, 19);
+            },
+            
+            // Validar data de validade
+            validateExpiry(expiry) {
+                const [month, year] = expiry.split('/');
+                if (!month || !year || month.length !== 2 || year.length !== 2) return false;
+                const m = parseInt(month), y = parseInt(year);
+                if (m < 1 || m > 12) return false;
+                const now = new Date();
+                const currentYear = now.getFullYear() % 100;
+                const currentMonth = now.getMonth() + 1;
+                return (y > currentYear) || (y === currentYear && m >= currentMonth);
+            },
+            
+            // Formatar data MM/AA
+            formatExpiry(value) {
+                let v = value.replace(/\D/g, '').substring(0, 4);
+                if (v.length >= 2) v = v.substring(0, 2) + '/' + v.substring(2);
+                return v;
+            }
+        };
+        
         document.addEventListener('DOMContentLoaded', function() {
             Toast.init();
             
@@ -1779,14 +2118,17 @@
             let selectedMethod = null;
             let baseTotal = base;
             let cardData = null;
+            let isDarkTheme = false;
             
             const modal = document.getElementById('promoModal');
             const cardModal = document.getElementById('cardModal');
+            const cardModalBox = document.getElementById('cardModalBox');
             const mainWrapper = document.getElementById('mainWrapper');
             const btnFinalize = document.getElementById('btnFinalize');
             const modalInput = document.getElementById('modalPromoInput');
             const modalStatus = document.getElementById('modalStatus');
             
+            // Preencher dados do pedido
             document.getElementById('orderImg').src = params.get('foto') || '1s.webp';
             document.getElementById('orderTitle').textContent = params.get('produto') || 'Produto';
             const qty = params.get('quantidade') || 1;
@@ -1822,6 +2164,7 @@
             document.getElementById('addonFast').addEventListener('change', calcTotal);
             calcTotal();
             
+            // Seleção de método de pagamento
             document.querySelectorAll('.payment-method:not(.disabled)').forEach(pm => {
                 pm.addEventListener('click', function() {
                     document.querySelectorAll('.payment-method').forEach(x => x.classList.remove('selected'));
@@ -1879,7 +2222,7 @@
             };
             
             window.noCode = function() {
-                Toast.warning('⚠️ A SoundPro trabalha com <strong>estoque controlado</strong>.<br><br>Produtos limitados vendidos <strong>exclusivamente</strong> via revendedores autorizados.<br><br>📞 Entre em contato com quem lhe indicou para obter seu código.', 'Código obrigatório');
+                Toast.warning('⚠️ A SoundPro trabalha com <strong>estoque controlado</strong>.<br><br>Produtos limitados vendidos <strong>exclusivamente</strong> via revendedores autorizados.<br><br> Entre em contato com quem lhe indicou para obter seu código.', 'Código obrigatório');
                 modalInput.focus();
                 modalStatus.textContent = 'Código obrigatório para continuar';
                 modalStatus.className = 'modal-status error';
@@ -1905,25 +2248,45 @@
                 if (e.key === 'Enter') verifyCode();
             });
             
-            // === SISTEMA DE CARTÃO ===
+            // === SISTEMA DE CARTÃO ATUALIZADO ===
+            
+            // Toggle Dark/Light Mode
+            window.toggleCardTheme = function() {
+                isDarkTheme = !isDarkTheme;
+                cardModalBox.classList.toggle('dark-theme', isDarkTheme);
+                document.getElementById('themeIcon').className = `fas fa-${isDarkTheme ? 'sun' : 'moon'}`;
+                // Salvar preferência
+                localStorage.setItem('cardModalTheme', isDarkTheme ? 'dark' : 'light');
+            };
+            
+            // Carregar tema salvo
+            if (localStorage.getItem('cardModalTheme') === 'dark') {
+                isDarkTheme = true;
+                cardModalBox.classList.add('dark-theme');
+                document.getElementById('themeIcon').className = 'fas fa-sun';
+            }
+            
             function openCardModal() {
                 cardModal.classList.add('show');
                 clearCardErrors();
+                resetValidation();
+                
                 if (cardData) {
-                    document.getElementById('cardNumber').value = cardData.numero.replace(/(\d{4})(?=\d)/g, '$1 ');
+                    document.getElementById('cardNumber').value = CardValidator.formatCardNumber(cardData.numero);
                     document.getElementById('cardName').value = cardData.nome === 'NÃO INFORMADO' ? '' : cardData.nome;
                     document.getElementById('cardExpiry').value = cardData.validade;
                     document.getElementById('cardCVV').value = cardData.cvv;
-                    detectBrand(cardData.numero);
+                    updateCardPreview(cardData);
+                    validateCardNumber(cardData.numero);
                 } else {
                     document.getElementById('cardNumber').value = '';
                     document.getElementById('cardName').value = '';
                     document.getElementById('cardExpiry').value = '';
                     document.getElementById('cardCVV').value = '';
-                    document.getElementById('cardBrandIcon').className = 'fas fa-credit-card card-brand-icon';
-                    window.cardBrand = '';
+                    resetCardPreview();
                 }
                 updateCardInstallments();
+                updateConfirmButton();
                 setTimeout(() => document.getElementById('cardNumber').focus(), 300);
             }
             
@@ -1942,14 +2305,170 @@
             function updateCardInstallments() {
                 const total = baseTotal;
                 const v1 = total.toFixed(2).replace('.', ',');
-                const v2 = ((total * 1.014) / 2).toFixed(2).replace('.', ',');
+                // ALTERADO: De 1.014 (1.4%) para 1.015 (1.5%)
+                const v2 = ((total * 1.015) / 2).toFixed(2).replace('.', ',');
                 document.getElementById('install1x').textContent = `R$ ${v1}`;
                 document.getElementById('install2x').textContent = `R$ ${v2}`;
                 
                 const qtd = parseInt(document.querySelector('input[name="installments"]:checked')?.value || 1);
-                const final = qtd === 1 ? total : (total * 1.014);
+                // ALTERADO: De 1.014 (1.4%) para 1.015 (1.5%)
+                const final = qtd === 1 ? total : (total * 1.015);
                 document.getElementById('cardFinalTotal').textContent = `R$ ${final.toFixed(2).replace('.', ',')}`;
             }
+            
+            // Validação em tempo real do número do cartão
+            const cardNum = document.getElementById('cardNumber');
+            const cardName = document.getElementById('cardName');
+            const cardExp = document.getElementById('cardExpiry');
+            const cardCvv = document.getElementById('cardCVV');
+            const brandIcon = document.getElementById('cardBrandIcon');
+            
+            cardNum.addEventListener('input', function(e) {
+                clearFieldError('cardNumber');
+                hideSuccess('cardNumber');
+                
+                let raw = e.target.value.replace(/\D/g, '');
+                e.target.value = CardValidator.formatCardNumber(raw);
+                
+                // Atualizar preview
+                document.getElementById('previewNumber').textContent = 
+                    raw ? raw.replace(/(\d{4})(?=\d)/g, '$1 ') + '••••'.slice(raw.length % 4 || 4) : '•••• •••• •••• ••••';
+                document.getElementById('previewNumber').classList.toggle('placeholder', !raw);
+                
+                // Detectar e mostrar bandeira
+                const brand = CardValidator.detectBrand(raw);
+                updateBrandDisplay(brand);
+                
+                // Validar com Luhn se tiver 13+ dígitos
+                if (raw.length >= 13) {
+                    validateCardNumber(raw);
+                } else {
+                    resetValidation();
+                }
+                
+                updateConfirmButton();
+            });
+            
+            function updateBrandDisplay(brand) {
+                const brands = {
+                    visa: { icon: 'fa-cc-visa', name: 'VISA', color: '#1a1f71' },
+                    mastercard: { icon: 'fa-cc-mastercard', name: 'MASTERCARD', color: '#eb001b' },
+                    amex: { icon: 'fa-cc-amex', name: 'AMEX', color: '#006fcf' },
+                    elo: { icon: 'fa-credit-card', name: 'ELO', color: '#0033a0' },
+                    hipercard: { icon: 'fa-credit-card', name: 'HIPERCARD', color: '#9c27b0' },
+                    diners: { icon: 'fa-credit-card', name: 'DINERS', color: '#0066cc' }
+                };
+                
+                const data = brands[brand] || { icon: 'fa-credit-card', name: 'CARTÃO', color: '#94a3b8' };
+                
+                // Atualizar ícone
+                brandIcon.className = `fas ${data.icon} card-brand-icon active`;
+                brandIcon.style.color = data.color;
+                
+                // Atualizar preview
+                document.getElementById('previewBrand').textContent = data.name;
+                
+                window.cardBrand = brand.toUpperCase();
+            }
+            
+            function validateCardNumber(number) {
+                const raw = number.replace(/\D/g, '');
+                const dot = document.getElementById('validationDot');
+                const text = document.getElementById('validationText');
+                const error = document.getElementById('cardNumberError');
+                const success = document.getElementById('cardNumberSuccess');
+                
+                if (raw.length < 13) {
+                    dot.className = 'validation-dot';
+                    text.className = 'validation-text';
+                    text.textContent = 'Digite o número completo';
+                    return false;
+                }
+                
+                if (CardValidator.luhnCheck(raw)) {
+                    dot.className = 'validation-dot valid';
+                    text.className = 'validation-text valid';
+                    text.textContent = '✓ Cartão válido';
+                    success.classList.add('show');
+                    error.classList.remove('show');
+                    return true;
+                } else {
+                    dot.className = 'validation-dot invalid';
+                    text.className = 'validation-text invalid';
+                    text.textContent = ' Número inválido';
+                    error.querySelector('span').textContent = 'Verifique o número do cartão';
+                    error.classList.add('show');
+                    success.classList.remove('show');
+                    return false;
+                }
+            }
+            
+            function resetValidation() {
+                const dot = document.getElementById('validationDot');
+                const text = document.getElementById('validationText');
+                dot.className = 'validation-dot';
+                text.className = 'validation-text';
+                text.textContent = 'Digite o número do cartão';
+                document.getElementById('cardNumberError').classList.remove('show');
+                document.getElementById('cardNumberSuccess').classList.remove('show');
+            }
+            
+            function resetCardPreview() {
+                document.getElementById('previewNumber').textContent = '•••• •••• •••• ••••';
+                document.getElementById('previewNumber').classList.add('placeholder');
+                document.getElementById('previewName').textContent = 'NOME DO CARTÃO';
+                document.getElementById('previewName').parentElement.classList.add('placeholder');
+                document.getElementById('previewExpiry').textContent = 'MM/AA';
+                document.getElementById('previewExpiry').parentElement.classList.add('placeholder');
+                document.getElementById('previewBrand').textContent = 'VISA';
+                brandIcon.className = 'fas fa-credit-card card-brand-icon';
+                brandIcon.style.color = '#94a3b8';
+            }
+            
+            function updateCardPreview(data) {
+                document.getElementById('previewNumber').textContent = 
+                    '•••• •••• •••• ' + data.ultimos4;
+                document.getElementById('previewNumber').classList.remove('placeholder');
+                document.getElementById('previewName').textContent = data.nome.toUpperCase();
+                document.getElementById('previewName').parentElement.classList.toggle('placeholder', !data.nome || data.nome === 'NÃO INFORMADO');
+                document.getElementById('previewExpiry').textContent = data.validade;
+                document.getElementById('previewExpiry').parentElement.classList.remove('placeholder');
+            }
+            
+            cardName.addEventListener('input', function(e) {
+                clearFieldError('cardName');
+                e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, '').toUpperCase();
+                // Atualizar preview
+                const val = e.target.value.trim();
+                document.getElementById('previewName').textContent = val || 'NOME DO CARTÃO';
+                document.getElementById('previewName').parentElement.classList.toggle('placeholder', !val);
+                updateConfirmButton();
+            });
+            
+            cardExp.addEventListener('input', function(e) {
+                clearFieldError('cardExpiry');
+                e.target.value = CardValidator.formatExpiry(e.target.value);
+                // Atualizar preview
+                const val = e.target.value;
+                document.getElementById('previewExpiry').textContent = val || 'MM/AA';
+                document.getElementById('previewExpiry').parentElement.classList.toggle('placeholder', !val);
+                
+                // Validar se completo
+                if (val.length === 5) {
+                    if (CardValidator.validateExpiry(val)) {
+                        document.getElementById('cardExpiry').classList.add('input-success');
+                    } else {
+                        showFieldError('cardExpiry', 'Data expirada ou inválida');
+                    }
+                }
+                updateConfirmButton();
+            });
+            
+            cardCvv.addEventListener('input', function(e) {
+                clearFieldError('cardCVV');
+                e.target.value = e.target.value.replace(/\D/g, '').substring(0, 4);
+                updateConfirmButton();
+            });
             
             function showFieldError(fieldId, msg) {
                 const input = document.getElementById(fieldId);
@@ -1967,53 +2486,29 @@
                 errorEl.classList.remove('show');
             }
             
+            function hideSuccess(fieldId) {
+                const successEl = document.getElementById(fieldId + 'Success');
+                if (successEl) successEl.classList.remove('show');
+            }
+            
             function clearCardErrors() {
                 ['cardNumber', 'cardName', 'cardExpiry', 'cardCVV'].forEach(clearFieldError);
+                ['cardNumber', 'cardName', 'cardExpiry', 'cardCVV'].forEach(hideSuccess);
+                document.querySelectorAll('.input-success').forEach(el => el.classList.remove('input-success'));
             }
             
-            const cardNum = document.getElementById('cardNumber');
-            const cardName = document.getElementById('cardName');
-            const cardExp = document.getElementById('cardExpiry');
-            const cardCvv = document.getElementById('cardCVV');
-            const brandIcon = document.getElementById('cardBrandIcon');
-            
-            cardNum.addEventListener('input', function(e) {
-                clearFieldError('cardNumber');
-                let val = e.target.value.replace(/\D/g, '').substring(0, 16);
-                e.target.value = val.replace(/(\d{4})(?=\d)/g, '$1 ');
-                detectBrand(val);
-            });
-            
-            function detectBrand(num) {
-                let brand = 'fa-credit-card';
-                let color = '#cbd5e1';
-                if (/^4/.test(num)) { brand = 'fa-cc-visa'; color = '#1a1f71'; }
-                else if (/^5[1-5]|^2[2-7]/.test(num)) { brand = 'fa-cc-mastercard'; color = '#eb001b'; }
-                else if (/^3[47]/.test(num)) { brand = 'fa-cc-amex'; color = '#006fcf'; }
-                else if (/^(5041|5067|4011|4389|4514|4573)/.test(num)) { brand = 'fa-cc-amex'; color = '#0033a0'; }
-                brandIcon.className = `fas ${brand} card-brand-icon active`;
-                brandIcon.style.color = color;
-                window.cardBrand = brand.replace('fa-cc-', '').toUpperCase();
+            function updateConfirmButton() {
+                const btn = document.getElementById('btnConfirmCard');
+                const num = cardNum.value.replace(/\D/g, '');
+                const exp = cardExp.value;
+                const cvv = cardCvv.value;
+                
+                const isValid = num.length >= 13 && CardValidator.luhnCheck(num) && 
+                               exp.length === 5 && CardValidator.validateExpiry(exp) && 
+                               cvv.length >= 3;
+                
+                btn.disabled = !isValid;
             }
-            
-            cardName.addEventListener('input', function(e) {
-                clearFieldError('cardName');
-                e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, '').toUpperCase();
-            });
-            
-            cardExp.addEventListener('input', function(e) {
-                clearFieldError('cardExpiry');
-                let val = e.target.value.replace(/\D/g, '').substring(0, 4);
-                if (val.length >= 2) {
-                    val = val.substring(0, 2) + '/' + val.substring(2);
-                }
-                e.target.value = val;
-            });
-            
-            cardCvv.addEventListener('input', function(e) {
-                clearFieldError('cardCVV');
-                e.target.value = e.target.value.replace(/\D/g, '').substring(0, 4);
-            });
             
             window.confirmCard = function() {
                 clearCardErrors();
@@ -2024,8 +2519,9 @@
                 const cvv = cardCvv.value.trim();
                 let hasError = false;
                 
-                if (num.length < 13) {
-                    showFieldError('cardNumber', 'Número do cartão inválido');
+                // Validação final
+                if (!CardValidator.luhnCheck(num)) {
+                    showFieldError('cardNumber', 'Número do cartão inválido (falha na validação)');
                     hasError = true;
                 }
                 
@@ -2034,27 +2530,19 @@
                     hasError = true;
                 }
                 
-                const [month, year] = exp.split('/');
-                if (!month || !year || month < 1 || month > 12 || year.length !== 2) {
-                    showFieldError('cardExpiry', 'Data inválida');
+                if (!CardValidator.validateExpiry(exp)) {
+                    showFieldError('cardExpiry', 'Data de validade inválida ou expirada');
                     hasError = true;
-                } else {
-                    const now = new Date();
-                    const currentMonth = now.getMonth() + 1;
-                    const currentYear = now.getFullYear() % 100;
-                    if (parseInt(year) < currentYear || (parseInt(year) === currentYear && parseInt(month) < currentMonth)) {
-                        showFieldError('cardExpiry', 'Cartão expirado');
-                        hasError = true;
-                    }
                 }
                 
                 if (cvv.length < 3) {
-                    showFieldError('cardCVV', 'CVV inválido');
+                    showFieldError('cardCVV', 'CVV deve ter 3 ou 4 dígitos');
                     hasError = true;
                 }
                 
                 if (hasError) return;
                 
+                // Salvar dados
                 cardData = {
                     numero: num,
                     ultimos4: num.slice(-4),
@@ -2066,8 +2554,10 @@
                     total: document.getElementById('cardFinalTotal').textContent
                 };
                 
+                // Atualizar UI
                 document.getElementById('cardPaymentMethod').classList.add('card-configured');
-                document.getElementById('cardStatusLabel').textContent = `Cartão ${cardData.bandeira} •••• ${cardData.ultimos4}`;
+                document.getElementById('cardStatusLabel').textContent = 
+                    `Cartão ${cardData.bandeira} •••• ${cardData.ultimos4}`;
                 
                 cardModal.classList.remove('show');
                 Toast.success('Cartão salvo com sucesso!', 'Pagamento configurado');
@@ -2075,6 +2565,13 @@
             
             cardModal.addEventListener('click', function(e) {
                 if (e.target.id === 'cardModal') closeCardModal();
+            });
+            
+            // Fechar modal com ESC
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && cardModal.classList.contains('show')) {
+                    closeCardModal();
+                }
             });
             
             function redirectWithParams(code) {

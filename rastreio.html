@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Rastreio de Pedido - SoundPro</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: #1f2937;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            padding: 16px 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
+        }
+
+        /* Main Content */
+        .content-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 24px 16px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 520px;
+            margin: 0 auto;
+        }
+
+        .tracking-card {
+            background: white;
+            border-radius: 12px;
+            padding: 28px 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        }
+
+        .tracking-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1.5px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.2s ease;
+            outline: none;
+            background: #fafafa;
+        }
+
+        .form-input:focus {
+            border-color: #6366f1;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: #9ca3af;
+        }
+
+        .btn-track {
+            width: 100%;
+            padding: 16px;
+            background: #111827;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 4px;
+        }
+
+        .btn-track:hover {
+            background: #000;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.12);
+        }
+
+        .btn-track:active {
+            transform: translateY(0);
+        }
+
+        .btn-track:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Notice Box */
+        .notice-box {
+            margin-top: 20px;
+            padding: 14px 16px;
+            background: #f0f9ff;
+            border-left: 4px solid #0ea5e9;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #0c4a6e;
+            line-height: 1.5;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .notice-icon {
+            font-size: 16px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* Loading */
+        .loading {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 16px 0;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .loading.active { display: flex; }
+
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #e5e7eb;
+            border-top-color: #6366f1;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Result Section */
+        .result-section {
+            margin-top: 20px;
+            padding: 18px;
+            border-radius: 8px;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-section.error {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            display: block;
+        }
+
+        .result-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .result-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #ef4444;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .result-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #991b1b;
+        }
+
+        .result-text {
+            font-size: 14px;
+            color: #7f1d1d;
+            line-height: 1.5;
+        }
+
+        .result-code {
+            font-family: monospace;
+            font-weight: 600;
+            background: rgba(0,0,0,0.06);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        /* Footer */
+        .footer {
+            background: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #9ca3af;
+            border-top: 1px solid #e5e7eb;
+            margin-top: auto;
+        }
+
+        .footer p { margin-bottom: 4px; }
+        .footer strong { color: #6b7280; }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .tracking-card { padding: 24px 18px; }
+            .tracking-title { font-size: 20px; }
+            .logo { font-size: 24px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">SoundPro</div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="content-wrapper">
+        <div class="container">
+            <div class="tracking-card">
+                <h1 class="tracking-title">Rastreie seu Pedido</h1>
+                
+                <form id="trackingForm">
+                    <div class="form-group">
+                        <label class="form-label" for="trackingCode">Código de Rastreio</label>
+                        <input 
+                            type="text" 
+                            id="trackingCode" 
+                            class="form-input" 
+                            placeholder="Ex: LD3JKKS83JBR"
+                            maxlength="12"
+                            required
+                            autocomplete="off"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="customerName">Nome Completo</label>
+                        <input 
+                            type="text" 
+                            id="customerName" 
+                            class="form-input" 
+                            placeholder="Digite seu nome completo"
+                            required
+                            autocomplete="off"
+                        >
+                    </div>
+
+                    <button type="submit" class="btn-track" id="trackBtn">
+                        Buscar encomenda
+                    </button>
+                </form>
+
+                <!-- Aviso WhatsApp -->
+                <div class="notice-box">
+                    <span class="notice-icon">📦</span>
+                    <span>Todos os códigos de rastreio são enviados pelo <strong>WhatsApp</strong> após a aprovação do pedido.</span>
+                </div>
+
+                <!-- Loading -->
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <span>Consultando sistema...</span>
+                </div>
+
+                <!-- Result -->
+                <div class="result-section" id="resultSection">
+                    <div class="result-header">
+                        <div class="result-icon">!</div>
+                        <div class="result-title">Código não localizado</div>
+                    </div>
+                    <p class="result-text">
+                        O código <span class="result-code" id="resultCode">LD3JKKS83JBR</span> não foi encontrado em nosso sistema para <strong id="resultName">cliente</strong>.
+                    </p>
+                    <p class="result-text" style="margin-top: 10px; font-size: 13px; color: #991b1b;">
+                        Verifique se digitou corretamente ou aguarde o envio do código válido pelo nosso WhatsApp oficial após a aprovação.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p><strong>SoundPro</strong> — GOB DISTRIBUIDORA</p>
+        <p>© 2026 Todos os direitos reservados</p>
+    </footer>
+
+    <script>
+        // Formatação automática para maiúsculas e apenas letras/números
+        const trackingInput = document.getElementById('trackingCode');
+        trackingInput.addEventListener('input', function() {
+            this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+        });
+
+        // Envio do formulário
+        document.getElementById('trackingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const code = trackingInput.value.trim();
+            const name = document.getElementById('customerName').value.trim();
+            const trackBtn = document.getElementById('trackBtn');
+            const loading = document.getElementById('loading');
+            const resultSection = document.getElementById('resultSection');
+            const resultCode = document.getElementById('resultCode');
+            const resultName = document.getElementById('resultName');
+            
+            // Validação básica
+            if (!code || !name) {
+                alert('Por favor, preencha todos os campos corretamente.');
+                return;
+            }
+            
+            if (code.length !== 12) {
+                alert('O código de rastreio deve conter exatamente 12 caracteres.');
+                return;
+            }
+            
+            // Estado de carregamento
+            trackBtn.disabled = true;
+            loading.classList.add('active');
+            resultSection.className = 'result-section';
+            resultSection.style.display = 'none';
+            
+            // Simulação de consulta (1.5s)
+            setTimeout(() => {
+                // Resultado genérico profissional
+                resultCode.textContent = code;
+                resultName.textContent = name;
+                
+                trackBtn.disabled = false;
+                loading.classList.remove('active');
+                
+                resultSection.className = 'result-section error';
+                resultSection.style.display = 'block';
+                
+                // Scroll suave para o resultado
+                resultSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                
+            }, 1500);
+        });
+    </script>
+</body>
+</html>

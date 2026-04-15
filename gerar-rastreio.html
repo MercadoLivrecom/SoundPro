@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel - Gerador de Rastreamento</title>
+    <link rel="icon" type="image/jpg" href="favicon.jpg">
+    <style>
+        :root {
+            --bg-primary: #0b1120;
+            --bg-secondary: #151d2f;
+            --bg-card: #1e293b;
+            --bg-input: #334155;
+            --accent-cyan: #38bdf8;
+            --accent-purple: #818cf8;
+            --accent-pink: #e94560;
+            --accent-gradient: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple), var(--accent-pink));
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --border: rgba(56, 189, 248, 0.3);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.5;
+        }
+
+        /* ===== CABEÇALHO ===== */
+        .header {
+            background: var(--bg-secondary);
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 2px solid var(--accent-gradient);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+        .header-icon {
+            width: 40px; height: 40px; background: rgba(56, 189, 248, 0.15);
+            border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        .header-icon svg { width: 24px; height: 24px; stroke: var(--accent-cyan); fill: none; stroke-width: 2; }
+        .header h1 {
+            font-size: 1.25rem; font-weight: 700; background: var(--accent-gradient);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .header-subtitle { font-size: 0.85rem; color: var(--text-secondary); margin-left: 52px; }
+
+        /* ===== CONTAINER PRINCIPAL ===== */
+        .container { max-width: 900px; margin: 0 auto; padding: 24px 20px; }
+
+        /* ===== CARDS DO FORMULÁRIO ===== */
+        .card {
+            background: var(--bg-card); border-radius: 16px; padding: 20px; margin-bottom: 20px;
+            border: 1px solid var(--border); box-shadow: var(--shadow);
+        }
+        .card-title {
+            display: flex; align-items: center; gap: 10px; font-size: 1.1rem; font-weight: 600;
+            margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+        }
+        .card-title svg { width: 20px; height: 20px; stroke: var(--accent-cyan); fill: none; stroke-width: 2; }
+
+        /* ===== GRID DE PRODUTOS ===== */
+        .products-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px; margin-bottom: 16px;
+        }
+        .product-option {
+            background: var(--bg-input); border: 2px solid transparent; border-radius: 12px;
+            padding: 12px 8px; cursor: pointer; transition: all 0.2s ease; text-align: center;
+            display: flex; flex-direction: column; align-items: center; gap: 8px;
+        }
+        .product-option:hover { border-color: rgba(56, 189, 248, 0.5); transform: translateY(-2px); }
+        .product-option.selected {
+            border-color: var(--accent-cyan); background: rgba(56, 189, 248, 0.1);
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+        }
+        .product-option img {
+            width: 80px; height: 80px; border-radius: 8px; object-fit: cover;
+            border: 1px solid rgba(148, 163, 184, 0.3);
+        }
+        .product-option .name {
+            font-size: 0.75rem; color: var(--text-primary); font-weight: 500;
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+            overflow: hidden; line-height: 1.3;
+        }
+        .product-option .price { font-size: 0.85rem; font-weight: 700; color: var(--success); }
+
+        /* ===== CAMPOS DO FORMULÁRIO ===== */
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .form-group.full-width { grid-column: 1 / -1; }
+        .form-group label {
+            font-size: 0.85rem; font-weight: 500; color: var(--text-secondary);
+            display: flex; align-items: center; gap: 6px;
+        }
+        .form-group label svg { width: 14px; height: 14px; stroke: var(--accent-cyan); fill: none; stroke-width: 2; }
+        .form-group input, .form-group select, .form-group textarea {
+            background: var(--bg-input); border: 1px solid rgba(148, 163, 184, 0.3);
+            border-radius: 10px; padding: 12px 14px; color: var(--text-primary);
+            font-size: 0.95rem; transition: border-color 0.2s; width: 100%;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none; border-color: var(--accent-cyan); box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+        }
+        .form-group textarea { min-height: 80px; resize: vertical; font-family: inherit; }
+
+        /* ===== SELETOR DE PRAZO ===== */
+        .delivery-presets { display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+        .preset-btn {
+            background: var(--bg-input); border: 1px solid rgba(148, 163, 184, 0.3);
+            border-radius: 8px; padding: 8px 14px; font-size: 0.85rem; color: var(--text-secondary);
+            cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 6px;
+        }
+        .preset-btn:hover, .preset-btn.active {
+            border-color: var(--accent-cyan); color: var(--accent-cyan); background: rgba(56, 189, 248, 0.1);
+        }
+        .preset-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+        /* ===== SELETOR DE STATUS ===== */
+        .status-options { display: flex; gap: 8px; flex-wrap: wrap; }
+        .status-option {
+            background: var(--bg-input); border: 2px solid transparent; border-radius: 10px;
+            padding: 10px 14px; font-size: 0.85rem; font-weight: 500; cursor: pointer;
+            transition: all 0.2s; display: flex; align-items: center; gap: 6px;
+        }
+        .status-option:hover { border-color: rgba(148, 163, 184, 0.5); }
+        .status-option.selected { border-color: var(--success); background: rgba(16, 185, 129, 0.15); color: var(--success); }
+        .status-option svg { width: 16px; height: 16px; fill: currentColor; }
+
+        /* ===== BOTÃO GERAR ===== */
+        .generate-btn {
+            width: 100%; background: var(--accent-gradient); border: none; border-radius: 12px;
+            padding: 16px 24px; font-size: 1.05rem; font-weight: 700; color: white; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            transition: transform 0.2s, box-shadow 0.2s; margin-top: 8px;
+        }
+        .generate-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(56, 189, 248, 0.4); }
+        .generate-btn:active { transform: translateY(0); }
+        .generate-btn svg { width: 20px; height: 20px; fill: none; stroke: white; stroke-width: 2; }
+
+        /* ===== ÁREA DE RESULTADO ===== */
+        .result-area {
+            background: var(--bg-secondary); border-radius: 12px; padding: 16px;
+            margin-top: 20px; border: 1px solid var(--border);
+        }
+        .result-label {
+            font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 10px;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .result-url {
+            background: var(--bg-input); border-radius: 8px; padding: 12px 14px;
+            font-family: 'Monaco', 'Consolas', monospace; font-size: 0.85rem;
+            color: var(--accent-cyan); word-break: break-all; margin-bottom: 12px;
+            max-height: 120px; overflow-y: auto;
+        }
+        .result-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
+        .copy-btn, #previewBtn {
+            flex: 1; min-width: 140px; background: var(--bg-input); border: 1px solid rgba(148, 163, 184, 0.3);
+            border-radius: 8px; padding: 10px 18px; font-size: 0.9rem; font-weight: 500;
+            color: var(--text-primary); cursor: pointer; display: flex; align-items: center;
+            justify-content: center; gap: 8px; transition: all 0.2s;
+        }
+        .copy-btn:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); }
+        .copy-btn.copied { background: rgba(16, 185, 129, 0.2); border-color: var(--success); color: var(--success); }
+        
+        #previewBtn { background: rgba(16, 185, 129, 0.15); border-color: var(--success); color: var(--success); }
+        #previewBtn:hover { background: rgba(16, 185, 129, 0.25); transform: translateY(-1px); }
+        #previewBtn:active { transform: translateY(0); }
+        .copy-btn svg, #previewBtn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+        /* ===== RESPONSIVIDADE ===== */
+        @media (max-width: 768px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .products-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+            .header { padding: 14px 16px; }
+            .header-subtitle { margin-left: 48px; font-size: 0.8rem; }
+            .container { padding: 16px 12px; }
+            .card { padding: 16px; }
+        }
+        @media (max-width: 480px) {
+            .products-grid { grid-template-columns: repeat(2, 1fr); }
+            .delivery-presets, .status-options { flex-direction: column; }
+            .preset-btn, .status-option { width: 100%; justify-content: center; }
+            .result-buttons { flex-direction: column; }
+            .copy-btn, #previewBtn { min-width: 100%; }
+        }
+
+        /* ===== ANIMAÇÕES ===== */
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+        .generating { animation: pulse 1.5s infinite; }
+
+        /* ===== TOAST NOTIFICATION ===== */
+        .toast {
+            position: fixed; bottom: 24px; right: 24px; background: var(--success); color: white;
+            padding: 12px 20px; border-radius: 10px; font-weight: 500; display: flex;
+            align-items: center; gap: 10px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            transform: translateX(150%); transition: transform 0.3s ease; z-index: 1000;
+        }
+        .toast.show { transform: translateX(0); }
+        .toast svg { width: 18px; height: 18px; fill: white; }
+    </style>
+</head>
+<body>
+
+    <!-- CABEÇALHO -->
+    <header class="header">
+        <div class="header-icon">
+            <svg viewBox="0 0 24 24">
+                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                <path d="M2 17l10 5 10-5"/>
+                <path d="M2 12l10 5 10-5"/>
+            </svg>
+        </div>
+        <div>
+            <h1>Painel de Rastreamento</h1>
+            <div class="header-subtitle">Gerador de URLs dinâmicas para Central Brasil</div>
+        </div>
+    </header>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="container">
+        
+        <!-- SELEÇÃO DE PRODUTO -->
+        <div class="card">
+            <div class="card-title">
+                <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                Selecionar Produto
+            </div>
+            <div class="products-grid" id="productsGrid"></div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg> Imagem do Produto</label>
+                    <input type="text" id="img" placeholder="URL da imagem" readonly>
+                </div>
+                <div class="form-group">
+                    <label><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Valor (R$)</label>
+                    <input type="number" id="valor" step="0.01" placeholder="0.00">
+                </div>
+            </div>
+        </div>
+
+        <!-- DADOS DO PEDIDO -->
+        <div class="card">
+            <div class="card-title">
+                <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                Dados do Pedido
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Quantidade</label>
+                    <input type="number" id="quantidade" value="1" min="1">
+                </div>
+                <div class="form-group">
+                    <label><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Data da Compra</label>
+                    <input type="date" id="data_aprovacao">
+                </div>
+            </div>
+        </div>
+
+        <!-- PRAZO DE ENTREGA -->
+        <div class="card">
+            <div class="card-title">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                Prazo de Entrega
+            </div>
+            <div class="delivery-presets">
+                <button type="button" class="preset-btn active" data-days="3">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> +3 dias úteis
+                </button>
+                <button type="button" class="preset-btn" data-days="20">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> +20 dias úteis
+                </button>
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg> Prazo Início (dias)</label>
+                    <input type="number" id="prazo_inicio" value="15" min="1">
+                </div>
+                <div class="form-group">
+                    <label><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg> Prazo Fim (dias)</label>
+                    <input type="number" id="prazo_fim" value="17" min="1">
+                </div>
+                <div class="form-group full-width">
+                    <label><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg> Data Prevista de Entrega</label>
+                    <input type="date" id="data_entrega">
+                </div>
+            </div>
+        </div>
+
+        <!-- DADOS DO CLIENTE -->
+        <div class="card">
+            <div class="card-title">
+                <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="M9 21h6"/></svg>
+                Dados do Destinatário
+            </div>
+            <div class="form-grid">
+                <div class="form-group full-width">
+                    <label><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Nome Completo</label>
+                    <input type="text" id="nome_destinatario" placeholder="Ex: João Pedro Carvalho">
+                </div>
+                <div class="form-group full-width">
+                    <label><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Endereço Completo</label>
+                    <textarea id="endereco" placeholder="Ex: Rua Pedro Alvares Menezes, 1879, Conjunto Metropolitano"></textarea>
+                </div>
+                <div class="form-group">
+                    <label><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> CEP</label>
+                    <input type="text" id="cep" placeholder="00000-000" maxlength="9">
+                </div>
+            </div>
+        </div>
+
+        <!-- STATUS DO PEDIDO -->
+        <div class="card">
+            <div class="card-title">
+                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                Status do Pedido
+            </div>
+            <div class="status-options">
+                <div class="status-option selected" data-status="1">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                    1 - Aguardando pagamento
+                </div>
+                <div class="status-option" data-status="2">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                    2 - Pagamento confirmado
+                </div>
+                <div class="status-option" data-status="3">
+                    <svg viewBox="0 0 24 24"><rect x="1" y="6" width="13" height="9" rx="1.5"/><path d="M14 10h4a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-4V10z"/><circle cx="5.5" cy="17.5" r="1.8"/><circle cx="17.5" cy="17.5" r="1.8"/></svg>
+                    3 - Pedido enviado
+                </div>
+                <div class="status-option" data-status="4">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="3"/><polyline points="9 16.5 11 18.5 15 14.5"/></svg>
+                    4 - Entregue
+                </div>
+            </div>
+            <input type="hidden" id="status" value="1">
+        </div>
+
+        <!-- BOTÃO GERAR -->
+        <button type="button" class="generate-btn" id="generateBtn">
+            <svg viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M1 12h4M19 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+            Gerar URL de Rastreamento
+        </button>
+
+        <!-- RESULTADO -->
+        <div class="result-area" id="resultArea" style="display: none;">
+            <div class="result-label">
+                <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                URL Gerada:
+            </div>
+            <div class="result-url" id="resultUrl"></div>
+            <div class="result-buttons">
+                <button type="button" class="copy-btn" id="copyBtn">
+                    <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                    Copiar URL
+                </button>
+                <button type="button" id="previewBtn">
+                    <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    Visualizar
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- TOAST NOTIFICATION -->
+    <div class="toast" id="toast">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        <span id="toastMessage">Copiado com sucesso!</span>
+    </div>
+
+    <script>
+        // ===== PRODUTOS PRÉ-CADASTRADOS (ATUALIZADOS - SOUNDPRO) =====
+        const products = [
+            { id: 1, nome: "Caixa de Som P10 com Microfone FM Pendrive 1000W PMPO", img: "1s.webp", valor: "129.99" },
+            { id: 2, nome: "Caixa de Som Bluetooth Externo Prova D'Água IPX5 - TWS Multimídia TWS USB TF FM AUX para Praia", img: "2s.webp", valor: "49.99" },
+            { id: 3, nome: "Caixa De Som Amplificada Bomber Papão 300 Portátil 300W Bluetooth Usb Bivolt", img: "3s.webp", valor: "146.00" },
+            { id: 4, nome: "Caixa de Som Bluetooth, À Prova d'água, 7 Horas, JBL GO4, 4,2W RMS - PRETA", img: "4s.webp", valor: "79.99" },
+            { id: 5, nome: "Smart TV AOC 32 LED HD 32S5155/78G Roku Wifi HDMI Dolby Audio", img: "5s.webp", valor: "329.99" },
+            { id: 6, nome: "Caixa de som Bluetooth Potente Multimídia com LED RGB Subwoofer TWS Estéreo sem fio XDG-96-XTRAD", img: "6s.webp", valor: "95.99" },
+            { id: 7, nome: "Kit Som Automotivo Player Bluetooth Falante Leson 6 + 6x9", img: "7s.webp", valor: "143.99" }
+        ];
+
+        // ===== ELEMENTOS DOM =====
+        const productsGrid = document.getElementById('productsGrid');
+        const generateBtn = document.getElementById('generateBtn');
+        const copyBtn = document.getElementById('copyBtn');
+        const previewBtn = document.getElementById('previewBtn');
+        const resultArea = document.getElementById('resultArea');
+        const resultUrl = document.getElementById('resultUrl');
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toastMessage');
+
+        // ===== INICIALIZAÇÃO =====
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProducts();
+            setTodayDate();
+            setupEventListeners();
+        });
+
+        // ===== RENDERIZAR PRODUTOS =====
+        function renderProducts() {
+            productsGrid.innerHTML = products.map(product => `
+                <div class="product-option" data-id="${product.id}">
+                    <img src="${product.img}" alt="${product.nome}" onerror="this.src='https://via.placeholder.com/80x80?text=Produto'">
+                    <div class="name">${product.nome}</div>
+                    <div class="price">R$ ${parseFloat(product.valor).toFixed(2).replace('.', ',')}</div>
+                </div>
+            `).join('');
+            selectProduct(products[0]);
+        }
+
+        // ===== SELECIONAR PRODUTO =====
+        function selectProduct(product) {
+            document.querySelectorAll('.product-option').forEach(el => el.classList.remove('selected'));
+            document.querySelector(`.product-option[data-id="${product.id}"]`)?.classList.add('selected');
+            document.getElementById('img').value = product.img;
+            document.getElementById('valor').value = product.valor;
+        }
+
+        // ===== DEFINIR DATA ATUAL =====
+        function setTodayDate() {
+            const today = new Date();
+            const formatted = today.toISOString().split('T')[0];
+            document.getElementById('data_aprovacao').value = formatted;
+            calculateDeliveryDate(3);
+        }
+
+        // ===== CALCULAR DATA DE ENTREGA =====
+        function calculateDeliveryDate(daysToAdd) {
+            const today = new Date();
+            const delivery = new Date(today);
+            let added = 0;
+            while (added < daysToAdd) {
+                delivery.setDate(delivery.getDate() + 1);
+                const dayOfWeek = delivery.getDay();
+                if (dayOfWeek !== 0 && dayOfWeek !== 6) added++;
+            }
+            return delivery.toISOString().split('T')[0];
+        }
+
+        // ===== CONFIGURAR EVENT LISTENERS =====
+        function setupEventListeners() {
+            // Seleção de produto
+            productsGrid.addEventListener('click', (e) => {
+                const option = e.target.closest('.product-option');
+                if (option) {
+                    const product = products.find(p => p.id == option.dataset.id);
+                    if (product) selectProduct(product);
+                }
+            });
+
+            // Presets de prazo
+            document.querySelectorAll('.preset-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    const days = parseInt(btn.dataset.days);
+                    document.getElementById('data_entrega').value = calculateDeliveryDate(days);
+                });
+            });
+
+            // Seleção de status
+            document.querySelectorAll('.status-option').forEach(option => {
+                option.addEventListener('click', () => {
+                    document.querySelectorAll('.status-option').forEach(o => o.classList.remove('selected'));
+                    option.classList.add('selected');
+                    document.getElementById('status').value = option.dataset.status;
+                });
+            });
+
+            // Máscara CEP
+            document.getElementById('cep').addEventListener('input', (e) => {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length > 5) value = value.replace(/^(\d{5})(\d)/, '$1-$2');
+                e.target.value = value;
+            });
+
+            // Ações principais
+            generateBtn.addEventListener('click', generateURL);
+            copyBtn.addEventListener('click', copyURL);
+            previewBtn.addEventListener('click', openPreview);
+            
+            // Validação de prazo
+            document.getElementById('prazo_inicio').addEventListener('change', updatePrazoRange);
+            document.getElementById('prazo_fim').addEventListener('change', updatePrazoRange);
+        }
+
+        function updatePrazoRange() {
+            const inicio = parseInt(document.getElementById('prazo_inicio').value) || 1;
+            const fim = parseInt(document.getElementById('prazo_fim').value) || 3;
+            if (fim < inicio) document.getElementById('prazo_fim').value = inicio;
+        }
+
+        // ===== GERAR URL =====
+        function generateURL() {
+            generateBtn.classList.add('generating');
+            generateBtn.disabled = true;
+
+            setTimeout(() => {
+                const params = {
+                    img: document.getElementById('img').value,
+                    nome: document.getElementById('nome_destinatario').value ? 
+                          document.querySelector('.product-option.selected .name')?.textContent || 'Produto' : 
+                          'Produto',
+                    valor: document.getElementById('valor').value || '0.00',
+                    quantidade: document.getElementById('quantidade').value || '1',
+                    prazo_inicio: document.getElementById('prazo_inicio').value || '1',
+                    prazo_fim: document.getElementById('prazo_fim').value || '3',
+                    nome_destinatario: document.getElementById('nome_destinatario').value || 'Cliente',
+                    endereco: document.getElementById('endereco').value || 'Endereço não informado',
+                    cep: document.getElementById('cep').value.replace('-', '') || '00000000',
+                    data_aprovacao: document.getElementById('data_aprovacao').value || new Date().toISOString().split('T')[0],
+                    data_entrega: document.getElementById('data_entrega').value || calculateDeliveryDate(3),
+                    status: document.getElementById('status').value || '1'
+                };
+
+                const baseUrl = 'r1.html';
+                const queryString = new URLSearchParams(params).toString();
+                const fullUrl = `${baseUrl}?${queryString}`;
+
+                resultUrl.textContent = fullUrl;
+                resultArea.style.display = 'block';
+                resultArea.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+                generateBtn.classList.remove('generating');
+                generateBtn.disabled = false;
+                showToast('URL gerada com sucesso!');
+            }, 400);
+        }
+
+        // ===== COPIAR URL =====
+        function copyURL() {
+            const url = resultUrl.textContent;
+            if (!url) return;
+            navigator.clipboard.writeText(url).then(() => {
+                copyBtn.classList.add('copied');
+                copyBtn.innerHTML = `<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Copiado!`;
+                showToast('URL copiada para a área de transferência!');
+                setTimeout(() => {
+                    copyBtn.classList.remove('copied');
+                    copyBtn.innerHTML = `<svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copiar URL`;
+                }, 2000);
+            });
+        }
+
+        // ===== ABRIR PRÉ-VISUALIZAÇÃO =====
+        function openPreview() {
+            const url = resultUrl.textContent;
+            if (!url) {
+                showToast('Gere a URL primeiro!');
+                return;
+            }
+            window.open(url, '_blank', 'noopener,noreferrer');
+            showToast('Abrindo página de rastreamento...');
+        }
+
+        // ===== TOAST NOTIFICATION =====
+        function showToast(message) {
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+    </script>
+</body>
+</html>

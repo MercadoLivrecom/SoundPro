@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Painel Administrativo | SoundPro</title>
+    
+    <!-- Ícones Profissionais -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Fonte Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --secondary: #ec4899;
+            --bg-body: #0f172a;
+            --bg-card: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+            --border: #334155;
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            --radius: 16px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- Header Simplificado --- */
+        header {
+            background-color: rgba(30, 41, 59, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 90;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        /* --- Main Container --- */
+        .container {
+            max-width: 1280px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            align-items: start;
+        }
+
+        /* --- Cards --- */
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-md);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 1.5rem;
+        }
+
+        .icon-box {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .icon-whatsapp { color: #25D366; background: rgba(37, 211, 102, 0.1); }
+        .icon-card { color: #F59E0B; background: rgba(245, 158, 11, 0.1); }
+        .icon-code { color: #8B5CF6; background: rgba(139, 92, 246, 0.1); }
+
+        .card-title h3 { font-size: 1.1rem; font-weight: 600; }
+        .card-title p { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
+
+        /* --- WhatsApp Card Specifics --- */
+        .contact-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: auto;
+        }
+
+        .info-display {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px dashed var(--border);
+            word-break: break-all;
+        }
+
+        .info-text {
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        /* --- Buttons --- */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 0.85rem 1.25rem;
+            border-radius: 10px;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+            text-align: center;
+            flex: 1;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+            color: white;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-main);
+        }
+
+        .btn-edit {
+            background: rgba(245, 158, 11, 0.1);
+            color: #F59E0B;
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+
+        .btn-icon-only {
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: none;
+        }
+
+        .btn-icon-only:hover { background: var(--success); color: white; }
+
+        /* --- Codes List --- */
+        .codes-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .codes-list {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+            padding-right: 4px;
+            max-height: 300px;
+        }
+
+        .codes-list::-webkit-scrollbar { width: 6px; }
+        .codes-list::-webkit-scrollbar-track { background: transparent; }
+        .codes-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+        .code-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 12px;
+            margin-bottom: 8px;
+            border-radius: 10px;
+            border: 1px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .code-item:hover {
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .member-info {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .member-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 140px;
+        }
+
+        .member-role {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .code-action {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .member-code {
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            color: var(--secondary);
+            font-size: 0.95rem;
+            background: rgba(236, 72, 153, 0.1);
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+            margin-top: auto;
+            background: var(--bg-card);
+        }
+
+        footer a { color: var(--primary); text-decoration: none; font-weight: 600; }
+
+        /* --- Toast --- */
+        #toast {
+            visibility: hidden;
+            min-width: 280px;
+            background-color: var(--success);
+            color: #fff;
+            text-align: center;
+            border-radius: 12px;
+            padding: 16px;
+            position: fixed;
+            z-index: 2000;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%) translateY(20px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            font-weight: 500;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        #toast.show {
+            visibility: visible;
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 768px) {
+            .dashboard-grid { grid-template-columns: 1fr; }
+            .container { padding: 0 1rem; margin: 1rem auto; }
+            .user-profile span { display: none; }
+            .member-name { max-width: 100px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Principal -->
+    <header>
+        <div class="logo">
+            <i class="fa-solid fa-layer-group"></i> Painel SoundPro
+        </div>
+
+        <div class="user-profile">
+            <span>Admin</span>
+            <div class="user-avatar">SP</div>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <div class="container">
+        <div class="dashboard-grid">
+
+            <!-- CARD 1: WHATSAPP -->
+            <div class="card" id="card-zap">
+                <div class="card-header">
+                    <div class="icon-box icon-whatsapp">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </div>
+                    <div class="card-title">
+                        <h3>Contato da Loja</h3>
+                        <p>Lido de <strong>zap.txt</strong></p>
+                    </div>
+                </div>
+
+                <div class="info-display">
+                    <span id="zapNumberDisplay" class="info-text"><i class="fa-solid fa-spinner fa-spin"></i></span>
+                    <button onclick="copiarTexto('zapNumberDisplay')" class="btn-icon-only" title="Copiar">
+                        <i class="fa-regular fa-copy"></i>
+                    </button>
+                </div>
+
+                <div class="contact-actions">
+                    <a href="#" id="btnOpenWhatsapp" target="_blank" class="btn btn-primary">
+                        <i class="fa-brands fa-whatsapp"></i> Conversar
+                    </a>
+                    <a href="editar.php" class="btn btn-edit">
+                        <i class="fa-solid fa-pen"></i> Editar
+                    </a>
+                </div>
+            </div>
+
+            <!-- CARD 2: CARD VIRTUAL -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="icon-box icon-card">
+                        <i class="fa-regular fa-credit-card"></i>
+                    </div>
+                    <div class="card-title">
+                        <h3>Card Virtual</h3>
+                        <p>Acesso restrito aos dados</p>
+                    </div>
+                </div>
+
+                <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; margin-bottom: 1.5rem;">
+                    <div style="background: rgba(245, 158, 11, 0.1); padding: 15px; border-radius: 50%; margin-bottom: 15px;">
+                        <i class="fa-solid fa-lock" style="font-size: 2rem; color: #F59E0B;"></i>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;">
+                        Os dados sensíveis do cartão estão protegidos. Acesse o módulo seguro para visualizar.
+                    </p>
+                </div>
+
+                <a href="ccg.html" class="btn btn-primary">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i> Acessar Cartão
+                </a>
+            </div>
+
+            <!-- CARD 3: CÓDIGOS DE INDICAÇÃO (ATUALIZADO) -->
+            <div class="card" id="card-codes">
+                <div class="card-header">
+                    <div class="icon-box icon-code">
+                        <i class="fa-solid fa-barcode"></i>
+                    </div>
+                    <div class="card-title">
+                        <h3>Códigos de Revenda</h3>
+                        <p>Lista de membros ativos</p>
+                    </div>
+                </div>
+
+                <div class="codes-container">
+                    <div class="codes-list" id="listaCodigos">
+                        <!-- JS preenche aqui -->
+                    </div>
+                </div>
+
+                <!-- Botão alterado para redirecionar ao gerador de rastreio -->
+                <div style="margin-top: auto;">
+                    <a href="gerar-rastreio.html" class="btn btn-primary" style="width: 100%;">
+                        <i class="fa-solid fa-truck-fast"></i> Ir para Gerador de Rastreio
+                    </a>
+                    <p style="text-align: center; font-size: 0.75rem; color: var(--text-muted); margin-top: 10px;">
+                        Gere novos códigos de envio no arquivo externo.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 SoundPro / GOB DISTRIBUIDORA.</p>
+        <p style="margin-top: 8px; font-size: 0.8rem;">
+            Suporte Técnico: <a href="https://wa.me/558596787670" target="_blank">+55 85 9678-7670</a>
+        </p>
+    </footer>
+
+    <!-- Notificação Toast -->
+    <div id="toast">
+        <i class="fa-solid fa-check-circle"></i> <span id="toastMsg">Copiado!</span>
+    </div>
+
+    <script>
+        // --- DADOS DOS MEMBROS (Sequencial - Apenas Visualização/Cópia) ---
+        const codigosMembros = [
+            { codigo: "K9X2", nome: "1 Revendedor" },
+            { codigo: "M4P7", nome: "2 Revendedor" },
+            { codigo: "R8Q1", nome: "3 Revendedor" },
+            { codigo: "T5V3", nome: "4 Revendedor" },
+            { codigo: "W2B6", nome: "5 Revendedor" },
+            { codigo: "L7F9", nome: "6 Revendedor" },
+            { codigo: "H3J8", nome: "7 Revendedor" },
+            { codigo: "N6D1", nome: "8 Revendedor" },
+            { codigo: "G4S5", nome: "9 Revendedor" },
+            { codigo: "Y1Z0", nome: "10 Revendedor" }
+        ];
+
+        // --- CARREGAR ZAP.TXT ---
+        async function carregarZapTxt() {
+            const display = document.getElementById('zapNumberDisplay');
+            const btnWhatsapp = document.getElementById('btnOpenWhatsapp');
+            const numeroPadrao = "+55 85 9678-7670";
+
+            try {
+                const response = await fetch('zap.txt');
+                if (response.ok) {
+                    const texto = await response.text();
+                    const numeroLimpo = texto.trim();
+                    
+                    if(numeroLimpo) {
+                        display.textContent = numeroLimpo;
+                        const linkNumero = numeroLimpo.replace(/\D/g, ''); 
+                        btnWhatsapp.href = `https://wa.me/${linkNumero}`;
+                    } else {
+                        throw new Error("Vazio");
+                    }
+                } else {
+                    throw new Error("404");
+                }
+            } catch (error) {
+                console.warn("Usando número padrão.");
+                display.textContent = numeroPadrao;
+                btnWhatsapp.href = "https://wa.me/558596787670";
+            }
+        }
+
+        // --- RENDERIZAR LISTA ---
+        function renderizarCodigos() {
+            const container = document.getElementById('listaCodigos');
+            container.innerHTML = ''; 
+
+            codigosMembros.forEach((item) => {
+                const div = document.createElement('div');
+                div.className = 'code-item';
+                div.innerHTML = `
+                    <div class="member-info">
+                        <span class="member-name">${item.nome}</span>
+                        <span class="member-role">Código Indicação</span>
+                    </div>
+                    <div class="code-action">
+                        <span class="member-code">${item.codigo}</span>
+                        <button onclick="copiarTextoDireto('${item.codigo}')" class="btn-icon-only">
+                            <i class="fa-regular fa-copy"></i>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // --- COPIAR E TOAST ---
+        function copiarTexto(elementId) {
+            const texto = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(texto).then(() => mostrarToast(`Número copiado!`));
+        }
+
+        function copiarTextoDireto(texto) {
+            navigator.clipboard.writeText(texto).then(() => mostrarToast(`Código ${texto} copiado!`));
+        }
+
+        function mostrarToast(mensagem) {
+            const toast = document.getElementById("toast");
+            document.getElementById("toastMsg").textContent = mensagem;
+            toast.className = "show";
+            setTimeout(() => toast.className = toast.className.replace("show", ""), 3000);
+        }
+
+        // --- INICIALIZAÇÃO ---
+        document.addEventListener('DOMContentLoaded', () => {
+            carregarZapTxt();
+            renderizarCodigos();
+        });
+    </script>
+</body>
+</html>
