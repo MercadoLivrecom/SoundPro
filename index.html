@@ -131,10 +131,92 @@
         }
         .carousel-indicators .dot.active { background: white; width: 24px; border-radius: 4px; }
 
+        /* ==================== FILTROS E BUSCA - DESIGN COMPACTO ==================== */
+        .filter-section {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 16px 16px 8px;
+        }
+
+        .search-container {
+            position: relative;
+            margin-bottom: 12px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 14px 20px 14px 48px;
+            border: 2px solid var(--gray-light);
+            border-radius: 12px;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+            font-size: 18px;
+            pointer-events: none;
+        }
+
+        .filter-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .filter-select-wrapper {
+            position: relative;
+        }
+
+        .filter-select {
+            width: 100%;
+            padding: 12px 36px 12px 16px;
+            border: 2px solid var(--gray-light);
+            border-radius: 12px;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            background: white;
+            color: var(--dark);
+            cursor: pointer;
+            transition: all 0.3s;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+        }
+
+        .filter-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .filter-select-wrapper::after {
+            content: '\003E9';
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: var(--gray);
+            font-size: 11px;
+        }
+
         /* ==================== PRODUCT GRID ==================== */
-        .products-section { max-width: 1280px; margin: 0 auto; padding: 24px 16px 40px; }
+        .products-section { max-width: 1280px; margin: 0 auto; padding: 20px 16px 40px; }
         .section-title {
-            font-size: 20px; font-weight: 700; color: var(--dark); margin-bottom: 18px;
+            font-size: 20px; font-weight: 700; color: var(--dark); margin-bottom: 16px;
             display: flex; align-items: center; gap: 8px;
         }
         .section-title i { color: var(--primary); }
@@ -782,6 +864,25 @@
             .partners-nav.next { right: -4px; }
             
             .discount-badge { font-size: 10px; padding: 3px 8px; }
+
+            .filter-section {
+                padding: 12px 12px 6px;
+            }
+            .search-input {
+                padding: 12px 16px 12px 44px;
+                font-size: 13px;
+            }
+            .search-icon {
+                left: 14px;
+                font-size: 16px;
+            }
+            .filter-controls {
+                gap: 8px;
+            }
+            .filter-select {
+                padding: 11px 32px 11px 14px;
+                font-size: 13px;
+            }
         }
     </style>
 </head>
@@ -854,6 +955,39 @@
             <button class="dot active" data-index="0" onclick="event.stopPropagation()"></button>
             <button class="dot" data-index="1" onclick="event.stopPropagation()"></button>
             <button class="dot" data-index="2" onclick="event.stopPropagation()"></button>
+        </div>
+    </section>
+
+    <!-- FILTROS E BUSCA - DESIGN COMPACTO -->
+    <section class="filter-section">
+        <!-- Barra de Pesquisa -->
+        <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" class="search-input" id="searchInput" placeholder="Buscar produto...">
+        </div>
+
+        <!-- Controles de Filtro e Ordenação - Lado a Lado -->
+        <div class="filter-controls">
+            <div class="filter-select-wrapper">
+                <select class="filter-select" id="sortBy">
+                    <option value="">Ordenar por</option>
+                    <option value="name-asc">Nome (A-Z)</option>
+                    <option value="name-desc">Nome (Z-A)</option>
+                    <option value="price-asc">Preço (Menor)</option>
+                    <option value="price-desc">Preço (Maior)</option>
+                    <option value="discount">Maior Desconto</option>
+                </select>
+            </div>
+            <div class="filter-select-wrapper">
+                <select class="filter-select" id="categoryFilter">
+                    <option value="all">Todos</option>
+                    <option value="caixas-de-som">Caixas de Som</option>
+                    <option value="audio">Áudio</option>
+                    <option value="tv-video">TV & Vídeo</option>
+                    <option value="acessorios">Acessórios</option>
+                    <option value="instrumentos">Instrumentos</option>
+                </select>
+            </div>
         </div>
     </section>
 
@@ -1327,25 +1461,25 @@
         // ==================== LISTA DE PRODUTOS ====================
         const products = [
             // ✅ PRODUTOS DISPONÍVEIS COM DESCONTO
-            { id: 1, name: "Caixa de Som P10 com Microfone FM Pendrive 1000W PMPO", originalPrice: 289.99, price: 129.99, rating: 4, inStock: true },
-            { id: 2, name: "Caixa de Som Bluetooth Externo Prova D'Água IPX5 - TWS Multimídia TWS USB TF FM AUX para Praia", originalPrice: 187.99, price: 49.99, rating: 5, inStock: true },
-            { id: 3, name: " Caixa De Som Amplificada Bomber Papão 300 Portátil 300W Bluetooth Usb Bivolt", originalPrice: 346.89, price: 146.00, rating: 4, inStock: true },
-            { id: 4, name: "Caixa de Som Bluetooth, À Prova d'água, 7 Horas, JBL GO4, 4,2W RMS - PRETA", originalPrice: 189.99, price: 79.99, rating: 5, inStock: true },
-            { id: 5, name: "Smart TV AOC 32 LED HD 32S5155/78G Roku Wifi HDMI Dolby Audio", originalPrice: 783.99, price: 329.99, rating: 4, inStock: true },
-            { id: 6, name: "Caixa de som Bluetooth Potente Multimídia com LED RGB Subwoofer TWS Estéreo sem fio XDG-96-XTRAD", originalPrice: 187.99, price: 95.99, rating: 3, inStock: true },
-            { id: 7, name: "Kit Som Automotivo Player Bluetooth Falante Leson 6 + 6x9", originalPrice: 203.05, price: 143.99, rating: 5, inStock: true },
+            { id: 1, name: "Caixa de Som P10 com Microfone FM Pendrive 1000W PMPO", originalPrice: 289.99, price: 129.99, rating: 4, inStock: true, category: "caixas-de-som" },
+            { id: 2, name: "Caixa de Som Bluetooth Externo Prova D'Água IPX5 - TWS Multimídia TWS USB TF FM AUX para Praia", originalPrice: 187.99, price: 49.99, rating: 5, inStock: true, category: "caixas-de-som" },
+            { id: 3, name: " Caixa De Som Amplificada Bomber Papão 300 Portátil 300W Bluetooth Usb Bivolt", originalPrice: 346.89, price: 146.00, rating: 4, inStock: true, category: "caixas-de-som" },
+            { id: 4, name: "Caixa de Som Bluetooth, À Prova d'água, 7 Horas, JBL GO4, 4,2W RMS - PRETA", originalPrice: 189.99, price: 79.99, rating: 5, inStock: true, category: "caixas-de-som" },
+            { id: 5, name: "Smart TV AOC 32 LED HD 32S5155/78G Roku Wifi HDMI Dolby Audio", originalPrice: 783.99, price: 329.99, rating: 4, inStock: true, category: "tv-video" },
+            { id: 6, name: "Caixa de som Bluetooth Potente Multimídia com LED RGB Subwoofer TWS Estéreo sem fio XDG-96-XTRAD", originalPrice: 187.99, price: 95.99, rating: 3, inStock: true, category: "caixas-de-som" },
+            { id: 7, name: "Kit Som Automotivo Player Bluetooth Falante Leson 6 + 6x9", originalPrice: 203.05, price: 143.99, rating: 5, inStock: true, category: "audio" },
             
             // ❌ PRODUTOS 8, 9 e 10 SEM ESTOQUE (conforme solicitado)
-            { id: 8, name: "Kit 2 Caixas Ativas com Tripé e Cabos P10", originalPrice: 899.99, price: 599.99, rating: 4, inStock: false },
-            { id: 9, name: "Microfone Sem Fio Profissional com Receptor USB", originalPrice: 289.99, price: 189.99, rating: 4, inStock: false },
-            { id: 10, name: "Caixa Gigante com Rodinhas e Alça Retrátil 2000W", originalPrice: 1199.99, price: 799.99, rating: 5, inStock: false },
+            { id: 8, name: "Kit 2 Caixas Ativas com Tripé e Cabos P10", originalPrice: 899.99, price: 599.99, rating: 4, inStock: false, category: "audio" },
+            { id: 9, name: "Microfone Sem Fio Profissional com Receptor USB", originalPrice: 289.99, price: 189.99, rating: 4, inStock: false, category: "acessorios" },
+            { id: 10, name: "Caixa Gigante com Rodinhas e Alça Retrátil 2000W", originalPrice: 1199.99, price: 799.99, rating: 5, inStock: false, category: "caixas-de-som" },
             
             // ❌ 5 PRODUTOS SEM ESTOQUE (já existentes)
-            { id: 11, name: "Caixa de Som Philco Extreme Ex Bass 750W PCX7100", originalPrice: 1299.99, price: 599.99, rating: 5, inStock: false },
-            { id: 12, name: " Caixa Som Grande Alta Torre Grave", originalPrice: 1288.99, price: 899.99, rating: 4, inStock: false },
-            { id: 13, name: "Fone Gamer RGB com Microfone Retrátil", originalPrice: 199.99, price: 129.99, rating: 5, inStock: false },
-            { id: 14, name: "Kit Som Automotivo Completo com Módulo", originalPrice: 1899.99, price: 1299.99, rating: 5, inStock: false },
-            { id: 15, name: "Rádio Caixa De Som Casa Bar Rancho Churrasco Usb Bluetooth", originalPrice: 499.99, price: 349.99, rating: 4, inStock: false }
+            { id: 11, name: "Caixa de Som Philco Extreme Ex Bass 750W PCX7100", originalPrice: 1299.99, price: 599.99, rating: 5, inStock: false, category: "caixas-de-som" },
+            { id: 12, name: " Caixa Som Grande Alta Torre Grave", originalPrice: 1288.99, price: 899.99, rating: 4, inStock: false, category: "caixas-de-som" },
+            { id: 13, name: "Fone Gamer RGB com Microfone Retrátil", originalPrice: 199.99, price: 129.99, rating: 5, inStock: false, category: "acessorios" },
+            { id: 14, name: "Kit Som Automotivo Completo com Módulo", originalPrice: 1899.99, price: 999.99, rating: 5, inStock: false, category: "audio" },
+            { id: 15, name: "Rádio Caixa De Som Casa Bar Rancho Churrasco Usb Bluetooth", originalPrice: 499.99, price: 349.99, rating: 4, inStock: false, category: "caixas-de-som" }
         ];
 
         // 🔥 FUNÇÃO PARA CALCULAR PORCENTAGEM DE DESCONTO
@@ -1359,11 +1493,11 @@
             return val.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }
 
-        function renderProducts() {
+        function renderProducts(productsToRender = products) {
             const grid = document.getElementById('productsGrid');
             grid.innerHTML = '';
 
-            products.forEach(product => {
+            productsToRender.forEach(product => {
                 const stars = generateStars(product.rating);
                 const priceFormatted = formatPrice(product.price).replace('.', ',');
                 const discountPercent = calculateDiscount(product.originalPrice, product.price);
@@ -1567,6 +1701,86 @@
                 setTimeout(() => toast.remove(), 300);
             }, 3000);
         }
+
+        // ==================== FUNCIONALIDADE DE BUSCA E FILTROS ====================
+        const searchInput = document.getElementById('searchInput');
+        const sortBy = document.getElementById('sortBy');
+        const categoryFilter = document.getElementById('categoryFilter');
+
+        // Buscar produtos
+        searchInput.addEventListener('input', function(e) {
+            const term = e.target.value.toLowerCase();
+            const productCards = document.querySelectorAll('.product-card');
+
+            productCards.forEach(card => {
+                const title = card.querySelector('.product-title').textContent.toLowerCase();
+                if (title.includes(term)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // Ordenar produtos
+        sortBy.addEventListener('change', function() {
+            const option = this.value;
+            const grid = document.getElementById('productsGrid');
+            const cards = Array.from(grid.children);
+
+            if (!option) return;
+
+            cards.sort((a, b) => {
+                const getTitle = (card) => card.querySelector('.product-title').textContent;
+                const getPrice = (card) => {
+                    const priceText = card.querySelector('.price-current').textContent.replace(/[^0-9,]/g, '').replace(',', '.');
+                    return parseFloat(priceText);
+                };
+
+                switch(option) {
+                    case 'name-asc':
+                        return getTitle(a).localeCompare(getTitle(b), 'pt-BR');
+                    case 'name-desc':
+                        return getTitle(b).localeCompare(getTitle(a), 'pt-BR');
+                    case 'price-asc':
+                        return getPrice(a) - getPrice(b);
+                    case 'price-desc':
+                        return getPrice(b) - getPrice(a);
+                    case 'discount':
+                        return 0; // Será implementado com lógica de desconto
+                    default:
+                        return 0;
+                }
+            });
+
+            cards.forEach(card => grid.appendChild(card));
+        });
+
+        // Filtrar por categoria
+        categoryFilter.addEventListener('change', function() {
+            const category = this.value;
+            const productCards = document.querySelectorAll('.product-card');
+
+            productCards.forEach(card => {
+                if (category === 'all') {
+                    card.style.display = '';
+                } else {
+                    // Lógica simples de filtro por categoria
+                    const title = card.querySelector('.product-title').textContent.toLowerCase();
+                    if (category === 'caixas-de-som' && title.includes('caixa')) {
+                        card.style.display = '';
+                    } else if (category === 'tv-video' && (title.includes('tv') || title.includes('vídeo'))) {
+                        card.style.display = '';
+                    } else if (category === 'acessorios' && (title.includes('fone') || title.includes('microfone') || title.includes('acessório'))) {
+                        card.style.display = '';
+                    } else if (category === 'audio' && (title.includes('som') || title.includes('áudio'))) {
+                        card.style.display = '';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                }
+            });
+        });
 
         document.addEventListener('DOMContentLoaded', () => {
             renderProducts();
