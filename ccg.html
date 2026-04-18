@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dados do Google Sheets</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #1a73e8;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f1f8ff;
+            font-weight: bold;
+        }
+        tr:hover {
+            background-color: #f5f9ff;
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 18px;
+            color: #5f6368;
+        }
+        .error {
+            color: #d32f2f;
+            background-color: #ffebee;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        .note {
+            background-color: #e3f2fd;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Dados da Planilha do Google Sheets</h1>
+    
+    <div class="note">
+        <strong>Nota:</strong> Substitua a variável <code>spreadsheetUrl</code> no código JavaScript 
+        com o link <strong>CSV publicado</strong> da sua planilha (não use o link de edição original).
+    </div>
+    
+    <div id="errorMessage" style="display: none;" class="error"></div>
+    <div id="loading" class="loading">Carregando dados da planilha...</div>
+    <div id="tableContainer"></div>
+
+    <script>
+        // CONFIGURAÇÃO OBRIGATÓRIA: 
+        // Substitua este URL pelo link CSV publicado da SUA planilha
+        // (Arquivo > Publicar na web > Inteira documento > CSV > Publicar)
+        const spreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1lFQgDLmi8G0x4Dfuva5j7oLM2tKMd7zT8sy501aHgxE/gviz/tq?tqx=out:csv&sheet=Sheet1';
+        
+        // Função para converter CSV em objeto JavaScript
+        function csvToJSON(csv) {
+            const lines = csv.split('\n');
+            const result = [];
+            const headers = lines[0].split(',').map(header => 
+                header.trim().replace(/^"|"$/g, '')
+            );
+
+            for (let i = 1; i < lines.length; i++) {
+                if (lines[i].trim() === '') continue;
+                
+                const obj = {};
+                const currentLine = lines[i].split(',');
+                
+                for (let j = 0; j < headers.length; j++) {
+                    // Remove aspas extras e espaços
+                    const value = currentLine[j] ? 
+                        currentLine[j].trim().replace(/^"|"$/g, '') : '';
+                    obj[headers[j]] = value;
+                }
+                
+                result.push(obj);
+            }
+            
+            return result;
+        }
+
+        // Função para criar a tabela HTML
+        function createTable(data) {
+            if (!data || data.length === 0) {
+                return '<p>Nenhum dado encontrado na planilha.</p>';
+            }
+
+            // Cabeçalhos da tabela
+            let tableHTML = '<table><thead><tr>';
+            Object.keys(data[0]).forEach(header => {
+                tableHTML += `<th>${header}</th>`;
+            });
+            tableHTML += '</tr></thead><tbody>';
+
+            // Linhas de dados
+            data.forEach(row => {
+                tableHTML += '<tr>';
+                Object.values(row).forEach(cell => {
+                    tableHTML += `<td>${cell || ''}</td>`;
+                });
+                tableHTML += '</tr>';
+            });
+
+            tableHTML += '</tbody></table>';
+            return tableHTML;
+        }
+
+        // Função principal para buscar e exibir dados
+        async function fetchSheetData() {
+            try {
+                const response = await fetch(spreadsheetUrl);
+                
+                if (!response.ok) {
+                    throw new Error(`Erro ao carregar dados: ${response.status} ${response.statusText}`);
+                }
+                
+                const csvData = await response.text();
+                const jsonData = csvToJSON(csvData);
+                
+                document.getElementById('tableContainer').innerHTML = createTable(jsonData);
+                document.getElementById('loading').style.display = 'none';
+                
+            } catch (error) {
+                document.getElementById('loading').style.display = 'none';
+                const errorElement = document.getElementById('errorMessage');
+                errorElement.textContent = `Erro: ${error.message}
+                
+                Verifique:
+                1. Se você publicou a planilha corretamente (Arquivo > Publicar na web)
+                2. Se o URL no código é o link CSV publicado
+                3. Se a planilha não está vazia`;
+                errorElement.style.display = 'block';
+            }
+        }
+
+        // Executa quando a página carrega
+        window.addEventListener('DOMContentLoaded', fetchSheetData);
+    </script>
+</body>
+</html>

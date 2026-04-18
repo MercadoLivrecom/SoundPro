@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Pagamento PIX - SoundPro</title>
+    <title>Pagamento PIX Seguro - Atacado Connect</title>
+    <link rel="icon" type="image/jpeg" href="favicon.jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
@@ -16,310 +17,1144 @@
             --darker: #020617;
             --light: #f8fafc;
             --gray: #64748b;
-            --success: #10b981;
-            --pix-green: #32bcad;
+            --gray-light: #e2e8f0;
             --gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --bg-body: #f0f2f5;
+            --whatsapp: #25d366;
+            --pix-bg: #0d9488;
+            --pix-dark: #0f766e;
+            --trust-green: #059669;
+            --trust-blue: #2563eb;
         }
-
+        
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
+        
         body {
-            font-family: 'Inter', sans-serif;
-            background: var(--darker);
-            color: var(--light);
-            min-height: 100vh;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-body);
+            color: #1a1a2e;
+            overflow-x: hidden;
+            line-height: 1.5;
             display: flex;
             flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        .main-wrapper { flex: 1; max-width: 99%; margin: 0 auto; padding: 16px; }
+        
+        /* ==================== HEADER ==================== */
+        .header {
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            background: rgba(248, 250, 252, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+        .header-main { padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; text-decoration: none; }
+        .logo img { height: 40px; width: auto; display: block; }
+        .hamburger { display: flex; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: transparent; border: none; }
+        .hamburger span { width: 24px; height: 2px; background: var(--dark); border-radius: 2px; }
+        
+        /* Mobile Menu */
+        .mobile-menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 999; opacity: 0; visibility: hidden; transition: all 0.3s; }
+        .mobile-menu-overlay.active { opacity: 1; visibility: visible; }
+        .mobile-menu { position: fixed; top: 0; right: -100%; width: 300px; max-width: 85%; height: 100vh; background: linear-gradient(180deg, #0f172a 0%, #1e1b4b 100%); z-index: 1000; transition: right 0.3s ease; padding: 75px 22px 22px; }
+        .mobile-menu.active { right: 0; }
+        .mobile-menu-header { display: flex; align-items: center; gap: 12px; padding-bottom: 18px; margin-bottom: 18px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .mobile-menu-header img { height: 40px; width: auto; }
+        .mobile-menu-header .brand-name { font-size: 16px; font-weight: 700; color: white; }
+        .mobile-menu nav a { display: flex; align-items: center; gap: 14px; padding: 14px 0; color: rgba(255,255,255,0.85); text-decoration: none; font-size: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .mobile-menu nav a i { width: 20px; color: var(--primary); text-align: center; }
+        
+        /* Breadcrumbs */
+        .breadcrumbs-section { background: white; padding: 14px 16px; margin-top: 72px; border-bottom: 1px solid #e2e8f0; }
+        .breadcrumbs { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+        .breadcrumb-item { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--gray); text-decoration: none; transition: color 0.3s; }
+        .breadcrumb-item:hover { color: var(--primary); }
+        .breadcrumb-item.active { color: var(--dark); font-weight: 600; }
+        .breadcrumb-separator { color: #cbd5e1; font-size: 14px; }
+        
+        /* ==================== TRUST BADGES ==================== */
+        .trust-banner {
+            background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+            border: 1px solid #bbf7d0;
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-bottom: 18px;
+            display: flex;
             align-items: center;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--trust-green);
+        }
+        .trust-badge i { font-size: 14px; }
+        .trust-badge.secure { color: var(--trust-blue); }
+        .trust-badge.verified { color: var(--primary); }
+        
+        /* ==================== PIX SECTION ==================== */
+        .pix-card {
+            background: #fff;
+            border-radius: 18px;
             padding: 20px;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 500px;
-            text-align: center;
-        }
-
-        .header { margin-bottom: 20px; }
-
-        .logo-mini {
-            font-size: 24px;
-            font-weight: 800;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        /* Card Principal */
-        .vip-card {
-            background: rgba(30, 41, 59, 0.7);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 24px;
-            padding: 30px 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            margin-bottom: 18px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border-top: 4px solid var(--pix-bg);
             position: relative;
             overflow: hidden;
         }
-
-        .vip-card::before {
+        .pix-card::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 6px;
-            background: var(--pix-green);
-            box-shadow: 0 0 15px var(--pix-green);
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(13,148,136,0.1) 0%, transparent 70%);
+            pointer-events: none;
         }
-
-        .pix-icon-large {
-            width: 90px; height: 90px;
-            background: rgba(50, 188, 173, 0.15);
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 20px;
-            color: var(--pix-green);
+        
+        .pix-header {
+            text-align: center;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--gray-light);
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        .pix-header i {
             font-size: 42px;
-            border: 2px solid var(--pix-green);
-            box-shadow: 0 0 20px rgba(50, 188, 173, 0.2);
+            color: var(--pix-bg);
+            margin-bottom: 10px;
+            animation: pulse 2s infinite;
         }
-
-        h1 { font-size: 26px; font-weight: 800; margin-bottom: 10px; color: white; }
-
-        .subtitle {
-            font-size: 15px; color: #cbd5e1; line-height: 1.6; margin-bottom: 0;
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.9; }
         }
-
-        /* Botão de Ação (POSICIONADO MAIS CIMA) */
-        .btn-whatsapp-pix {
-            width: 100%; 
-            padding: 18px;
-            background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
-            color: white; 
-            border: none; 
+        .pix-header h2 {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--dark);
+        }
+        .pix-header p {
+            font-size: 14px;
+            color: var(--gray);
+            margin-top: 4px;
+        }
+        
+        /* Valor destacado PREMIUM */
+        .value-box {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 50%, #bbf7d0 100%);
+            border: 2px solid var(--success);
             border-radius: 16px;
-            font-size: 18px; 
-            font-weight: 800; 
+            padding: 24px;
+            text-align: center;
+            margin-bottom: 24px;
+            position: relative;
+            box-shadow: inset 0 0 20px rgba(16,185,129,0.1);
+        }
+        .value-box::after {
+            content: '🔒';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 32px;
+            height: 32px;
+            background: var(--success);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: white;
+            box-shadow: 0 4px 12px rgba(16,185,129,0.4);
+        }
+        .value-label {
+            font-size: 14px;
+            color: var(--gray);
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+        .value-amount {
+            font-size: 36px;
+            font-weight: 900;
+            color: var(--dark);
+            letter-spacing: -1px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .value-sub {
+            font-size: 12px;
+            color: var(--success);
+            font-weight: 600;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        
+        /* Chave PIX */
+        .pix-key-section {
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 1;
+        }
+        .pix-key-label {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .pix-key-label i { color: var(--pix-bg); }
+        
+        .pix-key-box {
+            background: linear-gradient(145deg, #f8fafc, #f1f5f9);
+            border: 2px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 14px;
+            position: relative;
+            margin-bottom: 12px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.03);
+        }
+        .pix-key-text {
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            color: var(--dark);
+            word-break: break-all;
+            line-height: 1.4;
+            max-height: 80px;
+            overflow-y: auto;
+            padding-right: 8px;
+            background: rgba(255,255,255,0.8);
+            padding: 8px;
+            border-radius: 6px;
+        }
+        .pix-key-text::-webkit-scrollbar { width: 4px; }
+        .pix-key-text::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 2px; }
+        .pix-key-text::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 2px; }
+        
+        .btn-copy-pix {
+            width: 100%;
+            padding: 16px;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 700;
             cursor: pointer;
-            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
-            transition: transform 0.2s, box-shadow 0.2s;
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
             gap: 12px;
-            text-decoration: none;
-            animation: pulseBtn 2s infinite;
-            margin-bottom: 25px;
+            transition: all 0.3s;
+            box-shadow: 0 6px 20px rgba(99,102,241,0.4);
+            position: relative;
+            overflow: hidden;
         }
-
-        .btn-whatsapp-pix:hover {
+        .btn-copy-pix::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+        .btn-copy-pix:hover::before { left: 100%; }
+        .btn-copy-pix:hover:not(:disabled) {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.6);
+            box-shadow: 0 8px 28px rgba(99,102,241,0.6);
         }
-
-        @keyframes pulseBtn {
-            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); }
-            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        .btn-copy-pix:active:not(:disabled) { transform: translateY(0); }
+        .btn-copy-pix.copied {
+            background: var(--success);
+            box-shadow: 0 4px 16px rgba(16,185,129,0.5);
         }
-
-        /* Resumo do Pedido */
-        .order-summary {
-            background: rgba(0,0,0,0.2);
-            border-radius: 16px;
+        
+        /* Instruções */
+        .instructions-box {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border: 1px solid #7dd3fc;
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 1;
+        }
+        .instructions-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .instructions-title i { color: var(--trust-blue); }
+        .instructions-list {
+            list-style: none;
+            counter-reset: step;
+        }
+        .instructions-list li {
+            position: relative;
+            padding-left: 34px;
+            margin-bottom: 12px;
+            font-size: 13px;
+            color: var(--gray);
+            line-height: 1.5;
+        }
+        .instructions-list li::before {
+            counter-increment: step;
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 2px;
+            width: 24px;
+            height: 24px;
+            background: var(--gradient);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(99,102,241,0.3);
+        }
+        
+        /* ==================== MODAL CENTRALIZADO PREMIUM ==================== */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(2, 6, 23, 0.75);
+            backdrop-filter: blur(8px);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
             padding: 20px;
-            margin-bottom: 25px;
+            animation: fadeIn 0.3s ease;
+        }
+        .modal-backdrop.show { display: flex; }
+        
+        .modal-content {
+            background: white;
+            border-radius: 24px;
+            padding: 32px 28px;
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.4);
+            animation: modalSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .modal-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient);
+            border-radius: 24px 24px 0 0;
+        }
+        
+        /* Spinner animado */
+        .spinner-container {
+            margin: 0 auto 24px;
+            position: relative;
+            width: 80px;
+            height: 80px;
+        }
+        .spinner {
+            width: 80px;
+            height: 80px;
+            border: 4px solid rgba(99,102,241,0.15);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        .spinner::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .spinner-check {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--success), #059669);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 2;
+        }
+        .spinner-check.show { transform: translate(-50%, -50%) scale(1); }
+        .spinner.hide { animation: none; opacity: 0; }
+        
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes modalSlideIn {
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        .modal-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+        .modal-subtitle {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .modal-status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 16px;
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            border: 1px solid #86efac;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--trust-green);
+        }
+        .modal-status i { font-size: 16px; }
+        
+        .modal-support {
+            font-size: 12px;
+            color: var(--gray);
+            line-height: 1.5;
+            padding: 14px;
+            background: #f8fafc;
+            border-radius: 12px;
+            border-left: 3px solid var(--warning);
             text-align: left;
         }
-
-        .summary-title {
-            font-size: 12px; text-transform: uppercase; letter-spacing: 1px;
-            color: var(--gray); margin-bottom: 15px; font-weight: 700;
+        .modal-support a {
+            color: var(--whatsapp);
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s;
         }
-
-        .summary-item {
-            display: flex; justify-content: space-between;
-            margin-bottom: 10px; font-size: 14px; color: #e2e8f0;
+        .modal-support a:hover {
+            color: var(--trust-green);
+            text-decoration: underline;
+        }
+        .modal-support a i { font-size: 14px; }
+        
+        .modal-timer {
+            margin-top: 20px;
+            font-size: 11px;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .modal-timer i { animation: pulse 1.5s infinite; }
+        
+        /* ==================== Comprovante / Nota Fiscal ==================== */
+        .receipt-card {
+            background: #fff;
+            border-radius: 18px;
+            padding: 20px;
+            margin-bottom: 18px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e2e8f0;
+            position: relative;
+        }
+        .receipt-card::before {
+            content: '✓ VERIFICADO';
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 4px 10px;
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: white;
+            border-radius: 20px;
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+        .receipt-header {
+            text-align: center;
+            padding-bottom: 16px;
+            border-bottom: 2px dashed #cbd5e1;
+            margin-bottom: 16px;
+        }
+        .receipt-logo {
+            height: 32px;
+            margin-bottom: 8px;
+        }
+        .receipt-title {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .receipt-title i { color: var(--success); font-size: 14px; }
+        .receipt-subtitle {
+            font-size: 12px;
+            color: var(--gray);
         }
         
-        .summary-item.fee {
-            color: #94a3b8;
+        .receipt-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px dotted #e2e8f0;
             font-size: 13px;
         }
-
-        .summary-item.total {
-            margin-top: 15px; padding-top: 15px;
-            border-top: 1px dashed rgba(255,255,255,0.2);
-            font-size: 20px; font-weight: 800; color: var(--pix-green);
+        .receipt-row:last-child { border-bottom: none; }
+        .receipt-label { color: var(--gray); font-weight: 500; }
+        .receipt-value { color: var(--dark); font-weight: 600; text-align: right; max-width: 65%; word-break: break-word; }
+        .receipt-total {
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            border: 2px solid var(--success);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 16px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 800;
         }
-
-        .info-text {
-            font-size: 12px; color: var(--gray); margin-top: 10px; line-height: 1.5;
-        }
-        .info-text i { color: var(--primary); margin-right: 5px; }
+        .receipt-total .label { font-size: 14px; color: var(--gray); }
+        .receipt-total .value { font-size: 22px; color: var(--dark); }
         
-        .footer { margin-top: 40px; font-size: 12px; color: #475569; }
-
+        .receipt-footer {
+            text-align: center;
+            padding-top: 16px;
+            border-top: 2px dashed #cbd5e1;
+            margin-top: 16px;
+        }
+        .receipt-footer p {
+            font-size: 11px;
+            color: var(--gray);
+            line-height: 1.4;
+        }
+        .receipt-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: white;
+            border-radius: 24px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-top: 12px;
+            box-shadow: 0 4px 12px rgba(16,185,129,0.3);
+        }
+        .receipt-code {
+            font-family: monospace;
+            background: #f1f5f9;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            color: var(--dark);
+        }
+        
+        /* Trust footer badges */
+        .trust-footer {
+            background: white;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 18px;
+            text-align: center;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+        .trust-footer-title {
+            font-size: 12px;
+            color: var(--gray);
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+        .trust-icons {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .trust-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            font-size: 10px;
+            color: var(--gray);
+            font-weight: 500;
+        }
+        .trust-icon i {
+            font-size: 24px;
+            color: var(--trust-green);
+        }
+        .trust-icon.secure i { color: var(--trust-blue); }
+        .trust-icon.verified i { color: var(--primary); }
+        
+        /* Footer */
+        .footer { background: var(--darker); color: white; margin-top: 22px; }
+        .footer-main { max-width: 99%; margin: 0 auto; padding: 32px 20px; }
+        .footer-brand .logo { margin-bottom: 14px; }
+        .footer-company { font-size: 14px; color: #64748b; line-height: 1.9; padding: 14px; background: rgba(255,255,255,0.03); border-radius: 12px; border: 1px solid rgba(255,255,255,0.06); }
+        .footer-contact { margin-top: 24px; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 12px; border: 1px solid rgba(255,255,255,0.08); }
+        .footer-contact-title { font-size: 13px; font-weight: 700; color: white; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+        .footer-contact-title i { color: var(--primary); }
+        .footer-contact-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; font-size: 12px; color: #cbd5e1; line-height: 1.5; }
+        .footer-contact-item:last-child { margin-bottom: 0; }
+        .footer-contact-item i { color: var(--primary); font-size: 14px; margin-top: 2px; min-width: 16px; }
+        .footer-contact-item a { color: #cbd5e1; text-decoration: none; transition: color 0.2s; }
+        .footer-contact-item a:hover { color: white; }
+        .footer-contact-item strong { color: white; font-weight: 600; }
+        .payment-methods { margin-top: 22px; padding-top: 22px; padding-bottom: 22px; border-top: 1px solid rgba(255,255,255,0.08); }
+        .payment-methods-title { font-size: 13px; color: #64748b; margin-bottom: 16px; text-align: center; text-transform: uppercase; letter-spacing: 1px; }
+        .payment-icons { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
+        .card-flag-footer { width: 56px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: white; position: relative; overflow: hidden; flex-shrink: 0; }
+        .card-flag-footer.visa { background: #1a1f71; }
+        .card-flag-footer.visa span { font-family: Arial, sans-serif; font-style: italic; font-weight: 900; font-size: 15px; letter-spacing: -0.5px; }
+        .card-flag-footer.mastercard { background: #252525; display: flex; align-items: center; justify-content: center; position: relative; }
+        .card-flag-footer.mastercard .circle-red { width: 24px; height: 24px; background: #eb001b; border-radius: 50%; position: absolute; left: 14px; }
+        .card-flag-footer.mastercard .circle-yellow { width: 24px; height: 24px; background: #f79e1b; border-radius: 50%; position: absolute; right: 14px; }
+        .card-flag-footer.mastercard .circle-overlap { width: 24px; height: 24px; background: #ff5f00; border-radius: 50%; position: absolute; left: 50%; transform: translateX(-50%); }
+        .card-flag-footer.elo { background: #0033a0; }
+        .card-flag-footer.elo span { font-family: Arial, sans-serif; font-weight: 800; font-size: 14px; letter-spacing: 0.5px; }
+        .card-flag-footer.amex { background: #006fcf; }
+        .card-flag-footer.amex span { font-family: Arial, sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.5px; }
+        .card-flag-footer.pix { background: #34a37f; width: 62px; }
+        .card-flag-footer.pix span { font-family: Arial, sans-serif; font-weight: 800; font-size: 14px; letter-spacing: 1px; text-transform: uppercase; }
+        .social-share { margin-top: 22px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,0.08); }
+        .social-share-title { font-size: 13px; color: #64748b; margin-bottom: 16px; text-align: center; text-transform: uppercase; letter-spacing: 1px; }
+        .social-icons { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
+        .social-icon { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; color: white; font-size: 20px; text-decoration: none; }
+        .social-icon:hover { transform: translateY(-4px) scale(1.1); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+        .social-icon.whatsapp { background: linear-gradient(135deg, #25d366 0%, #128c7e 100%); }
+        .social-icon.facebook { background: linear-gradient(135deg, #1877f2 0%, #0d5cb6 100%); }
+        .social-icon.twitter { background: linear-gradient(135deg, #000000 0%, #333333 100%); }
+        .social-icon.instagram { background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+        .social-icon.telegram { background: linear-gradient(135deg, #0088cc 0%, #006699 100%); }
+        .social-icon.linkedin { background: linear-gradient(135deg, #0077b5 0%, #005885 100%); }
+        .social-icon.pinterest { background: linear-gradient(135deg, #bd081c 0%, #8b0614 100%); }
+        .social-icon.copy { background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.06); padding: 18px 20px; text-align: center; }
+        .footer-bottom p { font-size: 12px; color: #64748b; }
+        .whatsapp-float { position: fixed; bottom: 22px; right: 22px; z-index: 2000; width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #25d366 0%, #128c7e 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 28px; text-decoration: none; box-shadow: 0 6px 24px rgba(37,211,102,0.4); transition: all 0.3s ease; animation: whatsappPulse 3s infinite; }
+        .whatsapp-float:hover { transform: scale(1.1); box-shadow: 0 8px 28px rgba(37,211,102,0.6); }
+        .whatsapp-float:active { transform: scale(0.95); }
+        @keyframes whatsappPulse { 0%, 100% { box-shadow: 0 6px 24px rgba(37,211,102,0.4); } 50% { box-shadow: 0 6px 32px rgba(37,211,102,0.6), 0 0 0 10px rgba(37,211,102,0.1); } }
+        
         @media (max-width: 480px) {
-            .container { padding: 0 5px; }
-            h1 { font-size: 22px; }
-            .pix-icon-large { width: 70px; height: 70px; font-size: 32px; }
-            .btn-whatsapp-pix { font-size: 16px; padding: 16px; }
+            .main-wrapper { padding: 10px; }
+            .pix-card, .receipt-card { padding: 16px; }
+            .value-amount { font-size: 30px; }
+            .pix-key-text { font-size: 10px; }
+            .btn-copy-pix { padding: 14px; font-size: 15px; }
+            .instructions-list li { font-size: 12px; padding-left: 30px; }
+            .instructions-list li::before { width: 22px; height: 22px; font-size: 10px; }
+            .receipt-total .value { font-size: 20px; }
+            .modal-content { padding: 28px 24px; }
+            .spinner { width: 70px; height: 70px; }
+            .spinner::after { width: 48px; height: 48px; }
+            .modal-title { font-size: 17px; }
+            .whatsapp-float { width: 56px; height: 56px; font-size: 26px; bottom: 18px; right: 18px; }
         }
     </style>
 </head>
 <body>
-
-    <div class="container">
-        <div class="header">
-            <div class="logo-mini"><i class="fas fa-music"></i> SoundPro</div>
-        </div>
-
-        <!-- Card Explicativo -->
-        <div class="vip-card">
-            <div class="pix-icon-large"><i class="fas fa-qrcode"></i></div>
-            <h1>Pagamento via PIX</h1>
-            <p class="subtitle">
-                Para liberar seu pedido imediatamente, nossa aprovação é feita direto com o revendedor.<br><br>
-                Clique abaixo para receber a <strong>Chave Pix Copia e Cola</strong> e o <strong>QR Code</strong>.
-            </p>
-        </div>
-
-        <!-- BOTÃO DE AÇÃO -->
-        <a href="#" id="btnPix" class="btn-whatsapp-pix">
-            <i class="fab fa-whatsapp"></i>
-            Gerar Chave PIX e QR Code
-        </a>
-
-        <!-- Resumo Detalhado -->
-        <div class="order-summary">
-            <div class="summary-title">Detalhamento do Pedido</div>
-            
-            <div class="summary-item">
-                <span>Produto:</span>
-                <span id="prodName">...</span>
+    <!-- Modal Centralizado Premium -->
+    <div class="modal-backdrop" id="modalBackdrop">
+        <div class="modal-content">
+            <div class="spinner-container">
+                <div class="spinner" id="modalSpinner"></div>
+                <div class="spinner-check" id="modalCheck"><i class="fas fa-check"></i></div>
             </div>
-            <div class="summary-item">
-                <span>Qtd:</span>
-                <span id="prodQty">...</span>
+            <h3 class="modal-title">✅ Chave PIX copiada!</h3>
+            <p class="modal-subtitle">Abra seu app de pagamentos e cole a chave para finalizar a transação.</p>
+            
+            <div class="modal-status">
+                <i class="fas fa-circle-notch fa-spin"></i>
+                <span>Aguardando confirmação do pagamento...</span>
             </div>
             
-            <!-- Taxas (Apenas exibição visual) -->
-            <div class="summary-item fee" id="rowGarantia">
-                <span>Garantia Estendida:</span>
-                <span id="valGarantia">R$ 0,00</span>
+            <div class="modal-support">
+                <i class="fas fa-info-circle" style="color:var(--warning)"></i>
+                Caso após o pagamento a página não atualize, <a href="zap.html"><i class="fab fa-whatsapp"></i> entre em contato com o suporte</a>.
             </div>
             
-            <div class="summary-item fee" id="rowExpressa">
-                <span>Entrega Expressa:</span>
-                <span id="valExpressa">R$ 0,00</span>
+            <div class="modal-timer">
+                <i class="fas fa-clock"></i>
+                <span>Seu pedido será processado automaticamente após a confirmação</span>
             </div>
-            
-            <!-- Total Final -->
-            <div class="summary-item total">
-                <span>Total a Pagar:</span>
-                <span id="totalPrice">R$ 0,00</span>
-            </div>
-        </div>
-
-        <div class="info-text">
-            <i class="fas fa-shield-alt"></i> Pagamento seguro e aprovado em tempo real.<br>
-            Após o envio do comprovante, seu pedido segue para expedição.
-        </div>
-
-        <div class="footer">
-            &copy; 2026 SoundPro — GOB DISTRIBUIDORA
         </div>
     </div>
-
+    
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-main">
+            <a href="index.html" class="logo">
+                <img src="atacado-connect-31-anos.svg" alt="Atacado Connect - 31 Anos">
+            </a>
+            <button class="hamburger" id="hamburgerBtn">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+    
+    <!-- BREADCRUMBS -->
+    <div class="breadcrumbs-section">
+        <nav class="breadcrumbs">
+            <a href="index.html" class="breadcrumb-item"><i class="fas fa-home"></i><span>Início</span></a>
+            <span class="breadcrumb-separator">/</span>
+            <a href="checkout.html" class="breadcrumb-item"><i class="fas fa-shopping-cart"></i><span>Checkout</span></a>
+            <span class="breadcrumb-separator">/</span>
+            <a href="pagamento.html" class="breadcrumb-item"><i class="fas fa-credit-card"></i><span>Pagamento</span></a>
+            <span class="breadcrumb-separator">/</span>
+            <a href="#" class="breadcrumb-item active"><i class="fas fa-qrcode"></i><span>PIX</span></a>
+        </nav>
+    </div>
+    
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay" id="menuOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <img src="atacado-connect-31-anos.svg" alt="Atacado Connect">
+            <div class="brand-name">Atacado Connect</div>
+        </div>
+        <nav>
+            <a href="index.html"><i class="fas fa-home"></i> Início</a>
+            <a href="rastreio.html"><i class="fas fa-box"></i> Rastreio</a>
+            <a href="zap.html"><i class="fab fa-whatsapp"></i> Contato</a>
+        </nav>
+    </div>
+    
+    <!-- MAIN CONTENT -->
+    <div class="main-wrapper">
+        <!-- Trust Badges -->
+        <div class="trust-banner">
+            <div class="trust-badge"><i class="fas fa-lock"></i> Conexão segura SSL</div>
+            <div class="trust-badge secure"><i class="fas fa-shield-alt"></i> Pagamento criptografado</div>
+            <div class="trust-badge verified"><i class="fas fa-certificate"></i> Loja verificada</div>
+        </div>
+        
+        <!-- Card PIX -->
+        <div class="pix-card">
+            <div class="pix-header">
+                <i class="fas fa-qrcode"></i>
+                <h2>Pagamento via PIX</h2>
+                <p>Transação instantânea e 100% segura</p>
+            </div>
+            
+            <!-- Valor destacado PREMIUM -->
+            <div class="value-box">
+                <div class="value-label">Valor a pagar</div>
+                <div class="value-amount" id="pixAmount">R$ 0,00</div>
+                <div class="value-sub"><i class="fas fa-shield-check"></i> Ambiente seguro • Dados protegidos</div>
+            </div>
+            
+            <!-- Chave PIX -->
+            <div class="pix-key-section">
+                <div class="pix-key-label">
+                    <i class="fas fa-copy"></i>
+                    Chave PIX (copia e cola)
+                </div>
+                <div class="pix-key-box">
+                    <div class="pix-key-text" id="pixKey">00020126970014br.gov.bcb.pix01225749725@vakinha.com.br0249Smart TV AOC 32LED HD 32S5155/78G Roku Wifi HDMI 5204000053039865406229.995802BR5915Atacado Connect6008Paraguai62070503***630435FF</div>
+                </div>
+                <button class="btn-copy-pix" id="btnCopyPix">
+                    <i class="fas fa-copy"></i>
+                    <span id="copyBtnText">Copiar chave PIX</span>
+                </button>
+            </div>
+            
+            <!-- Instruções -->
+            <div class="instructions-box">
+                <div class="instructions-title">
+                    <i class="fas fa-list-ol"></i>
+                    Como pagar em 30 segundos:
+                </div>
+                <ol class="instructions-list">
+                    <li>Copie a chave PIX acima</li>
+                    <li>Abra o app do seu banco</li>
+                    <li>Selecione "PIX" → "Copia e Cola"</li>
+                    <li>Cole a chave e confirme o pagamento</li>
+                    <li>Pronto! Seu pedido será processado</li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- Trust Footer -->
+        <div class="trust-footer">
+            <div class="trust-footer-title">Sua compra está protegida por:</div>
+            <div class="trust-icons">
+                <div class="trust-icon"><i class="fas fa-lock"></i><span>SSL 256-bit</span></div>
+                <div class="trust-icon secure"><i class="fas fa-user-shield"></i><span>LGPD</span></div>
+                <div class="trust-icon verified"><i class="fas fa-check-circle"></i><span>Verificado</span></div>
+            </div>
+        </div>
+        
+        <!-- Comprovante / Nota Fiscal -->
+        <div class="receipt-card">
+            <div class="receipt-header">
+                <img src="atacado-connect-31-anos.svg" alt="Atacado Connect" class="receipt-logo">
+                <div class="receipt-title"><i class="fas fa-file-invoice"></i> COMPROVANTE</div>
+                <div class="receipt-subtitle">Nota Fiscal Eletrônica • Pré-venda</div>
+            </div>
+            
+            <div class="receipt-row">
+                <span class="receipt-label">Produto:</span>
+                <span class="receipt-value" id="receiptProduct">Carregando...</span>
+            </div>
+            <div class="receipt-row">
+                <span class="receipt-label">Quantidade:</span>
+                <span class="receipt-value" id="receiptQty">1</span>
+            </div>
+            <div class="receipt-row">
+                <span class="receipt-label">Cor/Versão:</span>
+                <span class="receipt-value" id="receiptColor">-</span>
+            </div>
+            <div class="receipt-row">
+                <span class="receipt-label">Cliente:</span>
+                <span class="receipt-value" id="receiptName">-</span>
+            </div>
+            <div class="receipt-row">
+                <span class="receipt-label">CPF/CNPJ:</span>
+                <span class="receipt-value" id="receiptDoc">-</span>
+            </div>
+            <div class="receipt-row">
+                <span class="receipt-label">Endereço:</span>
+                <span class="receipt-value" id="receiptAddress" style="max-width: 60%; text-align: right;">-</span>
+            </div>
+            <div class="receipt-row">
+                <span class="receipt-label">CEP:</span>
+                <span class="receipt-value" id="receiptCep">-</span>
+            </div>
+            <div class="receipt-row">
+                <span class="receipt-label">Telefone:</span>
+                <span class="receipt-value" id="receiptPhone">-</span>
+            </div>
+            <div class="receipt-row">
+                <span class="receipt-label">Email:</span>
+                <span class="receipt-value" id="receiptEmail">-</span>
+            </div>
+            
+            <div class="receipt-total">
+                <span class="label">TOTAL</span>
+                <span class="value" id="receiptTotal">R$ 0,00</span>
+            </div>
+            
+            <div class="receipt-footer">
+                <p><strong>GOB DISTRIBUIDORA (Luz & Ordem)</strong><br>
+                CNPJ: 50.742.088/0001-95 • Insc. Estadual: Isento<br>
+                GALPÃO AZUL - Jandira/SP • CEP: 06612-220</p>
+                <div class="receipt-badge">
+                    <i class="fas fa-check-circle"></i>
+                    Pagamento via PIX • Processamento automático
+                </div>
+                <p style="margin-top: 12px; font-size: 10px; color: #94a3b8;">
+                    Emitido em <span id="receiptDate"></span><br>
+                    Código: <span class="receipt-code" id="receiptCode">PIX-******</span>
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-main">
+            <div class="footer-brand">
+                <a href="index.html" class="logo">
+                    <img src="atacado-connect-31-anos.svg" alt="Atacado Connect" style="height: 38px;">
+                </a>
+                <div class="footer-company">
+                    <strong>GOB DISTRIBUIDORA (Luz & Ordem)</strong><br>
+                    GALPÃO AZUL - RUA AGENOR PEREIRA DA COSTA, 270A<br>
+                    JARDIM ALVORADA - JANDIRA, SP<br>
+                    CEP: 06612-220<br>
+                    CNPJ: 50.742.088/0001-95
+                </div>
+            </div>
+            
+            <div class="footer-contact">
+                <div class="footer-contact-title"><i class="fas fa-headset"></i> Suporte</div>
+                <div class="footer-contact-item"><i class="fab fa-whatsapp"></i><div><strong>WhatsApp:</strong><br><a href="https://wa.me/595993378642" target="_blank">+595 993 378642</a></div></div>
+                <div class="footer-contact-item"><i class="fas fa-envelope"></i><div><strong>Email:</strong><br><a href="mailto:contato@atacadoconnect.com">contato@atacadoconnect.com</a></div></div>
+                <div class="footer-contact-item"><i class="fas fa-map-marker-alt"></i><div><strong>Endereço:</strong><br>Av. Adrián Jara, Cd. del Este 100136</div></div>
+            </div>
+            
+            <div class="payment-methods">
+                <div class="payment-methods-title">Formas de Pagamento</div>
+                <div class="payment-icons">
+                    <div class="card-flag-footer visa"><span>VISA</span></div>
+                    <div class="card-flag-footer mastercard"><div class="circle-red"></div><div class="circle-overlap"></div><div class="circle-yellow"></div></div>
+                    <div class="card-flag-footer elo"><span>ELO</span></div>
+                    <div class="card-flag-footer amex"><span>AMEX</span></div>
+                    <div class="card-flag-footer pix"><span>PIX</span></div>
+                </div>
+            </div>
+            
+            <div class="social-share">
+                <div class="social-share-title">Compartilhar</div>
+                <div class="social-icons">
+                    <a href="#" class="social-icon whatsapp" id="shareWhatsapp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" class="social-icon facebook" id="shareFacebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon twitter" id="shareTwitter"><i class="fab fa-x-twitter"></i></a>
+                    <a href="#" class="social-icon instagram" id="shareInstagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon telegram" id="shareTelegram"><i class="fab fa-telegram-plane"></i></a>
+                    <a href="#" class="social-icon linkedin" id="shareLinkedin"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="social-icon pinterest" id="sharePinterest"><i class="fab fa-pinterest-p"></i></a>
+                    <a href="#" class="social-icon copy" id="copyLinkBtn"><i class="fas fa-link"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom"><p>&copy; 2026 Atacado Connect — GOB DISTRIBUIDORA — Todos os direitos reservados</p></div>
+    </footer>
+    
+    <a href="zap.html" class="whatsapp-float" title="Fale conosco pelo WhatsApp"><i class="fab fa-whatsapp"></i></a>
+    
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Número configurado diretamente
-            const PHONE_NUMBER = "5511945336003"; 
-
+        document.addEventListener('DOMContentLoaded', () => {
+            // ================= DADOS DA URL =================
             const params = new URLSearchParams(window.location.search);
             
-            // 1. Captura TODOS os dados necessários
-            const produto = params.get('produto') || 'Produto Não Identificado';
-            const quantidade = params.get('quantidade') || '1';
-            const nome = params.get('nome') || 'Cliente';
+            // Preencher valor
+            const total = parseFloat(params.get('total')) || 0;
+            document.getElementById('pixAmount').textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+            document.getElementById('receiptTotal').textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
             
-            // Dados de Endereço
-            const rua = params.get('rua') || '';
-            const numero = params.get('numero') || '';
-            const bairro = params.get('bairro') || '';
-            const cep = params.get('cep') || '';
-            const complemento = params.get('complemento') || '';
-
-            // Valor Total (Já calculado vindo da URL)
-            const totalFinal = parseFloat(params.get('total')) || 0;
-
-            // Verifica Taxas
-            const temGarantia = params.get('garantia_estendida') === 'sim';
-            const temExpressa = params.get('entrega_expressa') === 'sim';
-
-            // Valores fixos para exibição
-            const valorGarantia = 5.00;
-            const valorExpressa = 20.00;
-
-            // --- ATUALIZA A TELA (Visual) ---
-            document.getElementById('prodName').textContent = produto;
-            document.getElementById('prodQty').textContent = quantidade;
-            document.getElementById('totalPrice').textContent = `R$ ${totalFinal.toFixed(2).replace('.', ',')}`;
-
-            // Lógica visual das taxas na tela
-            const valGarantia = document.getElementById('valGarantia');
-            if (temGarantia) {
-                valGarantia.textContent = `+ R$ ${valorGarantia.toFixed(2).replace('.', ',')}`;
-            } else {
-                valGarantia.textContent = "R$ 0,00 (Não incluso)";
-            }
-
-            const valExpressa = document.getElementById('valExpressa');
-            if (temExpressa) {
-                valExpressa.textContent = `+ R$ ${valorExpressa.toFixed(2).replace('.', ',')}`;
-            } else {
-                valExpressa.textContent = "R$ 0,00 (Não incluso)";
-            }
-
-            // --- MONTA A MENSAGEM COMPLETA PARA O WHATSAPP ---
+            // Preencher dados do produto
+            document.getElementById('receiptProduct').textContent = params.get('produto') || 'Produto';
+            document.getElementById('receiptQty').textContent = params.get('quantidade') || 1;
+            document.getElementById('receiptColor').textContent = (params.get('cor') || 'preto').charAt(0).toUpperCase() + (params.get('cor') || 'preto').slice(1);
             
-            // Montagem do endereço formatado
-            let enderecoFormatado = "";
-            if(rua) enderecoFormatado += `${rua}, ${numero}`;
-            if(complemento) enderecoFormatado += ` - ${complemento}`;
-            if(bairro) enderecoFormatado += `\n📍 ${bairro}`;
-            if(cep) enderecoFormatado += ` | CEP: ${cep}`;
-
-            // Montagem dos extras para a mensagem
-            let msgExtras = "";
-            if (temGarantia) msgExtras += "\n✅ Garantia Estendida (+R$ 5,00)";
-            if (temExpressa) msgExtras += "\n🚀 Entrega Expressa 3 dias (+R$ 20,00)";
-            if (!temGarantia && !temExpressa) msgExtras += "\n⚪ Sem adicionais";
-
-            const message = 
-`*Olá! Gostaria de finalizar meu pedido via PIX.* 🚀
-
-📦 *DADOS DO PRODUTO*
-*Item:* ${produto}
-*Quantidade:* ${quantidade}
-
- *DADOS DO CLIENTE*
-*Nome:* ${nome}
-*Endereço:* ${enderecoFormatado}
-
-💰 *DETALHES DO PAGAMENTO*
-${msgExtras}
-
-💵 *VALOR TOTAL:* R$ ${totalFinal.toFixed(2).replace('.', ',')}
-
-Por favor, me envie a *Chave Pix Copia e Cola* e o *QR Code* para efetuar o pagamento agora.`;
-
-            // Codifica e define o link do botão
-            const encodedMessage = encodeURIComponent(message);
-            const btn = document.getElementById('btnPix');
-            btn.href = `https://wa.me/${PHONE_NUMBER}?text=${encodedMessage}`;
+            // Preencher dados do cliente
+            document.getElementById('receiptName').textContent = decodeURIComponent(params.get('nome') || 'Cliente');
+            document.getElementById('receiptDoc').textContent = params.get('cpf') || params.get('cnpj') || '-';
+            document.getElementById('receiptPhone').textContent = params.get('telefone') || '-';
+            document.getElementById('receiptEmail').textContent = params.get('email') || '-';
+            
+            // Endereço
+            const rua = decodeURIComponent(params.get('rua') || '');
+            const numero = decodeURIComponent(params.get('numero') || '');
+            const complemento = decodeURIComponent(params.get('complemento') || '');
+            const bairro = decodeURIComponent(params.get('bairro') || '');
+            const cidade = decodeURIComponent(params.get('cidade') || '');
+            const uf = decodeURIComponent(params.get('uf') || '');
+            const cep = decodeURIComponent(params.get('cep') || '');
+            
+            let endereco = '';
+            if (rua) endereco += rua;
+            if (numero) endereco += `, ${numero}`;
+            if (complemento) endereco += ` - ${complemento}`;
+            if (bairro) endereco += `, ${bairro}`;
+            if (cidade || uf) endereco += `${cidade ? ', ' : ''}${cidade}${uf ? '-' + uf : ''}`;
+            document.getElementById('receiptAddress').textContent = endereco || '-';
+            document.getElementById('receiptCep').textContent = cep || '-';
+            
+            // Data e código do comprovante
+            const now = new Date();
+            document.getElementById('receiptDate').textContent = now.toLocaleString('pt-BR');
+            const code = 'PIX-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+            document.getElementById('receiptCode').textContent = code;
+            
+            // ================= FUNÇÕES =================
+            
+            // Copiar para área de transferência
+            async function copyToClipboard(text) {
+                try {
+                    await navigator.clipboard.writeText(text);
+                    return true;
+                } catch (err) {
+                    const textarea = document.createElement('textarea');
+                    textarea.value = text;
+                    textarea.style.position = 'fixed';
+                    textarea.style.opacity = '0';
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    try {
+                        document.execCommand('copy');
+                        document.body.removeChild(textarea);
+                        return true;
+                    } catch (e) {
+                        document.body.removeChild(textarea);
+                        return false;
+                    }
+                }
+            }
+            
+            // Mostrar modal premium
+            function showPremiumModal() {
+                const backdrop = document.getElementById('modalBackdrop');
+                const spinner = document.getElementById('modalSpinner');
+                const check = document.getElementById('modalCheck');
+                
+                backdrop.classList.add('show');
+                
+                // Animação: spinner → check
+                setTimeout(() => {
+                    spinner.classList.add('hide');
+                    check.classList.add('show');
+                }, 1500);
+            }
+            
+            // Enviar dados para API SheetMonkey
+            async function sendToAPI(data) {
+                const apiUrl = 'https://api.sheetmonkey.io/form/7hUg1zyKvC8s75o23yutAW';
+                
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+                    
+                    if (response.ok) {
+                        console.log('✅ Dados enviados para API com sucesso');
+                        return true;
+                    } else {
+                        console.error('❌ Erro API:', response.status);
+                        return false;
+                    }
+                } catch (error) {
+                    console.error('❌ Erro de rede:', error);
+                    return false;
+                }
+            }
+            
+            // ================= EVENT LISTENERS =================
+            
+            // Botão Copiar PIX
+            const btnCopyPix = document.getElementById('btnCopyPix');
+            const pixKey = document.getElementById('pixKey').textContent;
+            
+            btnCopyPix.addEventListener('click', async () => {
+                btnCopyPix.disabled = true;
+                const originalText = document.getElementById('copyBtnText').textContent;
+                document.getElementById('copyBtnText').textContent = 'Processando...';
+                
+                // Copiar chave
+                const copied = await copyToClipboard(pixKey);
+                
+                if (copied) {
+                    // Mostrar modal premium
+                    showPremiumModal();
+                    
+                    // Atualizar botão
+                    btnCopyPix.classList.add('copied');
+                    document.getElementById('copyBtnText').textContent = 'Copiado! ✓';
+                    
+                    // Preparar dados para API
+                    const pixData = {
+                        timestamp: new Date().toISOString(),
+                        codigo_comprovante: document.getElementById('receiptCode').textContent,
+                        valor: total.toFixed(2),
+                        produto: params.get('produto'),
+                        quantidade: params.get('quantidade'),
+                        cor: params.get('cor'),
+                        nome_cliente: params.get('nome'),
+                        cpf_cnpj: params.get('cpf') || params.get('cnpj'),
+                        telefone: params.get('telefone'),
+                        email: params.get('email'),
+                        rua: params.get('rua'),
+                        numero: params.get('numero'),
+                        complemento: params.get('complemento'),
+                        bairro: params.get('bairro'),
+                        cidade: params.get('cidade'),
+                        uf: params.get('uf'),
+                        cep: params.get('cep'),
+                        metodo_pagamento: 'PIX',
+                        chave_pix_copiada: true,
+                        status: 'aguardando_confirmacao',
+                        user_agent: navigator.userAgent,
+                        pagina_origem: window.location.href
+                    };
+                    
+                    // Enviar para API (background)
+                    sendToAPI(pixData);
+                    
+                    // Restaurar botão após 4 segundos
+                    setTimeout(() => {
+                        btnCopyPix.classList.remove('copied');
+                        document.getElementById('copyBtnText').textContent = originalText;
+                        btnCopyPix.disabled = false;
+                    }, 4000);
+                } else {
+                    alert('Não foi possível copiar. Selecione e copie manualmente.');
+                    btnCopyPix.disabled = false;
+                    document.getElementById('copyBtnText').textContent = originalText;
+                }
+            });
+            
+            // Menu Mobile
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const menuOverlay = document.getElementById('menuOverlay');
+            
+            hamburgerBtn.addEventListener('click', () => {
+                mobileMenu.classList.add('active');
+                menuOverlay.classList.add('active');
+            });
+            menuOverlay.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                menuOverlay.classList.remove('active');
+            });
+            
+            // Compartilhar
+            document.getElementById('shareWhatsapp').addEventListener('click', (e) => { e.preventDefault(); window.open(`https://wa.me/?text=${encodeURIComponent('Pagamento PIX Seguro - Atacado Connect')}`, '_blank'); });
+            document.getElementById('shareFacebook').addEventListener('click', (e) => { e.preventDefault(); window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank'); });
+            document.getElementById('shareTwitter').addEventListener('click', (e) => { e.preventDefault(); window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}`, '_blank'); });
+            document.getElementById('shareTelegram').addEventListener('click', (e) => { e.preventDefault(); window.open(`https://t.me/share/url?url=${encodeURIComponent(window.location.href)}`, '_blank'); });
+            document.getElementById('shareLinkedin').addEventListener('click', (e) => { e.preventDefault(); window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`, '_blank'); });
+            document.getElementById('sharePinterest').addEventListener('click', (e) => { e.preventDefault(); window.open(`https://pinterest.com/pin/create/button/?url=${encodeURIComponent(window.location.href)}`, '_blank'); });
+            document.getElementById('shareInstagram').addEventListener('click', (e) => { e.preventDefault(); navigator.clipboard.writeText(window.location.href).then(() => alert('Link copiado para colar no Instagram!')); });
+            document.getElementById('copyLinkBtn').addEventListener('click', (e) => { e.preventDefault(); navigator.clipboard.writeText(window.location.href).then(() => alert('Link copiado!')); });
         });
     </script>
 </body>

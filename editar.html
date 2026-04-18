@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>📋 Dados do Formulário - SoundPro</title>
+  <style>
+    :root {
+      --primary: #00d4aa;
+      --primary-dark: #00b894;
+      --bg-dark: #0f172a;
+      --bg-card: #1e293b;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --border: #334155;
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      padding: 2rem 1rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 2rem;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    header p { color: var(--text-muted); }
+
+    .controls {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+      align-items: center;
+    }
+
+    .controls input, .controls select {
+      padding: 0.6rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg-card);
+      color: var(--text);
+      font-size: 0.95rem;
+      min-width: 200px;
+    }
+
+    .controls button {
+      padding: 0.6rem 1.2rem;
+      background: var(--primary);
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .controls button:hover { background: var(--primary-dark); }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      padding: 1rem;
+      border-radius: 10px;
+      text-align: center;
+      border: 1px solid var(--border);
+    }
+
+    .stat-card .value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .stat-card .label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      min-width: 1200px;
+    }
+
+    thead {
+      background: #0f172a;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    th, td {
+      padding: 0.9rem 0.8rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      font-weight: 600;
+      color: var(--primary);
+      white-space: nowrap;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    th:hover { background: #1a2436; }
+
+    tbody tr:hover { background: #2a364b; }
+
+    .status-badge {
+      padding: 0.3rem 0.7rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      display: inline-block;
+    }
+
+    .status-aguardando { background: #fef3c7; color: #92400e; }
+    .status-confirmado { background: #dcfce7; color: #166534; }
+    .status-cancelado { background: #fee2e2; color: #991b1b; }
+
+    .pix-badge {
+      background: #7c3aed;
+      color: white;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 3rem;
+      color: var(--text-muted);
+    }
+
+    .error {
+      background: #fef2f2;
+      color: #991b1b;
+      padding: 1rem;
+      border-radius: 8px;
+      margin: 1rem 0;
+      border-left: 4px solid var(--danger);
+    }
+
+    .copy-btn {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      transition: all 0.2s;
+    }
+
+    .copy-btn:hover {
+      background: var(--primary);
+      color: #000;
+      border-color: var(--primary);
+    }
+
+    @media (max-width: 768px) {
+      .controls { flex-direction: column; align-items: stretch; }
+      header h1 { font-size: 1.4rem; }
+      th, td { padding: 0.7rem 0.5rem; font-size: 0.85rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>📋 Dados do Formulário - SoundPro</h1>
+      <p>Extraído automaticamente do Google Sheets</p>
+    </header>
+
+    <div class="controls">
+      <input type="text" id="searchInput" placeholder="🔍 Buscar por nome, produto, CPF..." />
+      <select id="statusFilter">
+        <option value="">Todos os status</option>
+        <option value="aguardando_confirmacao">Aguardando confirmação</option>
+        <option value="confirmado">Confirmado</option>
+        <option value="cancelado">Cancelado</option>
+      </select>
+      <select id="paymentFilter">
+        <option value="">Todos os pagamentos</option>
+        <option value="PIX">PIX</option>
+      </select>
+      <button onclick="fetchData()">🔄 Atualizar Dados</button>
+    </div>
+
+    <div class="stats" id="statsContainer">
+      <div class="stat-card">
+        <div class="value" id="totalRecords">-</div>
+        <div class="label">Total de Registros</div>
+      </div>
+      <div class="stat-card">
+        <div class="value" id="totalValue">R$ -</div>
+        <div class="label">Valor Total</div>
+      </div>
+      <div class="stat-card">
+        <div class="value" id="pixCount">-</div>
+        <div class="label">Pagamentos PIX</div>
+      </div>
+      <div class="stat-card">
+        <div class="value" id="pendingCount">-</div>
+        <div class="label">Pendentes</div>
+      </div>
+    </div>
+
+    <div id="message"></div>
+
+    <div class="table-wrapper">
+      <table id="dataTable">
+        <thead>
+          <tr>
+            <th data-sort="timestamp">🕒 Data/Hora</th>
+            <th data-sort="codigo_comprovante">🎫 Comprovante</th>
+            <th data-sort="valor">💰 Valor</th>
+            <th data-sort="produto">📦 Produto</th>
+            <th data-sort="quantidade">🔢 Qtd</th>
+            <th data-sort="cor">🎨 Cor</th>
+            <th data-sort="nome_cliente">👤 Cliente</th>
+            <th data-sort="cpf_cnpj">🆔 CPF/CNPJ</th>
+            <th data-sort="telefone">📞 Telefone</th>
+            <th data-sort="email">✉️ Email</th>
+            <th data-sort="cidade">📍 Cidade/UF</th>
+            <th data-sort="cep">📮 CEP</th>
+            <th data-sort="metodo_pagamento">💳 Pagamento</th>
+            <th data-sort="chave_pix_copiada">🔑 PIX</th>
+            <th data-sort="status">📊 Status</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <tr><td colspan="15" class="loading">Carregando dados...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    // ⚙️ CONFIGURAÇÃO: Substitua pelo ID da SUA planilha
+    const SHEET_ID = '1YKiEk6Zh8i9earvtZYzy-cUHwyNR_pRD_Y1oTGi9sVc';
+    const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+
+    let allData = [];
+    let sortConfig = { key: 'timestamp', direction: 'desc' };
+
+    // Formatadores
+    const formatCurrency = (val) => {
+      const num = parseFloat(val);
+      return isNaN(num) ? '-' : new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(num);
+    };
+
+    const formatDate = (iso) => {
+      if (!iso) return '-';
+      const d = new Date(iso);
+      return d.toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+    };
+
+    const formatStatus = (status) => {
+      const map = {
+        'aguardando_confirmacao': { text: 'Aguardando', class: 'status-aguardando' },
+        'confirmado': { text: 'Confirmado', class: 'status-confirmado' },
+        'cancelado': { text: 'Cancelado', class: 'status-cancelado' }
+      };
+      const s = map[status] || { text: status, class: '' };
+      return `<span class="status-badge ${s.class}">${s.text}</span>`;
+    };
+
+    // Copiar para área de transferência
+    const copyToClipboard = (text, btn) => {
+      navigator.clipboard.writeText(text).then(() => {
+        const original = btn.textContent;
+        btn.textContent = '✔ Copiado!';
+        setTimeout(() => btn.textContent = original, 1500);
+      });
+    };
+
+    // Buscar dados da planilha
+    async function fetchData() {
+      const tbody = document.getElementById('tableBody');
+      const msg = document.getElementById('message');
+      
+      tbody.innerHTML = '<tr><td colspan="15" class="loading">🔄 Buscando dados...</td></tr>';
+      msg.innerHTML = '';
+
+      try {
+        const response = await fetch(SHEET_URL);
+        const text = await response.text();
+        
+        // Parser do JSONP do Google Sheets
+        const jsonText = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\);/)?.[1];
+        if (!jsonText) throw new Error('Formato de resposta inválido');
+        
+        const data = JSON.parse(jsonText);
+        const cols = data.table.cols.map(c => c.label || c.id);
+        const rows = data.table.rows.map(row => {
+          const obj = {};
+          row.c?.forEach((cell, i) => {
+            obj[cols[i]] = cell?.v ?? null;
+          });
+          return obj;
+        });
+
+        allData = rows.filter(r => r.timestamp); // Filtra linhas vazias
+        updateStats();
+        renderTable(allData);
+        
+      } catch (err) {
+        console.error('Erro:', err);
+        msg.innerHTML = `<div class="error">❌ Erro ao carregar dados: ${err.message}<br><small>Verifique se a planilha está publicada em "Arquivo > Compartilhar > Publicar na web"</small></div>`;
+        tbody.innerHTML = '<tr><td colspan="15" class="loading">Falha ao carregar</td></tr>';
+      }
+    }
+
+    // Atualizar cards de estatísticas
+    function updateStats() {
+      const total = allData.length;
+      const totalValue = allData.reduce((sum, r) => sum + (parseFloat(r.valor) || 0), 0);
+      const pixCount = allData.filter(r => r.metodo_pagamento === 'PIX').length;
+      const pending = allData.filter(r => r.status === 'aguardando_confirmacao').length;
+
+      document.getElementById('totalRecords').textContent = total;
+      document.getElementById('totalValue').textContent = formatCurrency(totalValue);
+      document.getElementById('pixCount').textContent = pixCount;
+      document.getElementById('pendingCount').textContent = pending;
+    }
+
+    // Renderizar tabela
+    function renderTable(data) {
+      const tbody = document.getElementById('tableBody');
+      if (data.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="15" style="text-align:center;padding:2rem">Nenhum registro encontrado</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = data.map(row => `
+        <tr>
+          <td>${formatDate(row.timestamp)}</td>
+          <td>
+            ${row.codigo_comprovante || '-'}
+            ${row.codigo_comprovante ? `<button class="copy-btn" onclick="copyToClipboard('${row.codigo_comprovante}', this)">📋</button>` : ''}
+          </td>
+          <td><strong>${formatCurrency(row.valor)}</strong></td>
+          <td>${row.produto || '-'}</td>
+          <td>${row.quantidade || '-'}</td>
+          <td>${row.cor || '-'}</td>
+          <td>${row.nome_cliente || '-'}</td>
+          <td>
+            ${row.cpf_cnpj || '-'}
+            ${row.cpf_cnpj ? `<button class="copy-btn" onclick="copyToClipboard('${row.cpf_cnpj}', this)">📋</button>` : ''}
+          </td>
+          <td>${row.telefone || '-'}</td>
+          <td>
+            ${row.email || '-'}
+            ${row.email ? `<button class="copy-btn" onclick="copyToClipboard('${row.email}', this)">📋</button>` : ''}
+          </td>
+          <td>${[row.cidade, row.uf].filter(Boolean).join('/') || '-'}</td>
+          <td>${row.cep || '-'}</td>
+          <td>${row.metodo_pagamento || '-'}</td>
+          <td>${row.chave_pix_copiada === '✔' ? '<span class="pix-badge">✔ Copiada</span>' : '-'}</td>
+          <td>${formatStatus(row.status)}</td>
+        </tr>
+      `).join('');
+    }
+
+    // Filtros e busca
+    function filterData() {
+      const search = document.getElementById('searchInput').value.toLowerCase();
+      const status = document.getElementById('statusFilter').value;
+      const payment = document.getElementById('paymentFilter').value;
+
+      const filtered = allData.filter(row => {
+        const matchesSearch = !search || Object.values(row).some(v => 
+          String(v ?? '').toLowerCase().includes(search)
+        );
+        const matchesStatus = !status || row.status === status;
+        const matchesPayment = !payment || row.metodo_pagamento === payment;
+        return matchesSearch && matchesStatus && matchesPayment;
+      });
+
+      // Aplicar ordenação
+      const sorted = [...filtered].sort((a, b) => {
+        const { key, direction } = sortConfig;
+        const valA = a[key] ?? '';
+        const valB = b[key] ?? '';
+        if (key === 'valor' || key === 'quantidade') {
+          return direction === 'asc' 
+            ? (parseFloat(valA) || 0) - (parseFloat(valB) || 0)
+            : (parseFloat(valB) || 0) - (parseFloat(valA) || 0);
+        }
+        if (key === 'timestamp') {
+          return direction === 'asc'
+            ? new Date(valA) - new Date(valB)
+            : new Date(valB) - new Date(valA);
+        }
+        return direction === 'asc'
+          ? String(valA).localeCompare(String(valB))
+          : String(valB).localeCompare(String(valA));
+      });
+
+      renderTable(sorted);
+    }
+
+    // Ordenação por coluna
+    document.querySelectorAll('th[data-sort]').forEach(th => {
+      th.addEventListener('click', () => {
+        const key = th.dataset.sort;
+        if (sortConfig.key === key) {
+          sortConfig.direction = sortConfig.direction === 'asc' ? 'desc' : 'asc';
+        } else {
+          sortConfig.key = key;
+          sortConfig.direction = key === 'timestamp' ? 'desc' : 'asc';
+        }
+        filterData();
+      });
+    });
+
+    // Event listeners para filtros
+    document.getElementById('searchInput').addEventListener('input', filterData);
+    document.getElementById('statusFilter').addEventListener('change', filterData);
+    document.getElementById('paymentFilter').addEventListener('change', filterData);
+
+    // Carregar ao iniciar
+    document.addEventListener('DOMContentLoaded', fetchData);
+  </script>
+</body>
+</html>

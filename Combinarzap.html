@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Pagamento em Análise - Atacado Connect</title>
+    <title>Pagamento PIX - Atacado Connect</title>
     
     <link rel="icon" type="image/jpeg" href="favicon.jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,7 +21,7 @@
             --gray: #64748b;
             --gray-light: #e2e8f0;
             --success: #10b981;
-            --warning: #f59e0b;
+            --pix-green: #32bcad;
             --gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
             --whatsapp: #25d366;
             --bg-body: #ffffff;
@@ -220,8 +220,8 @@
             gap: 10px;
         }
 
-        /* Card de Status */
-        .status-card {
+        /* Card Principal */
+        .vip-card {
             background: #ffffff;
             border: 1px solid var(--gray-light);
             border-radius: 24px;
@@ -232,104 +232,63 @@
             overflow: hidden;
         }
 
-        .status-card::before {
+        .vip-card::before {
             content: '';
             position: absolute;
             top: 0; left: 0; width: 100%; height: 6px;
-            background: var(--warning);
-            box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
+            background: var(--pix-green);
+            box-shadow: 0 0 15px rgba(50, 188, 173, 0.3);
         }
 
-        .status-icon {
+        .pix-icon-large {
             width: 90px; height: 90px;
-            background: rgba(245, 158, 11, 0.1);
+            background: rgba(50, 188, 173, 0.1);
             border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             margin: 0 auto 20px;
-            color: var(--warning);
+            color: var(--pix-green);
             font-size: 42px;
-            border: 2px solid var(--warning);
-            animation: pulseStatus 2s infinite;
+            border: 2px solid var(--pix-green);
         }
 
-        @keyframes pulseStatus {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.3); }
-            50% { box-shadow: 0 0 0 15px rgba(245, 158, 11, 0); }
+        h1 { font-size: 26px; font-weight: 800; margin-bottom: 10px; color: var(--dark); }
+
+        .subtitle {
+            font-size: 15px; color: var(--gray); line-height: 1.6; margin-bottom: 0;
         }
 
-        .status-title { 
-            font-size: 26px; 
-            font-weight: 800; 
-            margin-bottom: 10px; 
-            color: var(--dark); 
-        }
-
-        .status-subtitle {
-            font-size: 15px; 
-            color: var(--gray); 
-            line-height: 1.6; 
-            margin-bottom: 0;
-        }
-
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(245, 158, 11, 0.1);
-            color: #92400e;
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 600;
-            margin: 16px 0;
-        }
-
-        /* Card de Informações */
-        .info-card {
-            background: #f0f9ff;
-            border: 1px solid #bae6fd;
+        /* Botão de Ação */
+        .btn-whatsapp-pix {
+            width: 100%; 
+            padding: 18px;
+            background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+            color: white; 
+            border: none; 
             border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 25px;
-            text-align: left;
-        }
-
-        .info-card-title {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-            font-weight: 700;
-            color: #0369a1;
-            margin-bottom: 16px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid #bae6fd;
-        }
-
-        .info-card-title i { color: var(--primary); font-size: 16px; }
-
-        .info-list {
-            display: flex;
-            flex-direction: column;
+            font-size: 18px; 
+            font-weight: 800; 
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
             gap: 12px;
-            font-size: 13px;
-            color: var(--dark);
+            text-decoration: none;
+            animation: pulseBtn 2s infinite;
+            margin-bottom: 25px;
         }
 
-        .info-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
+        .btn-whatsapp-pix:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.6);
         }
 
-        .info-item i {
-            color: var(--success);
-            font-size: 14px;
-            margin-top: 2px;
-            min-width: 16px;
+        @keyframes pulseBtn {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
         }
-
-        .info-item strong { color: var(--dark); }
 
         /* Resumo do Pedido */
         .order-summary {
@@ -351,12 +310,15 @@
             margin-bottom: 10px; font-size: 14px; color: var(--dark);
         }
         
-        .summary-item.fee { color: var(--gray); font-size: 13px; }
+        .summary-item.fee {
+            color: var(--gray);
+            font-size: 13px;
+        }
 
         .summary-item.total {
             margin-top: 15px; padding-top: 15px;
             border-top: 1px dashed var(--gray-light);
-            font-size: 20px; font-weight: 800; color: var(--primary);
+            font-size: 20px; font-weight: 800; color: var(--pix-green);
         }
 
         .info-text {
@@ -364,69 +326,82 @@
         }
         .info-text i { color: var(--primary); margin-right: 5px; }
 
-        /* Botões de Ação */
-        .action-buttons {
+        /* ==================== HORÁRIO DE ATENDIMENTO ==================== */
+        .schedule-card {
+            background: #f0f9ff;
+            border: 1px solid #bae6fd;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .schedule-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #0369a1;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #bae6fd;
+        }
+
+        .schedule-title i { color: var(--primary); font-size: 16px; }
+
+        .schedule-grid {
             display: flex;
             flex-direction: column;
             gap: 12px;
-            margin-top: 20px;
         }
 
-        .btn-whatsapp-status {
-            width: 100%; 
-            padding: 16px;
-            background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
-            color: white; 
-            border: none; 
-            border-radius: 16px;
-            font-size: 16px; 
-            font-weight: 700; 
-            cursor: pointer;
-            box-shadow: 0 4px 16px rgba(37, 211, 102, 0.3);
-            transition: transform 0.2s, box-shadow 0.2s;
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 10px;
-            text-decoration: none;
-        }
-
-        .btn-whatsapp-status:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
-        }
-
-        .btn-home {
-            width: 100%;
-            padding: 14px;
-            background: white;
-            color: var(--dark);
-            border: 2px solid var(--gray-light);
-            border-radius: 16px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
+        .schedule-item {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            text-decoration: none;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 13px;
+            color: var(--dark);
         }
 
-        .btn-home:hover {
-            background: var(--gray-light);
-            border-color: var(--gray);
+        .schedule-item i {
+            color: var(--success);
+            font-size: 14px;
+            margin-top: 2px;
+            min-width: 16px;
         }
+
+        .schedule-item.weekday .time {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .schedule-item.weekend .time {
+            font-weight: 600;
+            color: #f59e0b;
+        }
+
+        .schedule-note {
+            margin-top: 16px;
+            padding: 12px;
+            background: rgba(245, 158, 11, 0.1);
+            border-radius: 10px;
+            border-left: 3px solid #f59e0b;
+            font-size: 12px;
+            color: #92400e;
+            line-height: 1.5;
+        }
+
+        .schedule-note i { color: #f59e0b; margin-right: 4px; }
 
         .footer-mini { margin-top: 40px; font-size: 12px; color: var(--gray); }
 
-        /* ==================== FOOTER PREMIUM ==================== */
+        /* ==================== FOOTER PREMIUM - CORREÇÃO TOTAL ==================== */
         .footer-premium { 
             background: var(--darker); 
             color: white; 
             width: 100%;
-            margin-top: auto;
+            margin-top: auto; /* Empurra para o final */
         }
         
         .footer-main { 
@@ -601,29 +576,88 @@
 
         /* ==================== RESPONSIVIDADE ==================== */
         @media (min-width: 768px) {
-            .container { max-width: 700px; }
-            .status-card { padding: 40px 30px; }
-            .status-title { font-size: 32px; }
+            .container {
+                max-width: 700px;
+            }
+            
+            .vip-card {
+                padding: 40px 30px;
+            }
+            
+            h1 {
+                font-size: 32px;
+            }
         }
 
         @media (min-width: 1024px) {
-            .container { max-width: 800px; }
-            .main-content { padding: 30px 20px; }
+            .container {
+                max-width: 800px;
+            }
+            
+            .main-content {
+                padding: 30px 20px;
+            }
         }
 
         @media (max-width: 480px) {
-            .main-content { padding: 10px; }
-            .container { padding: 0 10px; }
-            .status-title { font-size: 22px; }
-            .status-icon { width: 70px; height: 70px; font-size: 32px; }
-            .btn-whatsapp-status { font-size: 15px; padding: 14px; }
-            .whatsapp-float { width: 54px; height: 54px; font-size: 24px; bottom: 20px; right: 20px; }
-            .payment-icons { gap: 8px; }
-            .card-flag-footer { width: 46px; height: 30px; }
-            .social-icons { gap: 8px; }
-            .social-icon { width: 36px; height: 36px; font-size: 16px; }
-            .footer-contact { padding: 16px; }
-            .footer-contact-item { font-size: 11px; gap: 8px; }
+            .main-content {
+                padding: 10px;
+            }
+            
+            .container { 
+                padding: 0 10px; 
+            }
+            
+            h1 { 
+                font-size: 22px; 
+            }
+            
+            .pix-icon-large { 
+                width: 70px; 
+                height: 70px; 
+                font-size: 32px; 
+            }
+            
+            .btn-whatsapp-pix { 
+                font-size: 16px; 
+                padding: 16px; 
+            }
+            
+            .whatsapp-float { 
+                width: 54px; 
+                height: 54px; 
+                font-size: 24px; 
+                bottom: 20px; 
+                right: 20px; 
+            }
+            
+            .payment-icons { 
+                gap: 8px; 
+            }
+            
+            .card-flag-footer { 
+                width: 46px; 
+                height: 30px; 
+            }
+            
+            .social-icons { 
+                gap: 8px; 
+            }
+            
+            .social-icon { 
+                width: 36px; 
+                height: 36px; 
+                font-size: 16px; 
+            }
+            
+            .footer-contact { 
+                padding: 16px; 
+            }
+            
+            .footer-contact-item { 
+                font-size: 11px; 
+                gap: 8px; 
+            }
         }
     </style>
 </head>
@@ -650,7 +684,7 @@
                     <span class="breadcrumb-separator">/</span>
                     <a href="rastreio.html" class="breadcrumb-item"><i class="fas fa-box"></i><span>Rastreio</span></a>
                     <span class="breadcrumb-separator">/</span>
-                    <a href="analise.html" class="breadcrumb-item active"><i class="fas fa-hourglass-half"></i><span>Análise</span></a>
+                    <a href="zap.html" class="breadcrumb-item active"><i class="fas fa-credit-card"></i><span>Pagamento</span></a>
                 </nav>
             </div>
 
@@ -660,89 +694,82 @@
                     <div class="logo-mini"><i class="fas fa-shopping-bag"></i> Atacado Connect</div>
                 </div>
 
-                <!-- Card de Status -->
-                <div class="status-card">
-                    <div class="status-icon">
-                        <i class="fas fa-hourglass-half"></i>
-                    </div>
-                    <h1 class="status-title">Pagamento em Análise</h1>
-                    <p class="status-subtitle">
-                        Seu pagamento com cartão foi recebido com sucesso! 🎉<br><br>
-                        Estamos aguardando a confirmação do banco para liberar seu pedido.
+                <!-- Card Explicativo -->
+                <div class="vip-card">
+                    <div class="pix-icon-large"><i class="fas fa-qrcode"></i></div>
+                    <h1>Pagamento via PIX</h1>
+                    <p class="subtitle">
+                        Para liberar seu pedido imediatamente, nossa aprovação é feita direto com o revendedor.<br><br>
+                        Clique abaixo para receber a <strong>Chave Pix Copia e Cola</strong> e o <strong>QR Code</strong>.
                     </p>
-                    <div class="status-badge">
-                        <i class="fas fa-clock"></i>
-                        Prazo: até 24 horas para aprovação
-                    </div>
                 </div>
 
-                <!-- Card de Informações -->
-                <div class="info-card">
-                    <div class="info-card-title">
-                        <i class="fas fa-info-circle"></i>
-                        O que acontece agora?
-                    </div>
-                    <div class="info-list">
-                        <div class="info-item">
-                            <i class="fas fa-check-circle"></i>
-                            <div><strong>Etapa 1:</strong> Pagamento recebido e enviado para análise do banco</div>
-                        </div>
-                        <div class="info-item">
-                            <i class="fas fa-check-circle"></i>
-                            <div><strong>Etapa 2:</strong> Banco processa e confirma a transação (pode levar até 24h)</div>
-                        </div>
-                        <div class="info-item">
-                            <i class="fas fa-check-circle"></i>
-                            <div><strong>Etapa 3:</strong> Após confirmação, seu pedido segue para expedição</div>
-                        </div>
-                        <div class="info-item">
-                            <i class="fas fa-bell"></i>
-                            <div><strong>Notificação:</strong> Você receberá um WhatsApp assim que o status mudar!</div>
-                        </div>
-                    </div>
-                </div>
+                <!-- BOTÃO DE AÇÃO -->
+                <a href="#" id="btnPix" class="btn-whatsapp-pix">
+                    <i class="fab fa-whatsapp"></i>
+                    Gerar Chave PIX e QR Code
+                </a>
 
-                <!-- Resumo do Pedido -->
+                <!-- Resumo Detalhado -->
                 <div class="order-summary">
-                    <div class="summary-title">Detalhes do Pedido</div>
+                    <div class="summary-title">Detalhamento do Pedido</div>
                     
                     <div class="summary-item">
                         <span>Produto:</span>
                         <span id="prodName">...</span>
                     </div>
                     <div class="summary-item">
-                        <span>Quantidade:</span>
+                        <span>Qtd:</span>
                         <span id="prodQty">...</span>
                     </div>
-                    <div class="summary-item">
-                        <span>Cor:</span>
-                        <span id="prodColor">...</span>
+                    
+                    <div class="summary-item fee" id="rowGarantia">
+                        <span>Garantia Estendida:</span>
+                        <span id="valGarantia">R$ 0,00</span>
                     </div>
-                    <div class="summary-item">
-                        <span>Cliente:</span>
-                        <span id="clientName">...</span>
+                    
+                    <div class="summary-item fee" id="rowExpressa">
+                        <span>Entrega Expressa:</span>
+                        <span id="valExpressa">R$ 0,00</span>
                     </div>
                     
                     <div class="summary-item total">
-                        <span>Total Pago:</span>
+                        <span>Total a Pagar:</span>
                         <span id="totalPrice">R$ 0,00</span>
                     </div>
                 </div>
 
-                <!-- Botões de Ação -->
-                <div class="action-buttons">
-                    <a href="#" id="btnWhatsApp" class="btn-whatsapp-status">
-                        <i class="fab fa-whatsapp"></i>
-                        Falar com Atendimento
-                    </a>
-                    <a href="index.html" class="btn-home">
-                        <i class="fas fa-home"></i>
-                        Voltar para a Loja
-                    </a>
+                <!-- HORÁRIO DE ATENDIMENTO -->
+                <div class="schedule-card">
+                    <div class="schedule-title">
+                        <i class="fas fa-clock"></i>
+                        Horário de Atendimento
+                    </div>
+                    <div class="schedule-grid">
+                        <div class="schedule-item weekday">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>Segunda a Sexta:</strong><br>
+                                <span class="time">🕘 09:00 às 11:00</span> e <span class="time">🕐 13:00 às 21:00</span>
+                            </div>
+                        </div>
+                        <div class="schedule-item weekend">
+                            <i class="fas fa-sun"></i>
+                            <div>
+                                <strong>Sábado e Domingo:</strong><br>
+                                <span class="time">🌅 Somente pela manhã</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="schedule-note">
+                        <i class="fas fa-info-circle"></i>
+                        <strong>Observação:</strong> Pode haver exceções na disponibilidade do vendedor. Em caso de urgência, entre em contato pelo WhatsApp para confirmar o atendimento.
+                    </div>
                 </div>
 
                 <div class="info-text">
-                    <i class="fas fa-shield-alt"></i> Seus dados estão seguros. Não compartilhe este link com terceiros.
+                    <i class="fas fa-shield-alt"></i> Pagamento seguro e aprovado em tempo real.<br>
+                    Após o envio do comprovante, seu pedido segue para expedição.
                 </div>
 
                 <div class="footer-mini">
@@ -751,7 +778,7 @@
             </div>
         </main>
 
-        <!-- FOOTER PREMIUM -->
+        <!-- FOOTER PREMIUM - LARGURA TOTAL -->
         <footer class="footer-premium">
             <div class="footer-main">
                 <div class="footer-brand">
@@ -843,8 +870,8 @@
         // Funções de Compartilhamento
         function shareOnSocial(network) {
             const url = encodeURIComponent(window.location.href);
-            const title = encodeURIComponent('Atacado Connect - Pagamento em Análise');
-            const text = encodeURIComponent('Meu pedido está em análise de pagamento!');
+            const title = encodeURIComponent('Atacado Connect - Pagamento PIX');
+            const text = encodeURIComponent('Finalize seu pedido com segurança via PIX!');
             let shareUrl = '';
             switch(network) {
                 case 'whatsapp': shareUrl = `https://wa.me/?text=${title}%20${text}%20${url}`; break;
@@ -887,48 +914,79 @@
             setTimeout(() => { t.style.opacity='0'; t.style.transition='opacity .3s'; setTimeout(()=>t.remove(),300); }, 3000);
         }
 
-        // Lógica Principal - Carregar dados da URL
+        // Lógica Principal do PIX
         document.addEventListener('DOMContentLoaded', function() {
-            const PHONE_NUMBER = "5511945336003";
+            const PHONE_NUMBER = "5511945336003"; 
+            
             const params = new URLSearchParams(window.location.search);
             
-            // Captura todos os parâmetros
             const produto = params.get('produto') || 'Produto Não Identificado';
             const quantidade = params.get('quantidade') || '1';
-            const cor = params.get('cor') || 'Não informada';
-            const total = parseFloat(params.get('total')) || 0;
             const nome = params.get('nome') || 'Cliente';
-            const email = params.get('email') || '';
-            const telefone = params.get('telefone') || '';
-            const documento = params.get('documento') || '';
             
-            // Atualiza os elementos da tela
+            const rua = params.get('rua') || '';
+            const numero = params.get('numero') || '';
+            const bairro = params.get('bairro') || '';
+            const cep = params.get('cep') || '';
+            const complemento = params.get('complemento') || '';
+
+            const totalFinal = parseFloat(params.get('total')) || 0;
+            const temGarantia = params.get('garantia_estendida') === 'sim';
+            const temExpressa = params.get('entrega_expressa') === 'sim';
+
+            const valorGarantia = 5.00;
+            const valorExpressa = 20.00;
+
             document.getElementById('prodName').textContent = produto;
             document.getElementById('prodQty').textContent = quantidade;
-            document.getElementById('prodColor').textContent = cor.charAt(0).toUpperCase() + cor.slice(1);
-            document.getElementById('clientName').textContent = nome;
-            document.getElementById('totalPrice').textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+            document.getElementById('totalPrice').textContent = `R$ ${totalFinal.toFixed(2).replace('.', ',')}`;
 
-            // Monta mensagem para WhatsApp
+            const valGarantia = document.getElementById('valGarantia');
+            if (temGarantia) {
+                valGarantia.textContent = `+ R$ ${valorGarantia.toFixed(2).replace('.', ',')}`;
+            } else {
+                valGarantia.textContent = "R$ 0,00 (Não incluso)";
+            }
+
+            const valExpressa = document.getElementById('valExpressa');
+            if (temExpressa) {
+                valExpressa.textContent = `+ R$ ${valorExpressa.toFixed(2).replace('.', ',')}`;
+            } else {
+                valExpressa.textContent = "R$ 0,00 (Não incluso)";
+            }
+
+            let enderecoFormatado = "";
+            if(rua) enderecoFormatado += `${rua}, ${numero}`;
+            if(complemento) enderecoFormatado += ` - ${complemento}`;
+            if(bairro) enderecoFormatado += `\n📍 ${bairro}`;
+            if(cep) enderecoFormatado += ` | CEP: ${cep}`;
+
+            let msgExtras = "";
+            if (temGarantia) msgExtras += "\n✅ Garantia Estendida (+R$ 5,00)";
+            if (temExpressa) msgExtras += "\n🚀 Entrega Expressa 3 dias (+R$ 20,00)";
+            if (!temGarantia && !temExpressa) msgExtras += "\n⚪ Sem adicionais";
+
             const message = 
-`*Olá! Gostaria de consultar meu pedido em análise.* 🔍
+`*Olá! Gostaria de finalizar meu pedido via PIX.* 🚀
 
-📦 *DADOS DO PEDIDO*
-*Produto:* ${produto}
+ *DADOS DO PRODUTO*
+*Item:* ${produto}
 *Quantidade:* ${quantidade}
-*Cor:* ${cor.charAt(0).toUpperCase() + cor.slice(1)}
-*Total:* R$ ${total.toFixed(2).replace('.', ',')}
 
 👤 *DADOS DO CLIENTE*
 *Nome:* ${nome}
-*Telefone:* ${telefone}
-*Documento:* ${documento}
+*Endereço:* ${enderecoFormatado}
 
-Meu pagamento está em análise e gostaria de saber se há alguma previsão de liberação. Obrigado!`;
+💰 *DETALHES DO PAGAMENTO*
+${msgExtras}
+
+💵 *VALOR TOTAL:* R$ ${totalFinal.toFixed(2).replace('.', ',')}
+
+Por favor, me envie a *Chave Pix Copia e Cola* e o *QR Code* para efetuar o pagamento agora.`;
 
             const encodedMessage = encodeURIComponent(message);
-            const btnWhatsApp = document.getElementById('btnWhatsApp');
-            btnWhatsApp.href = `https://wa.me/${PHONE_NUMBER}?text=${encodedMessage}`;
+            const btn = document.getElementById('btnPix');
+            btn.href = `https://wa.me/${PHONE_NUMBER}?text=${encodedMessage}`;
         });
     </script>
 </body>

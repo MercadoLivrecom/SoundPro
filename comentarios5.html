@@ -3,222 +3,803 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Avaliações - Smart TV AOC 32" Roku | SoundPro</title>
+    <title>Avaliações - Smart TV AOC 32" Roku | Atacado Connect</title>
+    
+    <link rel="icon" type="image/jpeg" href="favicon.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #6366f1;
+            --secondary: #ec4899;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --gray-light: #e2e8f0;
+            --gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+            --star-gold: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --bg-body: #f0f2f5;
+            --whatsapp: #25d366;
+            --aoc-red: #e30613;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #f0f2f5;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-body);
             color: #1a1a2e;
             overflow-x: hidden;
+            line-height: 1.5;
         }
+
         .header {
-            background: rgba(2, 6, 23, 0.98);
-            backdrop-filter: blur(20px);
-            padding: 12px 16px;
-            position: sticky;
+            position: fixed;
             top: 0;
+            width: 100%;
             z-index: 1000;
+            background: rgba(248, 250, 252, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
         }
-        .header-content {
-            max-width: 1280px;
-            margin: 0 auto;
+
+        .header-main {
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            text-decoration: none;
         }
-        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-        .logo-icon {
-            width: 38px; height: 38px;
-            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
-            border-radius: 10px; display: flex; align-items: center; justify-content: center;
-            font-size: 18px; color: white; flex-shrink: 0;
+
+        .logo img {
+            height: 38px;
+            width: auto;
+            display: block;
         }
-        .logo-text h1 {
-            font-size: 18px; font-weight: 800;
-            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+            padding: 6px;
+            background: transparent;
+            border: none;
         }
-        .logo-text p { font-size: 8px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1.5px; }
-        .menu-btn { background: none; border: none; color: white; font-size: 24px; cursor: pointer; padding: 8px; transition: transform 0.3s; }
-        .menu-btn:hover { transform: scale(1.1); }
+
+        .hamburger span {
+            width: 22px;
+            height: 2px;
+            background: var(--dark);
+            border-radius: 2px;
+        }
+
         .mobile-menu-overlay {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
-            z-index: 999; opacity: 0; visibility: hidden; transition: all 0.3s ease;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
         }
+
         .mobile-menu-overlay.active { opacity: 1; visibility: visible; }
+
         .mobile-menu {
-            position: fixed; top: 0; right: -100%; width: 280px; max-width: 85%; height: 100vh;
-            background: linear-gradient(180deg, #0f172a 0%, #1e1b4b 100%); z-index: 1000;
-            transition: right 0.3s ease; padding: 70px 20px 20px; overflow-y: auto;
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 280px;
+            max-width: 85%;
+            height: 100vh;
+            background: linear-gradient(180deg, #0f172a 0%, #1e1b4b 100%);
+            z-index: 1000;
+            transition: right 0.3s ease;
+            padding: 70px 20px 20px;
         }
+
         .mobile-menu.active { right: 0; }
+
         .mobile-menu-header {
-            display: flex; align-items: center; gap: 10px; padding-bottom: 16px;
-            margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 16px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
-        .mobile-menu-logo {
-            width: 38px; height: 38px;
-            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
-            border-radius: 10px; display: flex; align-items: center; justify-content: center;
-            font-size: 18px; color: white;
+
+        .mobile-menu-header img {
+            height: 38px;
+            width: auto;
         }
-        .mobile-menu-title {
-            font-size: 18px; font-weight: 800;
-            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+
+        .mobile-menu-header .brand-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
         }
-        .mobile-menu nav { display: flex; flex-direction: column; gap: 8px; }
+
         .mobile-menu nav a {
-            display: flex; align-items: center; gap: 12px; padding: 14px 16px;
-            color: rgba(255,255,255,0.8); text-decoration: none; font-size: 15px;
-            border-radius: 10px; transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
-        .mobile-menu nav a:hover { background: rgba(99,102,241,0.1); color: white; }
-        .mobile-menu nav a i { width: 20px; color: #6366f1; text-align: center; font-size: 16px; }
-        .mobile-menu-close {
-            position: absolute; top: 16px; right: 16px; background: rgba(255,255,255,0.1);
-            border: none; color: white; width: 36px; height: 36px; border-radius: 8px;
-            cursor: pointer; font-size: 18px; transition: all 0.3s;
+
+        .mobile-menu nav a i { width: 18px; color: var(--primary); text-align: center; }
+
+        .breadcrumbs-section {
+            background: white;
+            padding: 14px 16px;
+            margin-top: 75px;
+            border-bottom: 1px solid #e2e8f0;
+            position: relative;
+            z-index: 100;
         }
-        .mobile-menu-close:hover { background: rgba(255,255,255,0.2); }
+
+        .breadcrumbs {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .breadcrumb-item:hover { color: var(--primary); }
+        .breadcrumb-item.active { color: var(--dark); font-weight: 600; }
+        .breadcrumb-separator { color: #cbd5e1; font-size: 12px; }
+        .breadcrumb-item i { font-size: 15px; }
+
         .container { max-width: 800px; margin: 0 auto; padding: 16px; }
+
         .rating-card {
             background: white; border-radius: 16px; padding: 24px;
             margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.06);
         }
+
         .rating-header {
             text-align: center; padding-bottom: 24px; border-bottom: 1px solid #f1f5f9; margin-bottom: 24px;
         }
+
         .rating-header h2 { font-size: 24px; font-weight: 700; color: #0f172a; margin-bottom: 8px; }
         .rating-header p { color: #64748b; font-size: 14px; }
+
         .average-rating { text-align: center; margin-bottom: 24px; }
         .average-number { font-size: 64px; font-weight: 300; color: #0f172a; line-height: 1; }
         .average-stars { margin: 12px 0; display: flex; justify-content: center; gap: 4px; }
-        .average-stars i { color: #f59e0b; font-size: 20px; }
+        .average-stars i { color: var(--star-gold); font-size: 20px; }
         .average-stars i.empty { color: #e2e8f0; }
         .total-ratings { color: #64748b; font-size: 14px; }
+
         .rating-bars { display: flex; flex-direction: column; gap: 10px; }
         .rating-bar-item { display: flex; align-items: center; gap: 10px; width: 100%; }
+
         .star-label {
             display: flex; align-items: center; gap: 4px; min-width: 40px;
             font-weight: 600; color: #64748b; font-size: 14px;
         }
-        .star-label i { color: #f59e0b; font-size: 14px; }
+        .star-label i { color: var(--star-gold); font-size: 14px; }
+
         .bar-container { flex: 1; height: 8px; background: #e2e8f0; border-radius: 4px; overflow: hidden; min-width: 0; }
         .bar-fill {
-            height: 100%; background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+            height: 100%; background: linear-gradient(135deg, var(--star-gold) 0%, #fbbf24 100%);
             border-radius: 4px; transition: width 0.5s ease;
         }
+
         .rating-count { min-width: 110px; font-size: 13px; color: #64748b; font-weight: 500; white-space: nowrap; }
+
         .comments-section {
             background: white; border-radius: 16px; overflow: hidden;
             box-shadow: 0 1px 3px rgba(0,0,0,0.06); margin-bottom: 20px;
         }
+
         .comments-header {
             padding: 20px 24px; border-bottom: 1px solid #f1f5f9;
             display: flex; align-items: center; justify-content: space-between;
         }
+
         .comments-header h3 { font-size: 20px; font-weight: 700; color: #0f172a; }
         .comments-filter { display: flex; gap: 8px; }
+
         .filter-btn {
             padding: 6px 12px; border-radius: 6px; border: 1px solid #e2e8f0;
             background: white; color: #64748b; font-size: 12px; font-weight: 500;
             cursor: pointer; transition: all 0.3s;
         }
-        .filter-btn.active { background: #6366f1; color: white; border-color: #6366f1; }
+        .filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
         .comment-item { padding: 24px; border-bottom: 1px solid #f1f5f9; }
         .comment-item:last-child { border-bottom: none; }
+
         .comment-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
+
         .comment-avatar {
             width: 48px; height: 48px; border-radius: 50%;
             background: linear-gradient(135deg, #a8a29e 0%, #78716c 100%);
             display: flex; align-items: center; justify-content: center;
             color: white; font-size: 20px; font-weight: 600; flex-shrink: 0; text-transform: uppercase;
         }
+
         .comment-meta { flex: 1; }
         .comment-author { font-size: 16px; font-weight: 600; color: #0f172a; margin-bottom: 4px; }
         .comment-info { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
         .comment-stars { display: flex; gap: 2px; }
-        .comment-stars i { color: #f59e0b; font-size: 14px; }
+        .comment-stars i { color: var(--star-gold); font-size: 14px; }
         .comment-date { font-size: 13px; color: #64748b; }
+
         .comment-text { font-size: 15px; color: #334155; line-height: 1.6; margin-bottom: 16px; }
+
         .comment-images { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
         .comment-image {
             width: 100px; height: 100px; border-radius: 8px; overflow: hidden;
             cursor: pointer; border: 2px solid #e2e8f0; transition: border-color 0.3s;
         }
-        .comment-image:hover { border-color: #6366f1; }
+        .comment-image:hover { border-color: var(--primary); }
         .comment-image img { width: 100%; height: 100%; object-fit: cover; }
+
         .comment-footer {
             margin-top: 16px; padding-top: 16px; border-top: 1px solid #f1f5f9; display: flex; gap: 20px;
         }
+
         .comment-action {
             display: flex; align-items: center; gap: 6px; font-size: 13px;
             color: #64748b; cursor: pointer; transition: color 0.3s;
         }
-        .comment-action:hover { color: #6366f1; }
+        .comment-action:hover { color: var(--primary); }
+        .comment-action.liked { color: var(--primary); font-weight: 600; }
         .comment-action i { font-size: 16px; }
+        .comment-action.liked i { color: var(--primary); }
+
+        /* ===== RESPOSTA DA LOJA ===== */
+        .store-reply {
+            margin-top: 16px;
+            padding: 16px;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-radius: 12px;
+            border-left: 4px solid var(--primary);
+            display: flex;
+            gap: 12px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .store-reply-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .store-reply-content { flex: 1; }
+
+        .store-reply-author {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        .store-reply-author strong {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .store-badge {
+            background: var(--primary);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .store-reply-text {
+            font-size: 14px;
+            color: #334155;
+            line-height: 1.6;
+            margin-bottom: 6px;
+        }
+
+        .store-reply-date {
+            font-size: 12px;
+            color: #64748b;
+        }
+
         .load-more {
             display: block; padding: 16px; text-align: center; background: #f8fafc;
-            color: #6366f1; text-decoration: none; font-weight: 600; font-size: 14px;
+            color: var(--primary); text-decoration: none; font-weight: 600; font-size: 14px;
             transition: background 0.3s; border: none; cursor: pointer; width: 100%;
         }
         .load-more:hover { background: #eef2f7; }
-        .whatsapp-float {
-            position: fixed; bottom: 24px; right: 24px; width: 60px; height: 60px;
-            border-radius: 50%; background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
-            display: flex; align-items: center; justify-content: center; color: white;
-            font-size: 28px; text-decoration: none; box-shadow: 0 4px 20px rgba(37,211,102,0.4);
-            z-index: 1000; animation: pulse 2s infinite;
+
+        /* ===== FORMULÁRIO DE AVALIAÇÃO ===== */
+        .review-form-section {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
         }
-        @keyframes pulse {
-            0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.4); }
-            50% { box-shadow: 0 4px 30px rgba(37,211,102,0.6), 0 0 0 8px rgba(37,211,102,0.1); }
+
+        .review-form-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #f1f5f9;
         }
-        .footer { background: #020617; color: white; margin-top: 20px; }
+
+        .form-group { margin-bottom: 20px; }
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 8px;
+        }
+
+        /* Estrelas selecionáveis */
+        .star-rating {
+            display: flex;
+            gap: 4px;
+            flex-direction: row-reverse;
+            justify-content: flex-start;
+        }
+        .star-rating input { display: none; }
+        .star-rating label {
+            font-size: 28px;
+            color: #e2e8f0;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .star-rating label:hover,
+        .star-rating label:hover ~ label,
+        .star-rating input:checked ~ label {
+            color: var(--star-gold);
+        }
+
+        /* Input de texto */
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 14px;
+            color: #1a1a2e;
+            background: #f8fafc;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+        }
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        /* Upload de imagens - 3 quadrados lado a lado */
+        .image-upload-container {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        .image-upload-box {
+            width: 70px;
+            height: 70px;
+            border: 2px dashed #cbd5e1;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background: #f8fafc;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .image-upload-box:hover {
+            border-color: var(--primary);
+            background: #f1f5f9;
+        }
+        .image-upload-box i {
+            font-size: 24px;
+            color: #94a3b8;
+        }
+        .image-upload-box.has-image {
+            border-style: solid;
+            border-color: var(--success);
+        }
+        .image-upload-box.has-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .image-upload-box .remove-image {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            width: 20px;
+            height: 20px;
+            background: var(--danger);
+            color: white;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        .image-upload-box.has-image .remove-image { display: flex; }
+        .image-upload-hint {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 8px;
+        }
+
+        /* Botão enviar */
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+        }
+        .submit-btn:active { transform: translateY(0); }
+
+        /* ===== MODAL DE ERRO (LOAD MORE) ===== */
+        .error-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            padding: 20px;
+        }
+        .error-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .error-modal {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            padding: 28px 24px;
+            border-radius: 16px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(239, 68, 68, 0.5);
+            animation: modalPop 0.3s ease;
+        }
+        @keyframes modalPop {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .error-modal i {
+            font-size: 48px;
+            margin-bottom: 16px;
+            display: block;
+        }
+        .error-modal-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .error-modal-text {
+            font-size: 14px;
+            opacity: 0.95;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        .error-modal-close {
+            padding: 10px 24px;
+            background: white;
+            color: #ef4444;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .error-modal-close:hover { background: #f8fafc; }
+
+        /* ===== MODAL DE CÓDIGO DO PRODUTO ===== */
+        .product-code-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9998;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            padding: 20px;
+        }
+        .product-code-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .product-code-box {
+            background: white;
+            padding: 24px;
+            border-radius: 16px;
+            max-width: 380px;
+            width: 100%;
+            text-align: center;
+        }
+        .product-code-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+        .product-code-hint {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 20px;
+        }
+        .product-code-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 14px;
+            margin-bottom: 16px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .product-code-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        .product-code-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .product-code-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .product-code-btn.cancel {
+            background: #f1f5f9;
+            color: #64748b;
+        }
+        .product-code-btn.confirm {
+            background: var(--primary);
+            color: white;
+        }
+        .product-code-btn:hover { transform: translateY(-1px); }
+
+        /* Toast de erro após código inválido */
+        .toast-error {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            padding: 20px 28px;
+            border-radius: 14px;
+            font-size: 14px;
+            z-index: 10000;
+            box-shadow: 0 15px 50px rgba(239, 68, 68, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: fadeInUp 0.3s ease;
+            max-width: 90%;
+            text-align: center;
+        }
+        .toast-error i { font-size: 22px; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translate(-50%, -40%); }
+            to { opacity: 1; transform: translate(-50%, -50%); }
+        }
+
+        .footer { background: var(--darker); color: white; margin-top: 20px; }
         .footer-main { max-width: 1280px; margin: 0 auto; padding: 30px 20px; }
         .footer-brand .logo { margin-bottom: 12px; }
+
         .footer-company {
-            font-size: 12px; color: #64748b; line-height: 1.8; padding: 12px;
-            background: rgba(255,255,255,0.03); border-radius: 10px;
+            font-size: 12px;
+            color: #64748b;
+            line-height: 1.8;
+            padding: 12px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 10px;
             border: 1px solid rgba(255,255,255,0.06);
         }
+        
+        .footer-contact {
+            margin-top: 24px;
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .footer-contact-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .footer-contact-title i {
+            color: var(--primary);
+        }
+        .footer-contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+            font-size: 12px;
+            color: #cbd5e1;
+            line-height: 1.5;
+        }
+        .footer-contact-item:last-child {
+            margin-bottom: 0;
+        }
+        .footer-contact-item i {
+            color: var(--primary);
+            font-size: 14px;
+            margin-top: 2px;
+            min-width: 16px;
+        }
+        .footer-contact-item a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-contact-item a:hover {
+            color: white;
+        }
+        .footer-contact-item strong {
+            color: white;
+            font-weight: 600;
+        }
+
         .payment-methods {
-            margin-top: 20px; padding-top: 20px; padding-bottom: 20px;
+            margin-top: 20px;
+            padding-top: 20px;
+            padding-bottom: 20px;
             border-top: 1px solid rgba(255,255,255,0.08);
         }
         .payment-methods-title {
-            font-size: 11px; color: #64748b; margin-bottom: 14px;
-            text-align: center; text-transform: uppercase; letter-spacing: 1px;
+            font-size: 11px;
+            color: #64748b;
+            margin-bottom: 14px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         .payment-icons { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+
         .card-flag-footer {
-            width: 52px; height: 34px; border-radius: 8px; display: flex;
-            align-items: center; justify-content: center; font-size: 11px;
-            font-weight: 700; color: white; position: relative; overflow: hidden; flex-shrink: 0;
+            width: 52px;
+            height: 34px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
         }
+
         .card-flag-footer.visa { background: #1a1f71; }
         .card-flag-footer.visa span { font-family: Arial, sans-serif; font-style: italic; font-weight: 900; font-size: 14px; letter-spacing: -0.5px; }
+
         .card-flag-footer.mastercard { background: #252525; display: flex; align-items: center; justify-content: center; position: relative; }
         .card-flag-footer.mastercard .circle-red { width: 22px; height: 22px; background: #eb001b; border-radius: 50%; position: absolute; left: 12px; }
         .card-flag-footer.mastercard .circle-yellow { width: 22px; height: 22px; background: #f79e1b; border-radius: 50%; position: absolute; right: 12px; }
         .card-flag-footer.mastercard .circle-overlap { width: 22px; height: 22px; background: #ff5f00; border-radius: 50%; position: absolute; left: 50%; transform: translateX(-50%); }
+
         .card-flag-footer.elo { background: #0033a0; }
         .card-flag-footer.elo span { font-family: Arial, sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.5px; }
+
         .card-flag-footer.amex { background: #006fcf; }
         .card-flag-footer.amex span { font-family: Arial, sans-serif; font-weight: 700; font-size: 10px; letter-spacing: 0.5px; }
+
         .card-flag-footer.pix { background: #34a37f; width: 58px; }
         .card-flag-footer.pix span { font-family: Arial, sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; }
+
         .social-share { margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.08); }
         .social-share-title { font-size: 11px; color: #64748b; margin-bottom: 14px; text-align: center; text-transform: uppercase; letter-spacing: 1px; }
         .social-icons { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+
         .social-icon {
-            width: 40px; height: 40px; border-radius: 50%; display: flex;
-            align-items: center; justify-content: center; cursor: pointer;
-            transition: all 0.3s; color: white; font-size: 18px; text-decoration: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: white;
+            font-size: 18px;
+            text-decoration: none;
         }
+
         .social-icon:hover { transform: translateY(-3px) scale(1.1); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
         .social-icon.whatsapp { background: linear-gradient(135deg, #25d366 0%, #128c7e 100%); }
         .social-icon.facebook { background: linear-gradient(135deg, #1877f2 0%, #0d5cb6 100%); }
@@ -228,23 +809,65 @@
         .social-icon.linkedin { background: linear-gradient(135deg, #0077b5 0%, #005885 100%); }
         .social-icon.pinterest { background: linear-gradient(135deg, #bd081c 0%, #8b0614 100%); }
         .social-icon.copy { background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); }
+
         .footer-bottom { border-top: 1px solid rgba(255,255,255,0.06); padding: 16px 20px; text-align: center; }
         .footer-bottom p { font-size: 11px; color: #64748b; }
-        .toast {
-            position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%);
-            background: #0f172a; color: white; padding: 12px 20px; border-radius: 10px;
-            font-size: 13px; z-index: 10000; box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-            display: flex; align-items: center; gap: 8px; animation: fadeInUp 0.3s ease;
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 2000;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+            text-decoration: none;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s ease;
+            animation: whatsappPulse 2s infinite;
         }
+
+        .whatsapp-float:hover { transform: scale(1.1); box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6); }
+        .whatsapp-float:active { transform: scale(0.95); }
+        .whatsapp-float i { filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2)); }
+
+        @keyframes whatsappPulse {
+            0%, 100% { box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4); }
+            50% { box-shadow: 0 4px 30px rgba(37, 211, 102, 0.6), 0 0 0 8px rgba(37, 211, 102, 0.1); }
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--dark);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 13px;
+            z-index: 10000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: fadeInUp 0.3s ease;
+        }
+
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateX(-50%) translateY(20px); }
             to { opacity: 1; transform: translateX(-50%) translateY(0); }
         }
+
         @media (max-width: 640px) {
             body { padding-bottom: 20px; }
             .header { padding: 10px 12px; }
-            .logo-text h1 { font-size: 16px; }
-            .logo-text p { font-size: 7px; }
             .container { padding: 12px; }
             .rating-card { padding: 20px 16px; }
             .rating-header h2 { font-size: 20px; }
@@ -276,7 +899,21 @@
             .whatsapp-float { width: 54px; height: 54px; font-size: 24px; bottom: 20px; right: 20px; }
             .footer-main { padding: 24px 16px; }
             .footer-company { font-size: 11px; }
+            .footer-contact { padding: 16px; }
+            .footer-contact-item { font-size: 11px; gap: 8px; }
+            .footer-contact-item i { font-size: 13px; margin-top: 1px; }
+            
+            /* Responsivo para formulário */
+            .image-upload-container { flex-wrap: wrap; justify-content: center; }
+            .image-upload-box { width: 65px; height: 65px; }
+            .star-rating label { font-size: 24px; }
+            
+            /* Responsivo para resposta da loja */
+            .store-reply { padding: 12px; }
+            .store-reply-avatar { width: 36px; height: 36px; font-size: 12px; }
+            .store-reply-text { font-size: 13px; }
         }
+
         @media (max-width: 360px) {
             .rating-count { min-width: 75px; font-size: 11px; }
             .star-label { min-width: 30px; font-size: 12px; }
@@ -284,38 +921,39 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header class="header">
-        <div class="header-content">
+        <div class="header-main">
             <a href="index.html" class="logo">
-                <div class="logo-icon"><i class="fas fa-tv"></i></div>
-                <div class="logo-text">
-                    <h1>SoundPro</h1>
-                    <p>Distribuidora de Eletrônicos</p>
-                </div>
+                <img src="atacado-connect-31-anos.svg" alt="Atacado Connect - 31 Anos">
             </a>
-            <button class="menu-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+            <button class="hamburger" onclick="toggleMenu()">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </header>
 
-    <!-- Mobile Menu -->
-    <div class="mobile-menu-overlay" onclick="toggleMenu()"></div>
-    <div class="mobile-menu" id="mobileMenu">
-        <button class="mobile-menu-close" onclick="toggleMenu()"><i class="fas fa-times"></i></button>
-        <div class="mobile-menu-header">
-            <div class="mobile-menu-logo"><i class="fas fa-tv"></i></div>
-            <div class="mobile-menu-title">SoundPro</div>
-        </div>
-        <nav>
-            <a href="index.html"><i class="fas fa-home"></i><span>Início</span></a>
-            <a href="rastreio.html"><i class="fas fa-box"></i><span>Rastreio</span></a>
-            <a href="zap.html"><i class="fab fa-whatsapp"></i><span>Contato</span></a>
+    <div class="breadcrumbs-section">
+        <nav class="breadcrumbs">
+            <a href="index.html" class="breadcrumb-item"><i class="fas fa-home"></i><span>Início</span></a>
+            <span class="breadcrumb-separator">/</span>
+            <a href="#" class="breadcrumb-item active"><i class="fas fa-star"></i><span>Avaliações</span></a>
         </nav>
     </div>
 
-    <!-- Main Content -->
+    <div class="mobile-menu-overlay" onclick="toggleMenu()"></div>
+    <div class="mobile-menu">
+        <div class="mobile-menu-header">
+            <img src="atacado-connect-31-anos.svg" alt="Atacado Connect">
+            <div class="brand-name">Atacado Connect</div>
+        </div>
+        <nav>
+            <a href="index.html"><i class="fas fa-home"></i> Início</a>
+            <a href="rastreio.html"><i class="fas fa-box"></i> Rastreio</a>
+            <a href="zap.html"><i class="fab fa-whatsapp"></i> Contato</a>
+        </nav>
+    </div>
+
     <div class="container">
-        <!-- Rating Summary -->
         <div class="rating-card">
             <div class="rating-header">
                 <h2>Avaliações do produto</h2>
@@ -357,7 +995,68 @@
             </div>
         </div>
 
-        <!-- Comments Section -->
+        <!-- FORMULÁRIO DE AVALIAÇÃO -->
+        <div class="review-form-section">
+            <h3 class="review-form-title">Deixe sua avaliação</h3>
+            
+            <form id="reviewForm" onsubmit="handleSubmit(event)">
+                <!-- Estrelas -->
+                <div class="form-group">
+                    <label class="form-label">Sua nota</label>
+                    <div class="star-rating">
+                        <input type="radio" id="star5" name="rating" value="5"><label for="star5"><i class="fas fa-star"></i></label>
+                        <input type="radio" id="star4" name="rating" value="4"><label for="star4"><i class="fas fa-star"></i></label>
+                        <input type="radio" id="star3" name="rating" value="3"><label for="star3"><i class="fas fa-star"></i></label>
+                        <input type="radio" id="star2" name="rating" value="2"><label for="star2"><i class="fas fa-star"></i></label>
+                        <input type="radio" id="star1" name="rating" value="1"><label for="star1"><i class="fas fa-star"></i></label>
+                    </div>
+                </div>
+
+                <!-- Nome de usuário -->
+                <div class="form-group">
+                    <label class="form-label" for="userName">Seu nome</label>
+                    <input type="text" id="userName" class="form-input" placeholder="Digite seu nome ou apelido" maxlength="50">
+                </div>
+
+                <!-- Comentário -->
+                <div class="form-group">
+                    <label class="form-label" for="userComment">Seu comentário</label>
+                    <textarea id="userComment" class="form-textarea" placeholder="Conte sua experiência com o produto..." maxlength="500"></textarea>
+                </div>
+
+                <!-- Upload de imagens (3 quadrados) -->
+                <div class="form-group">
+                    <label class="form-label">Adicione fotos (opcional)</label>
+                    <div class="image-upload-container">
+                        <div class="image-upload-box" onclick="openGallery(0)">
+                            <i class="fas fa-camera"></i>
+                            <img id="preview0" style="display:none">
+                            <div class="remove-image" onclick="removeImage(event, 0)">×</div>
+                        </div>
+                        <div class="image-upload-box" onclick="openGallery(1)">
+                            <i class="fas fa-camera"></i>
+                            <img id="preview1" style="display:none">
+                            <div class="remove-image" onclick="removeImage(event, 1)">×</div>
+                        </div>
+                        <div class="image-upload-box" onclick="openGallery(2)">
+                            <i class="fas fa-camera"></i>
+                            <img id="preview2" style="display:none">
+                            <div class="remove-image" onclick="removeImage(event, 2)">×</div>
+                        </div>
+                    </div>
+                    <p class="image-upload-hint">Clique em um quadrado para abrir a galeria • Máximo de 3 imagens</p>
+                    <input type="file" id="imageInput0" accept="image/*" style="display:none" onchange="previewImage(this, 0)">
+                    <input type="file" id="imageInput1" accept="image/*" style="display:none" onchange="previewImage(this, 1)">
+                    <input type="file" id="imageInput2" accept="image/*" style="display:none" onchange="previewImage(this, 2)">
+                </div>
+
+                <!-- Botão enviar -->
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-paper-plane"></i> Enviar avaliação
+                </button>
+            </form>
+        </div>
+
         <div class="comments-section">
             <div class="comments-header">
                 <h3>Comentários dos clientes</h3>
@@ -367,7 +1066,7 @@
                 </div>
             </div>
 
-            <!-- Comment 1 - Ricardo Ferreira -->
+            <!-- Comentários com respostas da loja e likes realistas -->
             <div class="comment-item">
                 <div class="comment-header">
                     <div class="comment-avatar">R</div>
@@ -382,7 +1081,7 @@
                     </div>
                 </div>
                 <div class="comment-text">
-                    Chegou super bem embalada e antes do prazo! A imagem é muito boa pra uma TV de 32", cores vivas e sem distorção. O Roku é muito fácil de usar, conectei na hora e já tava assistindo Netflix. Wi-Fi Dual Band não trava nem com a internet cheia. Recomendo demais! 📺✨
+                    Chegou super bem embalada e antes do prazo! A imagem é muito boa pra uma TV de 32", cores vivas e sem distorção. O Roku é muito fácil de usar, conectei na hora e já tava assistindo Netflix. Wi-Fi Dual Band não trava nem com a internet cheia. Recomendo demais!
                 </div>
                 <div class="comment-images">
                     <div class="comment-image"><img src="https://i.postimg.cc/2SQmthmv/br-11134103-820lc-mmt8e7v0ldkxef-resize-w144-nl.webp" alt="Foto 1"></div>
@@ -390,12 +1089,24 @@
                     <div class="comment-image"><img src="https://i.postimg.cc/cCtGB8XK/br-11134103-820mh-mmt8e7v7dsef7e-resize-w144-nl.webp" alt="Foto 3"></div>
                 </div>
                 <div class="comment-footer">
-                    <div class="comment-action"><i class="far fa-thumbs-up"></i><span>Útil (73)</span></div>
+                    <div class="comment-action" onclick="toggleLike(this)"><i class="far fa-thumbs-up"></i><span class="like-count">127</span></div>
                     <div class="comment-action"><i class="far fa-comment"></i><span>Responder</span></div>
+                </div>
+                <div class="store-reply">
+                    <div class="store-reply-avatar">AC</div>
+                    <div class="store-reply-content">
+                        <div class="store-reply-author">
+                            <strong>Atacado Connect</strong>
+                            <span class="store-badge">LOJA</span>
+                        </div>
+                        <div class="store-reply-text">
+                            ¡Muchas gracias por tu compra, Ricardo! Nos alegra mucho saber que llegaste satisfecho con tu TV. ¡Que la disfrutes mucho! Cualquier cosa, estamos a tu orden por WhatsApp. ¡Saludos desde Paraguay! 🇵🇾
+                        </div>
+                        <div class="store-reply-date">5 dias atrás</div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Comment 2 - Patrícia Almeida -->
             <div class="comment-item">
                 <div class="comment-header">
                     <div class="comment-avatar" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">P</div>
@@ -410,135 +1121,503 @@
                     </div>
                 </div>
                 <div class="comment-text">
-                    Comprei pro quarto e ficou perfeita! O design slim com bordas finas deixa o ambiente mais moderno. A função de audição privada pelo app do Roku é genial pra não acordar ninguém. Único ponto: o som poderia ser um pouco mais potente, mas com Dolby Audio dá pra ouvir bem. Vale muito a pena pelo preço! 🎬
+                    Comprei pro quarto e ficou perfeita! O design slim com bordas finas deixa o ambiente mais moderno. A função de audição privada pelo app do Roku é genial pra não acordar ninguém. Único ponto: o som poderia ser um pouco mais potente, mas com Dolby Audio dá pra ouvir bem. Vale muito a pena pelo preço!
                 </div>
                 <div class="comment-images">
                     <div class="comment-image"><img src="https://i.postimg.cc/XXMSH7z2/br-11134103-820m9-mmvymi8blk3lb6-resize-w144-nl.webp" alt="Foto 1"></div>
                     <div class="comment-image"><img src="https://i.postimg.cc/59DXd5df/br-11134103-820ma-mmtjsb51hjwnfa-resize-w144-nl.webp" alt="Foto 2"></div>
                 </div>
                 <div class="comment-footer">
-                    <div class="comment-action"><i class="far fa-thumbs-up"></i><span>Útil (45)</span></div>
+                    <div class="comment-action" onclick="toggleLike(this)"><i class="far fa-thumbs-up"></i><span class="like-count">89</span></div>
                     <div class="comment-action"><i class="far fa-comment"></i><span>Responder</span></div>
+                </div>
+                <div class="store-reply">
+                    <div class="store-reply-avatar">AC</div>
+                    <div class="store-reply-content">
+                        <div class="store-reply-author">
+                            <strong>Atacado Connect</strong>
+                            <span class="store-badge">LOJA</span>
+                        </div>
+                        <div class="store-reply-text">
+                            ¡Hola Patrícia! Gracias por tu valoración. Para mejorar el sonido, te recomendamos una soundbar básica. ¡Queda espectacular! Gracias por elegirnos. ¡Bendiciones! 🙏
+                        </div>
+                        <div class="store-reply-date">2 dias atrás</div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Comment 3 - Fernando Costa -->
             <div class="comment-item">
                 <div class="comment-header">
-                    <div class="comment-avatar" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">F</div>
+                    <div class="comment-avatar" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">S</div>
                     <div class="comment-meta">
-                        <div class="comment-author">Fernando Costa</div>
+                        <div class="comment-author">Solange Dantas</div>
                         <div class="comment-info">
                             <div class="comment-stars">
                                 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                             </div>
-                            <span class="comment-date">• 2 semanas atrás</span>
+                            <span class="comment-date">• Hoje</span>
                         </div>
                     </div>
                 </div>
                 <div class="comment-text">
-                    Melhor custo-benefício que encontrei! A interface do Roku é super intuitiva, minha mãe de 70 anos conseguiu usar sem ajuda. Conexão Wi-Fi 5GHz faz toda diferença no streaming, zero travamentos. As 3 entradas HDMI são suficientes pra conectar videogame, TV a cabo e soundbar. Chegou lacrada e com nota fiscal. 👍
+                    Chegou na data certa, tudo certo com meu pedido, amei a minha compra, muito satisfeita, recomendo a loja
+                </div>
+                <div class="comment-images">
+                    <div class="comment-image"><img src="https://i.postimg.cc/rm2GsMFD/br-11134103-81ztc-mk0vdu84v94y30-resize-w144-nl.webp" alt="Foto do produto"></div>
                 </div>
                 <div class="comment-footer">
-                    <div class="comment-action"><i class="far fa-thumbs-up"></i><span>Útil (61)</span></div>
+                    <div class="comment-action" onclick="toggleLike(this)"><i class="far fa-thumbs-up"></i><span class="like-count">34</span></div>
                     <div class="comment-action"><i class="far fa-comment"></i><span>Responder</span></div>
+                </div>
+                <div class="store-reply">
+                    <div class="store-reply-avatar">AC</div>
+                    <div class="store-reply-content">
+                        <div class="store-reply-author">
+                            <strong>Atacado Connect</strong>
+                            <span class="store-badge">LOJA</span>
+                        </div>
+                        <div class="store-reply-text">
+                            ¡Gracias Solange! Nos hace muy felices saber que llegaste contenta. ¡Bienvenida a la familia Atacado Connect! Cualquier duda, estamos aquí. ¡Que la disfrutes! 💜
+                        </div>
+                        <div class="store-reply-date">Hoje</div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Comment 4 - Gabriela Santos -->
             <div class="comment-item">
                 <div class="comment-header">
-                    <div class="comment-avatar" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">G</div>
+                    <div class="comment-avatar" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">M</div>
                     <div class="comment-meta">
-                        <div class="comment-author">Gabriela Santos</div>
+                        <div class="comment-author">Maria Silva</div>
                         <div class="comment-info">
                             <div class="comment-stars">
-                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
                             </div>
-                            <span class="comment-date">• 4 dias atrás</span>
+                            <span class="comment-date">• Ontem</span>
                         </div>
                     </div>
                 </div>
                 <div class="comment-text">
-                    A TV é boa, mas esperava um pouco mais de brilho para ambientes muito iluminados. Em quarto escuro a imagem fica ótima. O controle do Roku é prático, mas sinto falta de botões físicos para volume e canal. No geral, atendeu minhas expectativas pelo preço pago. Entrega foi rápida.
+                    Produto excelente! Superou minhas expectativas. A entrega foi rápida e o atendimento da loja foi impecável. Com certeza comprarei novamente!
                 </div>
                 <div class="comment-footer">
-                    <div class="comment-action"><i class="far fa-thumbs-up"></i><span>Útil (22)</span></div>
+                    <div class="comment-action" onclick="toggleLike(this)"><i class="far fa-thumbs-up"></i><span class="like-count">56</span></div>
                     <div class="comment-action"><i class="far fa-comment"></i><span>Responder</span></div>
+                </div>
+                <div class="store-reply">
+                    <div class="store-reply-avatar">AC</div>
+                    <div class="store-reply-content">
+                        <div class="store-reply-author">
+                            <strong>Atacado Connect</strong>
+                            <span class="store-badge">LOJA</span>
+                        </div>
+                        <div class="store-reply-text">
+                            ¡Maria, gracias por confiar en nosotros! Esperamos verte pronto de vuelta. ¡Tenemos muchas novedades! ¡Abrazo! 🤗
+                        </div>
+                        <div class="store-reply-date">Ontem</div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Comment 5 - Lucas Mendes -->
+            <!-- 10 novos comentários com likes e respostas -->
             <div class="comment-item">
                 <div class="comment-header">
-                    <div class="comment-avatar" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">L</div>
+                    <div class="comment-avatar" style="background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);">A</div>
                     <div class="comment-meta">
-                        <div class="comment-author">Lucas Mendes</div>
+                        <div class="comment-author">Ana Costa</div>
                         <div class="comment-info">
                             <div class="comment-stars">
                                 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                            <span class="comment-date">• 2 dias atrás</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="comment-text">
+                    Adorei! A TV chegou muito bem protegida e a configuração foi super simples. O sistema Roku é intuitivo e tem todos os apps que eu uso. Imagem nítida e som bom. Recomendo!
+                </div>
+                <div class="comment-footer">
+                    <div class="comment-action" onclick="toggleLike(this)"><i class="far fa-thumbs-up"></i><span class="like-count">42</span></div>
+                    <div class="comment-action"><i class="far fa-comment"></i><span>Responder</span></div>
+                </div>
+                <div class="store-reply">
+                    <div class="store-reply-avatar">AC</div>
+                    <div class="store-reply-content">
+                        <div class="store-reply-author">
+                            <strong>Atacado Connect</strong>
+                            <span class="store-badge">LOJA</span>
+                        </div>
+                        <div class="store-reply-text">
+                            ¡Ana, qué alegría leer tu comentario! Gracias por recomendarnos. ¡Disfruta mucho tu TV! Cualquier cosa, acá estamos. ¡Saludos! 😊
+                        </div>
+                        <div class="store-reply-date">1 dia atrás</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comment-item">
+                <div class="comment-header">
+                    <div class="comment-avatar" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">C</div>
+                    <div class="comment-meta">
+                        <div class="comment-author">Carlos Mendes</div>
+                        <div class="comment-info">
+                            <div class="comment-stars">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
                             </div>
                             <span class="comment-date">• 5 dias atrás</span>
                         </div>
                     </div>
                 </div>
                 <div class="comment-text">
-                    Comprei pra sala de espera do consultório e os pacientes adoram! O Roku tem todos os apps que a gente precisa: YouTube, Netflix, Globoplay. A instalação foi super fácil, só encaixar a base e pronto. O painel VA tem bom contraste, não fica aquela imagem lavada. Recomendo pra quem busca praticidade! 🏥📺
+                    Boa TV pelo preço. A imagem é boa, mas o som poderia ser melhor. No geral, estou satisfeito com a compra. Entrega dentro do prazo.
                 </div>
                 <div class="comment-footer">
-                    <div class="comment-action"><i class="far fa-thumbs-up"></i><span>Útil (38)</span></div>
+                    <div class="comment-action" onclick="toggleLike(this)"><i class="far fa-thumbs-up"></i><span class="like-count">23</span></div>
                     <div class="comment-action"><i class="far fa-comment"></i><span>Responder</span></div>
+                </div>
+                <div class="store-reply">
+                    <div class="store-reply-avatar">AC</div>
+                    <div class="store-reply-content">
+                        <div class="store-reply-author">
+                            <strong>Atacado Connect</strong>
+                            <span class="store-badge">LOJA</span>
+                        </div>
+                        <div class="store-reply-text">
+                            ¡Carlos, gracias por tu feedback! Para mejorar el audio, te sugerimos una barra de sonido económica. ¡Hace una diferencia enorme! Cualquier consulta, estamos a tu disposición. ¡Abrazo! 👍
+                        </div>
+                        <div class="store-reply-date">4 dias atrás</div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Comment 6 - Amanda Oliveira -->
             <div class="comment-item">
                 <div class="comment-header">
-                    <div class="comment-avatar" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">A</div>
+                    <div class="comment-avatar" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">L</div>
                     <div class="comment-meta">
-                        <div class="comment-author">Amanda Oliveira</div>
+                        <div class="comment-author">Lucas Oliveira</div>
                         <div class="comment-info">
                             <div class="comment-stars">
-                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                            <span class="comment-date">• 1 semana atrás</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="comment-text">
+                    Perfeita para o quarto! Tamanho ideal, imagem de qualidade e o Roku facilita muito a vida. Conectei na Wi-Fi em segundos. Muito feliz com a compra!
+                </div>
+                <div class="comment-footer">
+                    <div class="comment-action" onclick="toggleLike(this)"><i class="far fa-thumbs-up"></i><span class="like-count">78</span></div>
+                    <div class="comment-action"><i class="far fa-comment"></i><span>Responder</span></div>
+                </div>
+                <div class="store-reply">
+                    <div class="store-reply-avatar">AC</div>
+                    <div class="store-reply-content">
+                        <div class="store-reply-author">
+                            <strong>Atacado Connect</strong>
+                            <span class="store-badge">LOJA</span>
+                        </div>
+                        <div class="store-reply-text">
+                            ¡Lucas, nos encanta saber que estás feliz! El Roku es súper práctico, ¿verdad? ¡Gracias por elegirnos! Que la disfrutes mucho. ¡Hasta pronto! 🌟
+                        </div>
+                        <div class="store-reply-date">6 dias atrás</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comment-item">
+                <div class="comment-header">
+                    <div class="comment-avatar" style="background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);">J</div>
+                    <div class="comment-meta">
+                        <div class="comment-author">Juliana Santos</div>
+                        <div class="comment-info">
+                            <div class="comment-stars">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><i class="far fa-star"></i>
+                            </div>
+                            <span class="comment-date">• 3 semanas atrás</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="comment-text">
+                    TV boa, cumpre o que promete. O único ponto negativo é que o controle poderia ter mais botões de acesso rápido. Fora isso, tudo certo!
+                </div>
+                <div class="comment-footer">
+                    <div class="comment-action" onclick="toggleLike(this)"><i class="far fa-thumbs-up"></i><span class="like-count">31</span></div>
+                    <div class="comment-action"><i class="far fa-comment"></i><span>Responder</span></div>
+                </div>
+                <div class="store-reply">
+                    <div class="store-reply-avatar">AC</div>
+                    <div class="store-reply-content">
+                        <div class="store-reply-author">
+                            <strong>Atacado Connect</strong>
+                            <span class="store-badge">LOJA</span>
+                        </div>
+                        <div class="store-reply-text">
+                            ¡Juliana, gracias por tu opinión! El control del Roku es minimalista, pero podés usar el app del celular como control remoto con más funciones. ¡Probalo! Gracias por tu compra. 💜
+                        </div>
+                        <div class="store-reply-date">2 semanas atrás</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comment-item">
+                <div class="comment-header">
+                    <div class="comment-avatar" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">R</div>
+                    <div class="comment-meta">
+                        <div class="comment-author">Roberto Lima</div>
+                        <div class="comment-info">
+                            <div class="comment-stars">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                             </div>
                             <span class="comment-date">• 1 mês atrás</span>
                         </div>
                     </div>
                 </div>
                 <div class="comment-text">
-                    Muito satisfeita! A TV é leve, fácil de montar e o design combina com qualquer ambiente. O app do Roku no celular é um diferencial, dá pra controlar tudo pelo smartphone. A única coisa que poderia melhorar é o tempo de resposta do menu, mas nada que atrapalhe. Pelo preço, vale cada centavo! 💯
+                    Excelente custo-benefício! Comprei para o escritório e está perfeita. Imagem clara, sistema rápido e fácil de usar. A loja também foi muito atenciosa.
                 </div>
                 <div class="comment-footer">
-                    <div class="comment-action"><i class="far fa-thumbs-up"></i><span>Útil (29)</span></div>
+                    <div class="comment-action" onclick="toggleLike(this)"><i class="far fa-thumbs-up"></i><span class="like-count">95</span></div>
                     <div class="comment-action"><i class="far fa-comment"></i><span>Responder</span></div>
+                </div>
+                <div class="store-reply">
+                    <div class="store-reply-avatar">AC</div>
+                    <div class="store-reply-content">
+                        <div class="store-reply-author">
+                            <strong>Atacado Connect</strong>
+                            <span class="store-badge">LOJA</span>
+                        </div>
+                        <div class="store-reply-text">
+                            ¡Roberto, muchísimas gracias! Nos alegra que hayas elegido Atacado Connect para tu oficina. ¡Siempre buscamos la mejor atención para nuestros clientes! ¡Éxitos! 💼
+                        </div>
+                        <div class="store-reply-date">3 semanas atrás</div>
+                    </div>
                 </div>
             </div>
 
-            <button class="load-more" onclick="loadMoreComments()">
-                Ver mais 884 comentários <i class="fas fa-chevron-down"></i>
+            <div class="comment-item">
+                <div class="comment-header">
+                    <div class="comment-avatar" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">F</div>
+                    <div class="comment-meta">
+                        <div class="comment-author">Fernanda Rocha</div>
+                        <div class="comment-info">
+                            <div class="comment-stars">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                            </div>
+                            <span class="comment-date">• 1 mês atrás</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="comment-text">
+                    Chegou antes do prazo e muito bem embalada. A TV é bonita e funciona perfeitamente. Só achei o menu um pouco confuso no início, mas depois se acostuma.
+                </div>
+                <div class="comment-footer">
+                    <div class="comment-action" onclick="toggleLike(this)"><i class="far fa-thumbs-up"></i><span class="like-count">38</span></div>
+                    <div class="comment-action"><i class="far fa-comment"></i><span>Responder</span></div>
+                </div>
+                <div class="store-reply">
+                    <div class="store-reply-avatar">AC</div>
+                    <div class="store-reply-content">
+                        <div class="store-reply-author">
+                            <strong>Atacado Connect</strong>
+                            <span class="store-badge">LOJA</span>
+                        </div>
+                        <div class="store-reply-text">
+                            ¡Fernanda, gracias por tu compra! El menú del Roku se vuelve muy intuitivo después de usarlo unos días. Si tenés dudas, mirá nuestros tutoriales en YouTube. ¡Abrazo! 📺
+                        </div>
+                        <div class="store-reply-date">1 mês atrás</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comment-item">
+                <div class="comment-header">
+                    <div class="comment-avatar" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">T</div>
+                    <div class="comment-meta">
+                        <div class="comment-author">Thiago Alves</div>
+                        <div class="comment-info">
+                            <div class="comment-stars">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                            <span class="comment-date">• 2 meses atrás</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="comment-text">
+                    Melhor compra que fiz esse ano! A TV é linda, imagem perfeita e o Roku tem tudo que preciso. Atendimento da loja nota 10. Super recomendo!
+                </div>
+                <div class="comment-footer">
+                    <div class="comment-action" onclick="toggleLike(this)"><i class="far fa-thumbs-up"></i><span class="like-count">156</span></div>
+                    <div class="comment-action"><i class="far fa-comment"></i><span>Responder</span></div>
+                </div>
+                <div class="store-reply">
+                    <div class="store-reply-avatar">AC</div>
+                    <div class="store-reply-content">
+                        <div class="store-reply-author">
+                            <strong>Atacado Connect</strong>
+                            <span class="store-badge">LOJA</span>
+                        </div>
+                        <div class="store-reply-text">
+                            ¡Thiago, wow! ¡Gracias por ese nota 10! 🏆 Nos hace muy felices saber que superamos tus expectativas. ¡Gracias por recomendar-nos! ¡Bienvenido siempre! 🔥
+                        </div>
+                        <div class="store-reply-date">2 meses atrás</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comment-item">
+                <div class="comment-header">
+                    <div class="comment-avatar" style="background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);">B</div>
+                    <div class="comment-meta">
+                        <div class="comment-author">Beatriz Souza</div>
+                        <div class="comment-info">
+                            <div class="comment-stars">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><i class="far fa-star"></i>
+                            </div>
+                            <span class="comment-date">• 2 meses atrás</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="comment-text">
+                    Produto de qualidade e preço justo. A entrega foi rápida e sem problemas. A TV funciona muito bem, só poderia ter um som um pouco mais potente.
+                </div>
+                <div class="comment-footer">
+                    <div class="comment-action" onclick="toggleLike(this)"><i class="far fa-thumbs-up"></i><span class="like-count">44</span></div>
+                    <div class="comment-action"><i class="far fa-comment"></i><span>Responder</span></div>
+                </div>
+                <div class="store-reply">
+                    <div class="store-reply-avatar">AC</div>
+                    <div class="store-reply-content">
+                        <div class="store-reply-author">
+                            <strong>Atacado Connect</strong>
+                            <span class="store-badge">LOJA</span>
+                        </div>
+                        <div class="store-reply-text">
+                            ¡Beatriz, gracias por tu comentario! Para potenciar el sonido, te recomendamos una soundbar o parlantes externos. ¡Hace una gran diferencia! Gracias por confiar en nosotros. 🎵
+                        </div>
+                        <div class="store-reply-date">2 meses atrás</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comment-item">
+                <div class="comment-header">
+                    <div class="comment-avatar" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">G</div>
+                    <div class="comment-meta">
+                        <div class="comment-author">Gabriel Martins</div>
+                        <div class="comment-info">
+                            <div class="comment-stars">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                            <span class="comment-date">• 3 meses atrás</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="comment-text">
+                    Simplesmente perfeita! Comprei para presentear e a pessoa adorou. Imagem incrível, sistema fluido e design moderno. Vale cada centavo!
+                </div>
+                <div class="comment-footer">
+                    <div class="comment-action" onclick="toggleLike(this)"><i class="far fa-thumbs-up"></i><span class="like-count">112</span></div>
+                    <div class="comment-action"><i class="far fa-comment"></i><span>Responder</span></div>
+                </div>
+                <div class="store-reply">
+                    <div class="store-reply-avatar">AC</div>
+                    <div class="store-reply-content">
+                        <div class="store-reply-author">
+                            <strong>Atacado Connect</strong>
+                            <span class="store-badge">LOJA</span>
+                        </div>
+                        <div class="store-reply-text">
+                            ¡Gabriel, qué hermoso regalo! 🎁 Nos alegra que hayas elegido nuestros productos para regalar. ¡Gracias por confiar en nosotros! ¡Que la disfruten! 💖
+                        </div>
+                        <div class="store-reply-date">3 meses atrás</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comment-item">
+                <div class="comment-header">
+                    <div class="comment-avatar" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">D</div>
+                    <div class="comment-meta">
+                        <div class="comment-author">Daniela Ferreira</div>
+                        <div class="comment-info">
+                            <div class="comment-stars">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                            </div>
+                            <span class="comment-date">• 3 meses atrás</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="comment-text">
+                    Boa TV, atende bem às expectativas. O sistema Roku é prático e tem boa variedade de apps. Entrega no prazo e produto bem protegido. Satisfeita!
+                </div>
+                <div class="comment-footer">
+                    <div class="comment-action" onclick="toggleLike(this)"><i class="far fa-thumbs-up"></i><span class="like-count">67</span></div>
+                    <div class="comment-action"><i class="far fa-comment"></i><span>Responder</span></div>
+                </div>
+                <div class="store-reply">
+                    <div class="store-reply-avatar">AC</div>
+                    <div class="store-reply-content">
+                        <div class="store-reply-author">
+                            <strong>Atacado Connect</strong>
+                            <span class="store-badge">LOJA</span>
+                        </div>
+                        <div class="store-reply-text">
+                            ¡Daniela, gracias por tu valoración! Nos alegra que estés satisfecha con tu compra. El Roku tiene muchísimos apps disponibles. ¡A disfrutar! 📱
+                        </div>
+                        <div class="store-reply-date">3 meses atrás</div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="load-more" onclick="showErrorModal()">
+                Ver mais 888 comentários <i class="fas fa-chevron-down"></i>
             </button>
         </div>
     </div>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="footer-main">
             <div class="footer-brand">
                 <a href="index.html" class="logo">
-                    <div class="logo-icon"><i class="fas fa-tv"></i></div>
-                    <div>
-                        <div class="logo-name" style="font-size:18px;font-weight:800;background:linear-gradient(135deg,#6366f1 0%,#8b5cf6 50%,#ec4899 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">SoundPro</div>
-                        <div class="logo-tagline" style="font-size:8px;color:#94a3b8;text-transform:uppercase;letter-spacing:1.5px;">Distribuidora de Eletrônicos</div>
-                    </div>
+                    <img src="atacado-connect-31-anos.svg" alt="Atacado Connect" style="height: 38px;">
                 </a>
                 <div class="footer-company">
-                    <strong>GOB DISTRIBUIDORA (Luz &amp; Ordem)</strong><br>
+                    <strong>GOB DISTRIBUIDORA (Luz & Ordem)</strong><br>
                     GALPÃO AZUL - RUA AGENOR PEREIRA DA COSTA, 270A<br>
                     JARDIM ALVORADA - JANDIRA, SP<br>
                     CEP: 06612-220<br>
                     CNPJ: 50.742.088/0001-95
                 </div>
             </div>
+            
+            <div class="footer-contact">
+                <div class="footer-contact-title">
+                    <i class="fas fa-headset"></i> Entre em Contato
+                </div>
+                <div class="footer-contact-item">
+                    <i class="fab fa-whatsapp"></i>
+                    <div>
+                        <strong>WhatsApp:</strong><br>
+                        <a href="https://wa.me/595993378642" target="_blank">+595 993 378642</a>
+                    </div>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <strong>Email:</strong><br>
+                        <a href="mailto:contato@atacadoconnect.com">contato@atacadoconnect.com</a>
+                    </div>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <strong>Endereço:</strong><br>
+                        Av. Adrián Jara, Cd. del Este 100136
+                    </div>
+                </div>
+            </div>
+            
             <div class="payment-methods">
                 <div class="payment-methods-title">Formas de Pagamento</div>
                 <div class="payment-icons">
@@ -549,53 +1628,225 @@
                     <div class="card-flag-footer pix"><span>PIX</span></div>
                 </div>
             </div>
+
             <div class="social-share">
                 <div class="social-share-title">Compartilhar</div>
                 <div class="social-icons">
-                    <a href="#" class="social-icon whatsapp" onclick="shareOnSocial('whatsapp');return false;"><i class="fab fa-whatsapp"></i></a>
-                    <a href="#" class="social-icon facebook" onclick="shareOnSocial('facebook');return false;"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="social-icon twitter" onclick="shareOnSocial('twitter');return false;"><i class="fab fa-x-twitter"></i></a>
-                    <a href="#" class="social-icon instagram" onclick="shareOnSocial('instagram');return false;"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="social-icon telegram" onclick="shareOnSocial('telegram');return false;"><i class="fab fa-telegram-plane"></i></a>
-                    <a href="#" class="social-icon linkedin" onclick="shareOnSocial('linkedin');return false;"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="#" class="social-icon pinterest" onclick="shareOnSocial('pinterest');return false;"><i class="fab fa-pinterest-p"></i></a>
-                    <a href="#" class="social-icon copy" onclick="copyLink();return false;"><i class="fas fa-link"></i></a>
+                    <a href="#" class="social-icon whatsapp" onclick="shareOnSocial('whatsapp'); return false;"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" class="social-icon facebook" onclick="shareOnSocial('facebook'); return false;"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon twitter" onclick="shareOnSocial('twitter'); return false;"><i class="fab fa-x-twitter"></i></a>
+                    <a href="#" class="social-icon instagram" onclick="shareOnSocial('instagram'); return false;"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon telegram" onclick="shareOnSocial('telegram'); return false;"><i class="fab fa-telegram-plane"></i></a>
+                    <a href="#" class="social-icon linkedin" onclick="shareOnSocial('linkedin'); return false;"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="social-icon pinterest" onclick="shareOnSocial('pinterest'); return false;"><i class="fab fa-pinterest-p"></i></a>
+                    <a href="#" class="social-icon copy" onclick="copyLink(); return false;"><i class="fas fa-link"></i></a>
                 </div>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>© 2026 SoundPro — GOB DISTRIBUIDORA — Todos os direitos reservados</p>
+            <p>&copy; 2026 Atacado Connect — GOB DISTRIBUIDORA — Todos os direitos reservados</p>
         </div>
     </footer>
 
-    <!-- WhatsApp Float -->
-    <a href="zap.html" class="whatsapp-float"><i class="fab fa-whatsapp"></i></a>
+    <a href="zap.html" class="whatsapp-float" title="Fale conosco pelo WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- MODAL DE ERRO - EXCESSO DE USUÁRIOS -->
+    <div class="error-modal-overlay" id="errorModal" onclick="closeErrorModal(event)">
+        <div class="error-modal" onclick="event.stopPropagation()">
+            <i class="fas fa-exclamation-triangle"></i>
+            <div class="error-modal-title">Atenção</div>
+            <div class="error-modal-text">
+                O site está com excesso de usuários no momento. Muitas compras estão sendo efetuadas simultaneamente e os comentários não podem ser carregados agora. Tente novamente em alguns minutos.
+            </div>
+            <button class="error-modal-close" onclick="closeErrorModal()">Entendi</button>
+        </div>
+    </div>
+
+    <!-- MODAL DE CÓDIGO DO PRODUTO -->
+    <div class="product-code-modal" id="productCodeModal">
+        <div class="product-code-box">
+            <div class="product-code-title"><i class="fas fa-tag" style="color:var(--primary);margin-right:8px;"></i>Verificação de Compra</div>
+            <p class="product-code-hint">Para enviar sua avaliação, informe o código do produto que você comprou:</p>
+            <input type="text" id="productCodeInput" class="product-code-input" placeholder="EX: TV-AOC-32-001" maxlength="20" autocomplete="off">
+            <div class="product-code-actions">
+                <button class="product-code-btn cancel" onclick="closeProductCodeModal()">Cancelar</button>
+                <button class="product-code-btn confirm" onclick="validateProductCode()">Confirmar</button>
+            </div>
+        </div>
+    </div>
 
     <script>
+        // Toggle menu mobile
         function toggleMenu() {
-            const menu = document.getElementById('mobileMenu');
+            const menu = document.querySelector('.mobile-menu');
             const overlay = document.querySelector('.mobile-menu-overlay');
             menu.classList.toggle('active');
             overlay.classList.toggle('active');
             document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : '';
         }
+
+        // Filtros de comentários
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
             });
         });
+
+        // Fechar menu com ESC
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
-                const menu = document.getElementById('mobileMenu');
+                const menu = document.querySelector('.mobile-menu');
                 if (menu.classList.contains('active')) toggleMenu();
+                closeErrorModal();
+                closeProductCodeModal();
             }
         });
-        function loadMoreComments() { showToast('Carregando mais comentários...'); }
+
+        // ===== SISTEMA DE LIKES =====
+        function toggleLike(element) {
+            const countSpan = element.querySelector('.like-count');
+            let count = parseInt(countSpan.textContent);
+            
+            if (element.classList.contains('liked')) {
+                element.classList.remove('liked');
+                element.querySelector('i').className = 'far fa-thumbs-up';
+                countSpan.textContent = count - 1;
+            } else {
+                element.classList.add('liked');
+                element.querySelector('i').className = 'fas fa-thumbs-up';
+                countSpan.textContent = count + 1;
+            }
+        }
+
+        // ===== MODAL DE ERRO (LOAD MORE) =====
+        function showErrorModal() {
+            document.getElementById('errorModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeErrorModal(event) {
+            if (!event || event.target.id === 'errorModal' || event.target.classList.contains('error-modal-close')) {
+                document.getElementById('errorModal').classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // ===== FORMULÁRIO DE AVALIAÇÃO =====
+        
+        // Abrir galeria para upload de imagem
+        function openGallery(index) {
+            document.getElementById(`imageInput${index}`).click();
+        }
+
+        // Preview da imagem selecionada
+        function previewImage(input, index) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const preview = document.getElementById(`preview${index}`);
+                    const box = preview.parentElement;
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                    box.classList.add('has-image');
+                    box.querySelector('i').style.display = 'none';
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // Remover imagem
+        function removeImage(event, index) {
+            event.stopPropagation();
+            const preview = document.getElementById(`preview${index}`);
+            const box = preview.parentElement;
+            preview.src = '';
+            preview.style.display = 'none';
+            box.classList.remove('has-image');
+            box.querySelector('i').style.display = 'block';
+            document.getElementById(`imageInput${index}`).value = '';
+        }
+
+        // Mostrar modal de código do produto ao enviar
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('userName').value.trim();
+            const comment = document.getElementById('userComment').value.trim();
+            const rating = document.querySelector('input[name="rating"]:checked');
+            
+            if (!name || !comment || !rating) {
+                showToast('Por favor, preencha todos os campos obrigatórios.');
+                return;
+            }
+            
+            // Mostrar modal para pedir código do produto
+            document.getElementById('productCodeModal').classList.add('active');
+            document.getElementById('productCodeInput').focus();
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Validar código do produto (sempre dá erro conforme solicitado)
+        function validateProductCode() {
+            const code = document.getElementById('productCodeInput').value.trim().toUpperCase();
+            
+            // Fecha o modal primeiro
+            closeProductCodeModal();
+            
+            // Sempre mostra erro, pois o usuário não terá o código
+            showProductCodeError();
+        }
+
+        // Fechar modal de código do produto
+        function closeProductCodeModal() {
+            document.getElementById('productCodeModal').classList.remove('active');
+            document.getElementById('productCodeInput').value = '';
+            document.body.style.overflow = '';
+        }
+
+        // Mostrar toast de erro após código inválido
+        function showProductCodeError() {
+            // Remove toast existente se houver
+            const existing = document.querySelector('.toast-error');
+            if (existing) existing.remove();
+            
+            // Cria novo toast de erro
+            const toast = document.createElement('div');
+            toast.className = 'toast-error';
+            toast.innerHTML = `
+                <i class="fas fa-exclamation-circle"></i>
+                <div>
+                    <strong>Código não encontrado!</strong><br>
+                    Não foi possível localizar uma compra com este código. Verifique seu e-mail de confirmação ou entre em contato com nosso suporte.
+                </div>
+            `;
+            document.body.appendChild(toast);
+            
+            // Remove após 5 segundos
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.3s';
+                setTimeout(() => toast.remove(), 300);
+            }, 5000);
+        }
+
+        // ===== FUNÇÕES EXISTENTES (compartilhamento, toast, etc) =====
+        function showToast(msg) {
+            const ex = document.querySelector('.toast');
+            if (ex) ex.remove();
+            const t = document.createElement('div');
+            t.className = 'toast';
+            t.innerHTML = `<i class="fas fa-info-circle" style="color:#60a5fa;"></i> ${msg}`;
+            document.body.appendChild(t);
+            setTimeout(() => { t.style.opacity='0'; t.style.transition='opacity .3s'; setTimeout(()=>t.remove(),300); }, 3000);
+        }
+
         function shareOnSocial(network) {
             const url = encodeURIComponent(window.location.href);
-            const title = encodeURIComponent('SoundPro - Smart TV AOC 32"');
-            const text = encodeURIComponent('Smart TV AOC 32" Roku - Apenas R$ 329,99!');
+            const title = encodeURIComponent('Atacado Connect - Avaliações Smart TV AOC 32"');
+            const text = encodeURIComponent('Confira as avaliações da Smart TV AOC 32" Roku!');
             let shareUrl = '';
             switch(network) {
                 case 'whatsapp': shareUrl = `https://wa.me/?text=${title}%20${text}%20${url}`; break;
@@ -608,12 +1859,14 @@
             }
             if (shareUrl) window.open(shareUrl, '_blank', 'width=600,height=400');
         }
+
         function copyLink() {
             const url = window.location.href;
             if (navigator.clipboard && window.isSecureContext) {
                 navigator.clipboard.writeText(url).then(() => showToast('Link copiado!')).catch(() => fallbackCopy(url));
             } else { fallbackCopy(url); }
         }
+
         function fallbackCopy(text) {
             const textArea = document.createElement('textarea');
             textArea.value = text;
@@ -624,15 +1877,6 @@
             try { document.execCommand('copy'); showToast('Link copiado!'); }
             catch (err) { showToast('Copie manualmente.'); }
             document.body.removeChild(textArea);
-        }
-        function showToast(msg) {
-            const ex = document.querySelector('.toast');
-            if (ex) ex.remove();
-            const t = document.createElement('div');
-            t.className = 'toast';
-            t.innerHTML = `<i class="fas fa-info-circle" style="color:#60a5fa;"></i> ${msg}`;
-            document.body.appendChild(t);
-            setTimeout(() => { t.style.opacity='0'; t.style.transition='opacity .3s'; setTimeout(()=>t.remove(),300); }, 3000);
         }
     </script>
 </body>
